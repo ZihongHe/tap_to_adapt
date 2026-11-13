@@ -2,7 +2,7 @@
 
 ## Interaction and learning
 
-The desktop and mobile clients share a scheduled study session. Desktop taps supervise response initiation: activation labels the current waiting context positively; interruption labels the initiating context negatively. Eligibility checks associate each label with a valid decision. The frozen speech representation feeds a per-user head; CBPER balances replay classes and constrains updates toward the fixed base parameters. CTHA uses past corrective events and bounded timing adjustments. Content generation and conversational memory run separately from the timing path.
+The desktop and mobile clients share a scheduled study session. Desktop taps supervise response initiation: activation labels the current waiting context positively; interruption labels the initiating context negatively. Eligibility checks associate each label with a valid decision. The frozen speech representation feeds a per-user head; CBPER balances replay classes and constrains updates toward the fixed base parameters. Recent Tap-History Adaptation (RTHA) uses corrective events available before the current decision and bounded timing adjustments. Content generation and conversational memory run separately from the timing path.
 
 Core entry points are `app/distilhubert_online.py`, `app/tap_history.py`, `app/timing.py`, and `app/main.py`. `app/study_analysis.py` defines active-block analyses. `content/study_protocol.json` specifies the study schedule. `app/orchestration.py` implements assignment and session management.
 

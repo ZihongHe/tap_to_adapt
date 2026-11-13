@@ -1,7 +1,7 @@
 """Streaming response-initiation inference and state-bound correction learning.
 
 Each ParticipantRuntime manages the audio buffer, immutable shared prediction,
-personal prediction, causal tap history, and correction eligibility.
+personal prediction, recent tap history, and correction eligibility.
 TimingService shares frozen feature extraction while isolating participant
 heads and checkpoints. Prediction precedes feedback; the server state and
 activation identifier bind each eligible tap to the decision it corrects.

@@ -2,7 +2,7 @@
 
 This component provides a separate diagnostic or legacy context score.
 The deployed continuous timing path assigns activation authority to acoustic
-timing inference and causal tap history rather than this text-context score.
+timing inference and recent tap history rather than this text-context score.
 """
 
 from __future__ import annotations

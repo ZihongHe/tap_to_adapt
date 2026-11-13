@@ -2,7 +2,7 @@
 
 This service summarizes conversational content and retrieves saved context for
 the dialogue agents. Its state is separate from the acoustic timing head and
-causal corrective-tap history used for response initiation.
+recent corrective-tap history used for response initiation.
 """
 
 from __future__ import annotations

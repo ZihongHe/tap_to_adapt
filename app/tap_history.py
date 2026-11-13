@@ -1,4 +1,7 @@
-"""Causal ≤1 min tap-timing history fusion for cold-start personalisation.
+"""Recent Tap-History Adaptation (RTHA) for response initiation timing.
+
+The deployed configuration uses accepted taps from the 60 seconds preceding
+each decision.
 
 Production lock: A10_lr_high_0.05 from the cold-start feature/backbone sweep
 (experiments/sweep_tap_history_coldstart_features.py, outputs/tap_history_feature_sweep_v1).
