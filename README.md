@@ -17,6 +17,27 @@ This repository contains the study implementation: a desktop client, a mobile pu
 | `scripts/` | Simulation, model preparation, validation, and export utilities |
 | `tests/` | Unit and integration tests with synthetic fixtures |
 | `docs/IMPLEMENTATION.md` | Runtime architecture, model dependencies, and validation notes |
+| `data/pilot_1000/` | Authorized 1,000-record pilot corpus, labels, and acoustic features |
+| `data/public_acoustic_reference/` | Acoustic prototypes fitted only to the public pilot |
+| `data/user_corrections_dp_v1/` | Participant-level differentially private joint statistics |
+
+## Research data
+
+The [pilot corpus](data/pilot_1000/DATASET_CARD.md) provides 1,000 human-recorded,
+15-second audio clips (253 begin-responding and 747 continue-waiting labels),
+their collection order, hashes, and 10,752-dimensional DistilHuBERT features.
+The data owner authorized public distribution. Audio retains spoken content
+and voice characteristics; this corpus is not a differentially private release.
+
+The [user-correction summary](data/user_corrections_dp_v1/DATASET_CARD.md) contains
+16 noisy joint weights over eight public acoustic prototypes and two correction
+labels. Its mechanism uses participant-level differential privacy with epsilon
+1 and delta 0 under add/remove-participant adjacency. It contains neither
+individual study feature vectors nor generated observation rows. It supports
+inspection of a coarse acoustic/feedback distribution, with substantial
+resolution and noise limitations; it does not establish a useful replacement
+for the original feature-label training data. Individual user-study recordings,
+transcripts, features, and trajectories remain private. See [data documentation](data/README.md).
 
 ## Run locally
 

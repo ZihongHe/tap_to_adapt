@@ -1,0 +1,27 @@
+{
+  "schema": "tap-to-adapt-public-prototype-dp-weights/v1",
+  "data_type": "Differentially private joint statistics of real corrective-feedback records; not individual or synthetic observation rows.",
+  "epsilon": 1.0,
+  "delta": 0,
+  "adjacency": "Add or remove all contributed records of one participant.",
+  "replacement_epsilon_bound": 2.0,
+  "maximum_rows_per_participant": 24,
+  "l1_sensitivity": 24,
+  "laplace_scale": 24.0,
+  "cells": 8,
+  "label_values": [
+    0,
+    1
+  ],
+  "label_semantics": {
+    "0": "Manual interruption, associated with response-initiation context.",
+    "1": "Manual activation."
+  },
+  "reference_sha256": "62ef5e7edcca4770a43f55b07d022434fb438bb85870398c9864d1d17b9ed397",
+  "reference_source": "Authorized public 1000-record pilot corpus only.",
+  "postprocessing": "Negative noisy cell weights clipped to zero. Weights are not exact counts.",
+  "sampler": "diffprivlib.mechanisms.Laplace with default SystemRandom; no stored noise seed.",
+  "diffprivlib_version": "0.6.6",
+  "composition": "One released histogram. All future releases must be composed. The guarantee applies to this mechanism and does not undo earlier disclosures.",
+  "weights_sha256": "fe5fc246198ec3750aec5995cc2aefea6134072190e5d41612439bc0f337060d"
+}

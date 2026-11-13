@@ -36,3 +36,9 @@ checkpoints/
 !/data/DATASET_CARD.md
 !/data/group_block_summary.csv
 !/data/MANIFEST.json
+!/data/pilot_1000/
+!/data/pilot_1000/**
+!/data/public_acoustic_reference/
+!/data/public_acoustic_reference/**
+!/data/user_corrections_dp_v1/
+!/data/user_corrections_dp_v1/**
