@@ -40,7 +40,9 @@ the elementwise temporal mean and population standard deviation, yielding
 normalization. The pinned encoder is obtained separately under its own terms.
 
 `scripts/extract_public_pilot_features.py` regenerates this representation.
-Small numerical differences can occur across hardware/library versions. The
+The supplied cache used CUDA float16 mixed precision with float32 pooling;
+CPU extraction uses float32. Numerical differences can occur across precision,
+hardware, batch size, and library versions. The
 provided matrix has a file hash in the manifest and corresponds to the supplied
 ordered recordings. No user-study replay features occur in this archive.
 

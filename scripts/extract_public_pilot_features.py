@@ -29,7 +29,11 @@ def main():
             waveform,sr=sf.read(args.corpus/row['file'],dtype='float32')
             if sr!=16000 or waveform.shape!=(240000,):raise ValueError('Unexpected pilot waveform format')
             inputs=extractor(waveform,sampling_rate=sr,return_tensors='pt')
-            hidden=model(**{k:v.to(args.device) for k,v in inputs.items()}).last_hidden_state[0].float()
+            # Match the original cache's CUDA mixed-precision inference;
+            # CPU extraction remains float32 and can differ numerically.
+            with torch.autocast(device_type='cuda',dtype=torch.float16,
+                                enabled=args.device.startswith('cuda')):
+                hidden=model(**{k:v.to(args.device) for k,v in inputs.items()}).last_hidden_state[0].float()
             n=len(hidden);vectors=[]
             for seconds in (15,8,4,2,1,.5,.25):
                 count=max(1,min(n,round(seconds*n/15)))

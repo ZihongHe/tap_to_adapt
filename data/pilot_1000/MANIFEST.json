@@ -20,5 +20,6 @@
   "license": "CC-BY-NC-4.0",
   "audio_bytes": 480044000,
   "feature_sha256": "a88658d538958562100b126c2dbe6a10404f911398d5e2eaab28f3ecdd264ddd",
-  "labels_sha256": "74f714e41c0a49395865c90cd2285ffb7a12122105efd9dc4b57f202bc9e01aa"
+  "labels_sha256": "74f714e41c0a49395865c90cd2285ffb7a12122105efd9dc4b57f202bc9e01aa",
+  "cached_inference_precision": "CUDA float16 mixed precision; temporal pooling in float32"
 }
