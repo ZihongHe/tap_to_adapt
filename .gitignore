@@ -29,6 +29,8 @@ checkpoints/
 .aes_key
 .export_pepper
 .id_map.json
+*.dpapi
+authorized-key.bin
 /runtime-data/
 /dataset/
 /data/*
@@ -42,3 +44,8 @@ checkpoints/
 !/data/public_acoustic_reference/**
 !/data/user_corrections_dp_v1/
 !/data/user_corrections_dp_v1/**
+!/data/user_corrections_controlled_v1/
+/data/user_corrections_controlled_v1/*
+!/data/user_corrections_controlled_v1/DATASET_CARD.md
+!/data/user_corrections_controlled_v1/MANIFEST.json
+!/data/user_corrections_controlled_v1/feature_label_pairs.aes256gcm

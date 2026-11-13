@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "artifact": "feature_label_pairs.aes256gcm",
+  "sha256": "9747700858ce5a21df6a02b0a65827664b90ba0b91e3399219185ac69eb29fc1",
+  "bytes": 36970286,
+  "access": "Encrypted download; separate key authorization required",
+  "encryption": "AES-256-GCM, independent random 256-bit key, 96-bit nonce, 128-bit authentication tag",
+  "container": "8-byte TTACR01 null-terminated header, 12-byte nonce, ciphertext and tag; header is AAD",
+  "records": 926,
+  "contributors": 43,
+  "feature_dimensions": 10752,
+  "label_counts": {
+    "0": 470,
+    "1": 456
+  },
+  "consent": "Both formal derived-data permission and latest interface academic-release choice affirmative",
+  "metadata_privacy": "These aggregate metadata are exact and are not covered by the separate DP statistics guarantee",
+  "schema": {
+    "features": {
+      "shape": [
+        926,
+        10752
+      ],
+      "dtype": "float32",
+      "meaning": "Native standardized, pooled DistilHuBERT representations"
+    },
+    "labels": {
+      "shape": [
+        926
+      ],
+      "dtype": "uint8",
+      "values": {
+        "0": "manual interruption of the associated response initiation",
+        "1": "manual activation at the current acoustic input"
+      }
+    },
+    "group": {
+      "shape": [
+        926
+      ],
+      "dtype": "uint16",
+      "meaning": "Release-local random participant grouping for disjoint evaluation"
+    },
+    "row_order": "Randomized; no temporal interpretation",
+    "source": "Verified final native replay caches within the analyzed study cohort",
+    "sampling": "Bounded training reservoirs, at most 12 examples per class per participant",
+    "coverage": "Partial correction records from online-learning conditions; no frozen-condition cache",
+    "privacy": "Pseudonymous controlled-access features; not anonymous or differentially private"
+  },
+  "license": "Controlled access subject to a separate data-use arrangement; no public plaintext redistribution grant"
+}

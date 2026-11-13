@@ -4,5 +4,6 @@ numpy>=2.0
 scipy>=1.13
 scikit-learn>=1.4
 threadpoolctl>=3.1
+cryptography>=46.0.0
 # Feature re-extraction also uses torch, transformers and soundfile from the
 # main application's model dependencies; obtain pretrained weights separately.

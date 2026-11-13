@@ -20,6 +20,7 @@ This repository contains the study implementation: a desktop client, a mobile pu
 | `data/pilot_1000/` | Authorized 1,000-record pilot corpus, labels, and acoustic features |
 | `data/public_acoustic_reference/` | Acoustic prototypes fitted only to the public pilot |
 | `data/user_corrections_dp_v1/` | Participant-level differentially private joint statistics |
+| `data/user_corrections_controlled_v1/` | Encrypted real user-study acoustic-feature/label pairs with controlled key access |
 
 ## Research data
 
@@ -36,8 +37,17 @@ labels. Its mechanism uses participant-level differential privacy with epsilon
 individual study feature vectors nor generated observation rows. It supports
 inspection of a coarse acoustic/feedback distribution, with substantial
 resolution and noise limitations; it does not establish a useful replacement
-for the original feature-label training data. Individual user-study recordings,
-transcripts, features, and trajectories remain private. See [data documentation](data/README.md).
+for the original feature-label training data.
+
+The [controlled-access user dataset](data/user_corrections_controlled_v1/DATASET_CARD.md)
+contains 926 original acoustic-feature/correction-label pairs from 43 eligible
+participants, packaged with AES-256-GCM encryption. It preserves 10,752-dimensional
+features and observed labels for joint modeling. Direct identifiers and temporal
+metadata are absent; random grouping supports participant-disjoint evaluation.
+The archive is downloadable, while its decryption key requires a consent-compatible
+research-access review. Decrypted features remain sensitive. The dataset card
+describes coverage, privacy limits, and the in-memory reader. Study recordings
+and transcripts remain private. See [data documentation](data/README.md).
 
 ## Run locally
 
