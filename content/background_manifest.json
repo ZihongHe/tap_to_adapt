@@ -1,0 +1,73 @@
+{
+  "version": "background-2026-08-15-sanitized-v2",
+  "approved_for_distribution": true,
+  "source": "DataSEC PT_DATASET_250314; public record DOI 10.5281/zenodo.17033970",
+  "source_rule": "Random category; longest WAV; gain 0.05-0.20 rounded to 0.01; equal-duration silence after each segment. High-confidence distressing events are replaced by equal-duration calm segments from the same fixed-track collection.",
+  "license_status": "CC BY-NC-SA 4.0; verified against the public DataSEC v3 record on 2026-07-13",
+  "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+  "attribution": "DataSEC - Dataset for Sound Event Classification of environmental noise, Fredianelli et al., DOI 10.5281/zenodo.17033970. Adapted into fixed experimental stimulus tracks.",
+  "provenance_note": "The source WAVs were created by the original play_background.py rule. Their per-segment random choices were not logged; reproducibility is therefore guaranteed by the fixed stimulus hashes below, not by reconstructing the random sequence. The distributed v2 tracks preserve the original 2700-second timelines while replacing audited glass-breaking and emergency-siren intervals with already-audited calm ambient intervals.",
+  "sanitization": {
+    "audit_model": "MIT/ast-finetuned-audioset-10-10-0.4593",
+    "window_seconds": 10,
+    "production_threshold": 0.15,
+    "method": "High-confidence distressing source-event intervals are replaced by equal-duration calm segments from the existing fixed-track collection with 250 ms boundary fades.",
+    "replacements": [
+      {
+        "day": 1,
+        "start_seconds": 0.0,
+        "end_seconds": 50.5,
+        "reason": "glass_breaking_shatter"
+      },
+      {
+        "day": 1,
+        "start_seconds": 745.0,
+        "end_seconds": 800.0,
+        "reason": "glass_breaking_shatter"
+      },
+      {
+        "day": 2,
+        "start_seconds": 1106.0,
+        "end_seconds": 1207.0,
+        "reason": "emergency_siren_car_alarm"
+      }
+    ],
+    "post_replacement_unsafe_windows": 0
+  },
+  "single_session_day_fallback": 1,
+  "tracks": [
+    {
+      "day": 1,
+      "url": "/static/media/background-day1.m4a",
+      "fallback_url": "/static/media/background-day1.mp3",
+      "source_file": "generated_audio38.wav",
+      "duration_seconds": 2700,
+      "bytes": 6162146,
+      "sha256": "80d0e0ac7702806e728038e9d38a4f5e916be8bf5c3e680645b82e0d4a92a2f0",
+      "fallback_bytes": 21600690,
+      "fallback_sha256": "57dd70b231fc154eb6dd3eba891d2a07a0b2092615878973daf1935f3437febf"
+    },
+    {
+      "day": 2,
+      "url": "/static/media/background-day2.m4a",
+      "fallback_url": "/static/media/background-day2.mp3",
+      "source_file": "generated_audio39.wav",
+      "duration_seconds": 2700,
+      "bytes": 6462136,
+      "sha256": "82497ad4c725d22c24b075abd3b9183a337e1e21cfc632355a6c5b7d7c295910",
+      "fallback_bytes": 21600690,
+      "fallback_sha256": "dfd50d7f600d491664a930147b20a3860bcc3eec265b7766ba84486f9930db17"
+    },
+    {
+      "day": 3,
+      "url": "/static/media/background-day3.m4a",
+      "fallback_url": "/static/media/background-day3.mp3",
+      "source_file": "generated_audio40.wav",
+      "duration_seconds": 2700,
+      "bytes": 8968468,
+      "sha256": "1d4d22b72ecdd77acb33f76bfdc4f191cdd097991dc8099a207322d8a22acbe4",
+      "fallback_bytes": 21600690,
+      "fallback_sha256": "7450338c7754e1e56d9026cbab74f3fc0c6bf6ea4a32812480a8562abcb1ce47"
+    }
+  ]
+}

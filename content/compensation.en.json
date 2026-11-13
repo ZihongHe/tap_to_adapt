@@ -1,0 +1,32 @@
+{
+  "version": "draft-compensation-2026-08-24-v8",
+  "ethics_status": "pending",
+  "approved": false,
+  "ethics_status_notice": "Ethics review is in progress. This notice may be used for formal participant recruitment; the final text will be updated after ethics approval.",
+  "title": "Please provide your information so we can keep a record",
+  "lead": "ID number and handwritten signature are only for university financial reimbursement; skipping them does not affect participation. Please leave at least one of email, phone number, or WeChat ID so we can contact you and issue compensation.",
+  "status_notice": "This notice is only for system integration and operator debugging. Before formal recruitment, both compensation routes—with or without identity details—the retention period, authorised access, and processing procedures must receive ethics approval. The consent page already requires a consent-form typed name and on-screen acknowledgment; that name is reused here, and the identity-document number and handwritten signature are requested only after you choose to trust and provide reimbursement identity details.",
+  "purpose": "Please leave at least one of email, telephone number, or WeChat ID so we can contact you and record compensation. ID number and handwritten signature are only for university financial reimbursement; skipping them does not affect participation.",
+  "contact_help": "Please provide at least one of email, telephone number, or WeChat ID for study contact, compensation, and reimbursement. Contact details are stored encrypted and are not used for research analysis, model training, or dataset release.",
+  "fields": [
+    "Required: at least one of email, telephone number, or WeChat ID",
+    "Name: reused from the consent page; you do not need to type it again here",
+    "Optional after choosing to provide reimbursement identity details: Mainland resident identity-card number, or another approved document number if you do not have one",
+    "Optional after choosing to provide reimbursement identity details: handwritten electronic signature drawn on this page"
+  ],
+  "protections": [
+    "Contact details are used for study contact, compensation, and reimbursement. Reimbursement identity details are used only to pay and reimburse study compensation. Recipients: authorised compensation staff on the research team; name, document number, and signature may be submitted to the University's finance department only when unified reimbursement is needed and you choose to provide them.",
+    "Retention: according to the University's financial-record retention requirements. Specific retention and expiry procedures follow the ethics-approved documents and University finance rules.",
+    "Contact details and voluntarily provided reimbursement identity details are encrypted at the application layer into a separate compensation vault. The research database, speech models, questionnaire analysis, and generic administrator export record only whether registration is complete, not plaintext.",
+    "Contact details, names, identity-document numbers, and electronic signatures will not be used for research analysis, model training, or dataset release, and must not appear in paper examples, external research sharing, or releases with raw speech.",
+    "The website exposes no plaintext decryption or viewing endpoint. Only authorised compensation staff may process these data with a separate key under controlled procedures.",
+    "Identity-document numbers and electronic signatures are high-risk information. A breach could enable identity misuse or other harm."
+  ],
+  "choice_prompt": "After providing contact details, choose whether to provide the University's reimbursement identity details. Either choice lets you continue, and neither affects the base RMB 40 compensation.",
+  "provide_choice_label": "I am willing to provide my name, identity-document number, and electronic signature for University reimbursement.",
+  "decline_choice_label": "I do not currently trust or wish to provide these identity details, but I still want to continue the study.",
+  "decline_explanation": "The system will not store your name, identity-document number, or electronic signature; it only records that you chose not to provide them. At least one contact method you entered above is still stored encrypted for study contact and compensation. After completion you may also contact WeChat study-contact (WeChat name: Research team).",
+  "separate_affirmation": "I understand and agree that the research team may collect my name, identity-document number, and electronic signature and submit them to the University's finance department to pay and reimburse study compensation. These details will not be used for research analysis, model training, or dataset release.",
+  "decline_affirmation": "I do not currently trust or wish to provide my name, identity-document number, or electronic signature, but I still want to continue the study. I understand that the system records only this choice and does not store those identity details; the contact details I leave are used only for study contact, compensation, and reimbursement.",
+  "debug_notice": "This code is for personal debugging only. Entries are still written to the separate encrypted compensation vault, but they do not enter formal statistics, models, or datasets."
+}

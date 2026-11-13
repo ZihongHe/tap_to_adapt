@@ -1,0 +1,677 @@
+{
+  "version": "topics-2026-07-13-v1",
+  "source": "对话话题.docx",
+  "presentation": "same_pool_all_days_free_choice",
+  "categories": [
+    {
+      "id": "ordinary_life",
+      "label_en": "Ordinary Life",
+      "label_zh": "日常生活",
+      "prompts": [
+        {
+          "id": "ordinary_life_01",
+          "text": "你平时一天的作息是怎样的？"
+        },
+        {
+          "id": "ordinary_life_02",
+          "text": "最近有没有养成什么新的生活习惯？"
+        },
+        {
+          "id": "ordinary_life_03",
+          "text": "你最享受一天中的哪个时刻？"
+        },
+        {
+          "id": "ordinary_life_04",
+          "text": "周末一般更喜欢在家还是出门？"
+        },
+        {
+          "id": "ordinary_life_05",
+          "text": "最近一次让你觉得生活很舒服的瞬间是什么？"
+        },
+        {
+          "id": "ordinary_life_06",
+          "text": "你平时会自己做饭吗？"
+        },
+        {
+          "id": "ordinary_life_07",
+          "text": "你觉得现在的生活节奏快吗？"
+        },
+        {
+          "id": "ordinary_life_08",
+          "text": "最近有没有什么小事让你觉得特别开心？"
+        },
+        {
+          "id": "ordinary_life_09",
+          "text": "你会刻意给自己留独处的时间吗？"
+        },
+        {
+          "id": "ordinary_life_10",
+          "text": "如果今天什么都不用做，你会怎么过？"
+        },
+        {
+          "id": "ordinary_life_11",
+          "text": "你觉得自己的生活更偏规律还是随性？"
+        },
+        {
+          "id": "ordinary_life_12",
+          "text": "最近有没有觉得生活有点重复？"
+        },
+        {
+          "id": "ordinary_life_13",
+          "text": "你会记录生活吗，比如写日记或拍照？"
+        },
+        {
+          "id": "ordinary_life_14",
+          "text": "你理想中的“普通一天”是什么样的？"
+        },
+        {
+          "id": "ordinary_life_15",
+          "text": "如果能改变一个日常习惯，你会改什么？"
+        }
+      ]
+    },
+    {
+      "id": "school_life",
+      "label_en": "School Life",
+      "label_zh": "校园生活",
+      "prompts": [
+        {
+          "id": "school_life_01",
+          "text": "你还记得上学时最喜欢的一门课吗？"
+        },
+        {
+          "id": "school_life_02",
+          "text": "学生时代对你影响最大的人是谁？"
+        },
+        {
+          "id": "school_life_03",
+          "text": "你更喜欢自学还是被老师带着学？"
+        },
+        {
+          "id": "school_life_04",
+          "text": "你觉得考试能真实反映一个人的能力吗？"
+        },
+        {
+          "id": "school_life_05",
+          "text": "上学时你最不擅长的科目是什么？"
+        },
+        {
+          "id": "school_life_06",
+          "text": "你怎么看待“内卷”这个现象？"
+        },
+        {
+          "id": "school_life_07",
+          "text": "你觉得学校应该更注重成绩还是能力？"
+        },
+        {
+          "id": "school_life_08",
+          "text": "有没有一段校园经历你至今记得很清楚？"
+        },
+        {
+          "id": "school_life_09",
+          "text": "你当学生时压力大吗？"
+        },
+        {
+          "id": "school_life_10",
+          "text": "如果重新上学，你最想改变什么？"
+        },
+        {
+          "id": "school_life_11",
+          "text": "你更喜欢小班教学还是大课堂？"
+        },
+        {
+          "id": "school_life_12",
+          "text": "你觉得课堂上提问重要吗？"
+        },
+        {
+          "id": "school_life_13",
+          "text": "你怎么看待线上学习？"
+        },
+        {
+          "id": "school_life_14",
+          "text": "学校生活对你性格的影响大吗？"
+        },
+        {
+          "id": "school_life_15",
+          "text": "你觉得学校最应该教会学生什么？"
+        }
+      ]
+    },
+    {
+      "id": "culture_education",
+      "label_en": "Culture & Education",
+      "label_zh": "文化与教育",
+      "prompts": [
+        {
+          "id": "culture_education_01",
+          "text": "你平时会主动接触不同文化吗？"
+        },
+        {
+          "id": "culture_education_02",
+          "text": "你觉得文化背景会影响一个人的思维方式吗？"
+        },
+        {
+          "id": "culture_education_03",
+          "text": "你怎么看待传统文化和现代文化的关系？"
+        },
+        {
+          "id": "culture_education_04",
+          "text": "你认为教育的核心目标是什么？"
+        },
+        {
+          "id": "culture_education_05",
+          "text": "你觉得阅读对一个人重要吗？"
+        },
+        {
+          "id": "culture_education_06",
+          "text": "哪种文化作品对你影响比较大？"
+        },
+        {
+          "id": "culture_education_07",
+          "text": "你觉得文化差异容易带来冲突吗？"
+        },
+        {
+          "id": "culture_education_08",
+          "text": "你会担心文化逐渐被同质化吗？"
+        },
+        {
+          "id": "culture_education_09",
+          "text": "你怎么看待通识教育？"
+        },
+        {
+          "id": "culture_education_10",
+          "text": "你觉得教育应该更偏实用还是思想？"
+        },
+        {
+          "id": "culture_education_11",
+          "text": "你会主动学习非本专业的知识吗？"
+        },
+        {
+          "id": "culture_education_12",
+          "text": "哪种教育方式你最认同？"
+        },
+        {
+          "id": "culture_education_13",
+          "text": "你觉得文化自信重要吗？"
+        },
+        {
+          "id": "culture_education_14",
+          "text": "你怎么看待“终身学习”这个概念？"
+        },
+        {
+          "id": "culture_education_15",
+          "text": "如果设计一门通识课，你会教什么？"
+        }
+      ]
+    },
+    {
+      "id": "attitude_emotion",
+      "label_en": "Attitude & Emotion",
+      "label_zh": "态度与情绪",
+      "prompts": [
+        {
+          "id": "attitude_emotion_01",
+          "text": "你一般如何应对负面情绪？"
+        },
+        {
+          "id": "attitude_emotion_02",
+          "text": "你觉得情绪需要被控制还是被表达？"
+        },
+        {
+          "id": "attitude_emotion_03",
+          "text": "你更容易焦虑还是更容易放松？"
+        },
+        {
+          "id": "attitude_emotion_04",
+          "text": "遇到挫折时你通常会怎么想？"
+        },
+        {
+          "id": "attitude_emotion_05",
+          "text": "你觉得情绪会影响判断吗？"
+        },
+        {
+          "id": "attitude_emotion_06",
+          "text": "你会压抑自己的真实感受吗？"
+        },
+        {
+          "id": "attitude_emotion_07",
+          "text": "你怎么看待“情绪稳定”？"
+        },
+        {
+          "id": "attitude_emotion_08",
+          "text": "最近一次情绪波动比较大的原因是什么？"
+        },
+        {
+          "id": "attitude_emotion_09",
+          "text": "你觉得情绪是理性的对立面吗？"
+        },
+        {
+          "id": "attitude_emotion_10",
+          "text": "你更倾向于乐观还是谨慎？"
+        },
+        {
+          "id": "attitude_emotion_11",
+          "text": "你会因为别人的情绪受影响吗？"
+        },
+        {
+          "id": "attitude_emotion_12",
+          "text": "你觉得情绪管理是能力还是性格？"
+        },
+        {
+          "id": "attitude_emotion_13",
+          "text": "你会主动调节自己的心态吗？"
+        },
+        {
+          "id": "attitude_emotion_14",
+          "text": "什么事情最容易让你生气？"
+        },
+        {
+          "id": "attitude_emotion_15",
+          "text": "你觉得情绪对生活质量影响大吗？"
+        }
+      ]
+    },
+    {
+      "id": "relationship",
+      "label_en": "Relationship",
+      "label_zh": "人际关系",
+      "prompts": [
+        {
+          "id": "relationship_01",
+          "text": "你觉得维持一段关系最重要的是什么？"
+        },
+        {
+          "id": "relationship_02",
+          "text": "你更看重朋友数量还是质量？"
+        },
+        {
+          "id": "relationship_03",
+          "text": "你会主动维系关系吗？"
+        },
+        {
+          "id": "relationship_04",
+          "text": "你怎么看待人与人之间的边界感？"
+        },
+        {
+          "id": "relationship_05",
+          "text": "你觉得沟通在关系中重要吗？"
+        },
+        {
+          "id": "relationship_06",
+          "text": "你会轻易信任别人吗？"
+        },
+        {
+          "id": "relationship_07",
+          "text": "关系中你更倾向于付出还是接受？"
+        },
+        {
+          "id": "relationship_08",
+          "text": "你如何处理关系中的冲突？"
+        },
+        {
+          "id": "relationship_09",
+          "text": "你觉得关系会随着时间自然变淡吗？"
+        },
+        {
+          "id": "relationship_10",
+          "text": "你会为了关系改变自己吗？"
+        },
+        {
+          "id": "relationship_11",
+          "text": "你更喜欢稳定的关系还是变化的关系？"
+        },
+        {
+          "id": "relationship_12",
+          "text": "你怎么看待长期关系？"
+        },
+        {
+          "id": "relationship_13",
+          "text": "你觉得独处和陪伴哪个更重要？"
+        },
+        {
+          "id": "relationship_14",
+          "text": "你会主动表达自己的需求吗？"
+        },
+        {
+          "id": "relationship_15",
+          "text": "你觉得好关系需要刻意经营吗？"
+        }
+      ]
+    },
+    {
+      "id": "tourism",
+      "label_en": "Tourism",
+      "label_zh": "旅游",
+      "prompts": [
+        {
+          "id": "tourism_01",
+          "text": "你更喜欢自由行还是跟团游？"
+        },
+        {
+          "id": "tourism_02",
+          "text": "你旅行时最看重什么？"
+        },
+        {
+          "id": "tourism_03",
+          "text": "你更喜欢城市还是自然景观？"
+        },
+        {
+          "id": "tourism_04",
+          "text": "一次理想的旅行对你来说是什么样的？"
+        },
+        {
+          "id": "tourism_05",
+          "text": "你会为了旅行改变日常节奏吗？"
+        },
+        {
+          "id": "tourism_06",
+          "text": "你觉得旅行能改变一个人吗？"
+        },
+        {
+          "id": "tourism_07",
+          "text": "你更倾向于短途还是长途旅行？"
+        },
+        {
+          "id": "tourism_08",
+          "text": "你会提前详细规划旅行吗？"
+        },
+        {
+          "id": "tourism_09",
+          "text": "你旅行中最难忘的经历是什么？"
+        },
+        {
+          "id": "tourism_10",
+          "text": "你怎么看待“打卡式旅游”？"
+        },
+        {
+          "id": "tourism_11",
+          "text": "你更喜欢一个人旅行还是结伴？"
+        },
+        {
+          "id": "tourism_12",
+          "text": "你觉得旅行的意义是什么？"
+        },
+        {
+          "id": "tourism_13",
+          "text": "你会为了美食专门旅行吗？"
+        },
+        {
+          "id": "tourism_14",
+          "text": "你旅行时更想放松还是探索？"
+        },
+        {
+          "id": "tourism_15",
+          "text": "如果现在出发，你最想去哪？"
+        }
+      ]
+    },
+    {
+      "id": "health",
+      "label_en": "Health",
+      "label_zh": "健康",
+      "prompts": [
+        {
+          "id": "health_01",
+          "text": "你平时会关注自己的身体状态吗？"
+        },
+        {
+          "id": "health_02",
+          "text": "你觉得作息对健康影响大吗？"
+        },
+        {
+          "id": "health_03",
+          "text": "你会定期运动吗？"
+        },
+        {
+          "id": "health_04",
+          "text": "你更关注身体健康还是心理健康？"
+        },
+        {
+          "id": "health_05",
+          "text": "你怎么看待“亚健康”状态？"
+        },
+        {
+          "id": "health_06",
+          "text": "你会因为工作忽视健康吗？"
+        },
+        {
+          "id": "health_07",
+          "text": "你觉得压力对健康的影响大吗？"
+        },
+        {
+          "id": "health_08",
+          "text": "你会主动学习健康相关知识吗？"
+        },
+        {
+          "id": "health_09",
+          "text": "你对自己的饮食习惯满意吗？"
+        },
+        {
+          "id": "health_10",
+          "text": "你怎么看待健康焦虑？"
+        },
+        {
+          "id": "health_11",
+          "text": "你觉得健康是自律的结果吗？"
+        },
+        {
+          "id": "health_12",
+          "text": "你会定期体检吗？"
+        },
+        {
+          "id": "health_13",
+          "text": "生病时你更倾向于忍还是立刻处理？"
+        },
+        {
+          "id": "health_14",
+          "text": "你觉得健康管理应该提前还是事后？"
+        },
+        {
+          "id": "health_15",
+          "text": "如果只能改善一项健康习惯，你会选什么？"
+        }
+      ]
+    },
+    {
+      "id": "work",
+      "label_en": "Work",
+      "label_zh": "工作",
+      "prompts": [
+        {
+          "id": "work_01",
+          "text": "你对现在的工作满意吗？"
+        },
+        {
+          "id": "work_02",
+          "text": "你更看重工作内容还是工作环境？"
+        },
+        {
+          "id": "work_03",
+          "text": "你觉得工作和生活应该严格区分吗？"
+        },
+        {
+          "id": "work_04",
+          "text": "你怎么看待加班？"
+        },
+        {
+          "id": "work_05",
+          "text": "工作中你最有成就感的时刻是什么？"
+        },
+        {
+          "id": "work_06",
+          "text": "你觉得工作压力来自哪里？"
+        },
+        {
+          "id": "work_07",
+          "text": "你会为了工作牺牲个人时间吗？"
+        },
+        {
+          "id": "work_08",
+          "text": "你更喜欢稳定的工作还是有挑战的工作？"
+        },
+        {
+          "id": "work_09",
+          "text": "你怎么看待职业规划？"
+        },
+        {
+          "id": "work_10",
+          "text": "你觉得工作能代表一个人吗？"
+        },
+        {
+          "id": "work_11",
+          "text": "你更喜欢独立工作还是团队合作？"
+        },
+        {
+          "id": "work_12",
+          "text": "你会担心职业被替代吗？"
+        },
+        {
+          "id": "work_13",
+          "text": "你觉得兴趣和工作必须一致吗？"
+        },
+        {
+          "id": "work_14",
+          "text": "你对未来的工作状态有清晰想象吗？"
+        },
+        {
+          "id": "work_15",
+          "text": "如果不考虑现实，你最想做什么工作？"
+        }
+      ]
+    },
+    {
+      "id": "politics",
+      "label_en": "Politics",
+      "label_zh": "政治",
+      "prompts": [
+        {
+          "id": "politics_01",
+          "text": "你平时会关注政治新闻吗？"
+        },
+        {
+          "id": "politics_02",
+          "text": "你觉得政治与普通人生活关系大吗？"
+        },
+        {
+          "id": "politics_03",
+          "text": "你怎么看待政治参与？"
+        },
+        {
+          "id": "politics_04",
+          "text": "你觉得政治讨论容易引发冲突吗？"
+        },
+        {
+          "id": "politics_05",
+          "text": "你更关注国内政治还是国际政治？"
+        },
+        {
+          "id": "politics_06",
+          "text": "你觉得政策制定应该更听谁的声音？"
+        },
+        {
+          "id": "politics_07",
+          "text": "你怎么看待政治立场的差异？"
+        },
+        {
+          "id": "politics_08",
+          "text": "你觉得媒体会影响政治认知吗？"
+        },
+        {
+          "id": "politics_09",
+          "text": "你认为政治讨论需要保持理性吗？"
+        },
+        {
+          "id": "politics_10",
+          "text": "你会刻意回避政治话题吗？"
+        },
+        {
+          "id": "politics_11",
+          "text": "你觉得政治信息透明重要吗？"
+        },
+        {
+          "id": "politics_12",
+          "text": "你怎么看待公众舆论的作用？"
+        },
+        {
+          "id": "politics_13",
+          "text": "你觉得政治决策应该更长期还是短期？"
+        },
+        {
+          "id": "politics_14",
+          "text": "你认为年轻人应该更关心政治吗？"
+        },
+        {
+          "id": "politics_15",
+          "text": "你觉得政治信任容易建立吗？"
+        }
+      ]
+    },
+    {
+      "id": "finance",
+      "label_en": "Finance",
+      "label_zh": "金融",
+      "prompts": [
+        {
+          "id": "finance_01",
+          "text": "你平时会关注自己的财务状况吗？"
+        },
+        {
+          "id": "finance_02",
+          "text": "你更倾向于储蓄还是消费？"
+        },
+        {
+          "id": "finance_03",
+          "text": "你觉得理财重要吗？"
+        },
+        {
+          "id": "finance_04",
+          "text": "你会为未来做长期财务规划吗？"
+        },
+        {
+          "id": "finance_05",
+          "text": "你怎么看待风险和收益的关系？"
+        },
+        {
+          "id": "finance_06",
+          "text": "你更偏好稳健投资还是高风险投资？"
+        },
+        {
+          "id": "finance_07",
+          "text": "你觉得金钱能带来安全感吗？"
+        },
+        {
+          "id": "finance_08",
+          "text": "你会因为钱感到焦虑吗？"
+        },
+        {
+          "id": "finance_09",
+          "text": "你怎么看待超前消费？"
+        },
+        {
+          "id": "finance_10",
+          "text": "你觉得财务自由意味着什么？"
+        },
+        {
+          "id": "finance_11",
+          "text": "你会主动学习金融知识吗？"
+        },
+        {
+          "id": "finance_12",
+          "text": "你认为收入和幸福感强相关吗？"
+        },
+        {
+          "id": "finance_13",
+          "text": "你觉得理财应该越早越好吗？"
+        },
+        {
+          "id": "finance_14",
+          "text": "你会为兴趣投入较多金钱吗？"
+        },
+        {
+          "id": "finance_15",
+          "text": "如果不考虑现实限制，你理想的经济状态是什么？"
+        }
+      ]
+    }
+  ]
+}

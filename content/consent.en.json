@@ -1,0 +1,155 @@
+{
+  "version": "Study-Consent-TapToAdapt-v1.1-20260824",
+  "form_id": "Study-Consent-TapToAdapt",
+  "ethics_status": "pending",
+  "approved": false,
+  "ethics_status_notice": "Ethics review is in progress. This version implements the study informed-consent form; the approval number and final text will be updated after ethics approval.",
+  "title": "Informed Consent Form: Tap-to-Adapt Online Study of Adaptive Speech Interaction and Personalized Response Timing",
+  "status_notice": "This document corresponds to the ethics-approved study informed-consent form. Before formal recruitment, the research protocol, online consent procedure, and full text of this document must receive ethics approval, and the approval number, ethics-committee contacts, and locked final details must be added. Optional permissions for data retention, sharing, and future use are independent. Declining any optional permission will not affect participation or base compensation.",
+  "study_name": "Tap-to-Adapt: Online Study of Adaptive Speech Interaction and Personalized Response Timing",
+  "typed_name_label": "Participant name (typed)",
+  "typed_name_help": "Please type your real name. Under this consent form, your typed name, on-screen acknowledgment, consent-form version, and server timestamp together constitute your recorded electronic informed consent. A handwritten signature on paper is not required for online participation.",
+  "researcher_name": "研究团队",
+  "researcher_name_en": "Research team",
+  "researcher_wechat": "study-contact (WeChat name: Research team)",
+  "researcher_email": "study@example.invalid",
+  "researcher_institution": "研究机构",
+  "researcher_institution_en": "the research institution",
+  "sections": [
+    {
+      "heading": "Description of the Project",
+      "paragraphs": [
+        "This study is conducted under the research institution's approved human research ethics protocol for adaptive speech interaction and human–agent collaboration. Within the approved ethics scope, the project examines how adaptive models affect interaction timing, correction burden, user experience, trust, safety, and system performance.",
+        "The present implementation (Tap-to-Adapt) studies whether shared priors and online personalization reduce the need for manual activation/interruption when interacting with a speech-based agent, and how adaptation affects perceived predictability and control. The study is for research evaluation only and is not used for identity recognition or high-stakes decisions."
+      ]
+    },
+    {
+      "heading": "Description of the Study",
+      "paragraphs": [
+        "This is a remote online study using a dedicated research system in your browser, together with microphone input on your own device. After electronic consent and screening, you will complete a scheduled interactive session of about 30 minutes of effective interaction: five six-minute active blocks with a fixed one-minute rest between adjacent blocks. Within each block you typically talk with the experimental system on the computer for four minutes and then with the companion agent on the phone for two minutes. The timed flow lasts about 34 minutes. Device checks and the final questionnaire take place outside the timed interaction.",
+        "During the session you will speak with research agents/systems and may manually activate or interrupt responses when timing feels wrong. You may be assigned to a condition such as cold-start personalization, shared-model frozen behavior, or shared-model online personalization; condition names may be blinded during the study.",
+        "After the session you will complete short questionnaires about predictability, control, correctability, and related experience. Optional follow-up or dataset-related choices, if any, will be presented separately and may be declined without losing basic eligibility or basic compensation.",
+        "Participation remains within the approved participation-time limits (for example, no more than 120 minutes per visit and no more than 60 minutes of active speech/multimodal interaction per visit, with appropriate breaks)."
+      ]
+    },
+    {
+      "heading": "Risks",
+      "paragraphs": [
+        "We do not anticipate any greater than minimal risks from participating in this research study. Risks are comparable to ordinary use of voice assistants or online meetings. Possible discomforts include voice or eye strain, fatigue, frustration with mistimed responses, privacy concerns about voice recordings, incidental capture of background speech, or concern about re-identification from audio.",
+        "To minimize risks, only approved research audio/interaction data will be collected; raw voice data are treated as identifiable or potentially identifiable and segregated from routine coded datasets; you will be asked to use a reasonably private setting and avoid saying names, contact details, or sensitive information; rest breaks are provided; and you may pause or withdraw at any time without penalty."
+      ]
+    },
+    {
+      "heading": "Benefits",
+      "paragraphs": [
+        "Findings may improve adaptive speech agents and reduce unnecessary manual correction in future interactive systems. You may experience a research speech interface and contribute to academic evaluation of personalization methods. There is no guarantee of direct personal benefit beyond the study experience and any compensation described below."
+      ]
+    },
+    {
+      "heading": "Compensation",
+      "paragraphs": [
+        "If you complete the required study activities for this enrollment, you will receive a fixed compensation of RMB 40, as disclosed at recruitment. This amount is within the approved compensation ceiling (up to RMB 50 per hour and no more than RMB 400 per enrollment occasion). Partial compensation will be based on time or completed required activities and will not depend on optional recording/reuse choices or study outcomes."
+      ]
+    },
+    {
+      "heading": "Voluntary Participation",
+      "paragraphs": [
+        "Participation in this research is completely voluntary. You may refuse to participate, may withdraw at any time without providing a reason, and may decline to answer any question—all without negative consequences for your academic evaluation, employment assessment, or future opportunities to join other studies.",
+        "Core study participation requires collection of interaction timing/events and related coded measures needed for the research questions. Saving raw audio, future reuse, controlled sharing, or public release of speech-related materials—if offered—are optional layered choices. Declining any optional choice will not affect basic compensation.",
+        "If you withdraw, you may request deletion of identifiers, coded study data, and (where still feasible) study audio until 14 days after your final participation (or such other 7/14/30-day deadline as locked in the Implementation Record and shown at consent). After irreversible de-identification, incorporation into aggregate results, or incorporation into a trained model after that deadline, removal may no longer be possible."
+      ]
+    },
+    {
+      "heading": "Personal Privacy and Data Confidentiality",
+      "paragraphs": [
+        "The information collected will not be publicly disclosed in a way that a specific person can be identified unless you expressly consent or disclosure is required by law. Every reasonable precaution will be taken in relation to the storage, use, and disposition of data.",
+        "By participating in the study, you understand and agree that the the research institution (the research institution) may be required to disclose your consent record, data, and other personally identifiable information as required by law, regulation, subpoena, or court order. Otherwise, your confidentiality will be maintained as follows:",
+        "Your research data and consent/compensation records will be kept separately. Consent and compensation records will be stored in locked or encrypted institutional records and will not be disclosed to third parties except as required by law or institutional audit. By participating, you understand and agree that coded data and information gathered during this study may be used by the research institution and published and/or disclosed by the research institution to others outside of the research institution for academic purposes. However, your name, address, contact information, and other direct personal identifiers will not be mentioned in any such publication or dissemination of the research data and/or results by the research institution.",
+        "The researchers will take the following steps to protect participants' identities: (1) each participant will be assigned a study code; (2) researchers will record research data by code, not by name; (3) only authorized members of the research group will view identifiable linkage or compensation records in detail; (4) electronic research data will be stored on encrypted, access-controlled systems.",
+        "Study-specific data for this consent implementation may include: coded screening/demographic, language/accent, and experience data; raw or derived audio/speech data where you consent to the applicable recording choice; transcripts after screening; interaction timing, turn-taking, correction, and system-state events; questionnaires and fatigue ratings; model scores, outputs, updates, and participant-specific adaptive state; and technical/quality logs. Contact and compensation records are stored separately.",
+        "Raw face/voice recordings are identifiable or potentially identifiable and will not be publicly released in identifiable form under this consent. Any broader sharing or dataset release would require the specific optional consent choices disclosed for that purpose. Research data status is coded, not anonymous, unless a specific derived release is irreversibly de-identified as separately disclosed."
+      ]
+    },
+    {
+      "heading": "University reimbursement details and electronic-signature choice",
+      "paragraphs": [
+        "Collection basis: the University's standard financial reimbursement requirements. To pay and reimburse the RMB 40 compensation for completing the full interaction and final questionnaire through the University's finance process, the page asks after informed consent and before the study whether you are willing to provide a full name, Mainland resident identity-card number (or another approved document if you do not have one), and a handwritten electronic signature. Identity-document numbers and electronic signatures are high-risk personal information.",
+        "These reimbursement-identity data are encrypted at the application layer into a separate compensation-identity vault and are linked to the research process only through a random participant ID. Their plaintext is absent from the research event database, questionnaire database, speech and personal models, research analysis, and generic administrator export.",
+        "Purpose: payment and reimbursement of study compensation only. Recipients: authorised compensation staff on the research team and the University's finance department. Retention: according to the University's financial-record retention requirements. These data will not be used for research analysis, model training, or dataset release.",
+        "If you do not trust or do not wish to provide a name, identity-card number, and handwritten signature, you may explicitly choose not to provide them and continue the study. The system stores only that choice, the notice version, and the time, not those identity details. This choice does not affect study eligibility or the base RMB 40 compensation. After completion, contact WeChat study-contact (WeChat name: Research team) so that the research team can arrange an alternative payment method that does not require submitting these details. Note: the typed name required by the consent form belongs to the electronic informed-consent record and is independent of these optional reimbursement-identity details."
+      ]
+    },
+    {
+      "heading": "Coercion and Undue Influence",
+      "paragraphs": [
+        "There will be no coercion or undue influence. You may stop your participation at any time without explanation. Declining optional data-use choices (where offered) will not affect your eligibility or basic compensation."
+      ]
+    },
+    {
+      "heading": "Consent",
+      "paragraphs": [
+        "This study uses explicit electronic (online) informed consent. After reading this form, you will be asked to confirm the statement below by checking an on-screen consent box and typing your name. Your confirmation, together with the consent-form version identifier and a server timestamp, constitutes your recorded informed consent. A handwritten signature on paper is not required for online participation.",
+        "You will be asked to confirm this consent form, which states:",
+        "“I have read and fully understood what is stated in this consent form, and I am willing to participate in this study. I understand that my electronic confirmation (typed name, on-screen acknowledgment, consent version, and timestamp) constitutes my recorded informed consent.”",
+        "Consent Form ID: Study-Consent-TapToAdapt | Version: v1.0"
+      ]
+    },
+    {
+      "heading": "Contact",
+      "paragraphs": [
+        "Principal researcher: Research team (研究团队)",
+        "Institution: the research institution / 研究机构",
+        "WeChat: study-contact (WeChat name: Research team)",
+        "Email: study@example.invalid"
+      ]
+    }
+  ],
+  "required_affirmation": "I have read and fully understood what is stated in this consent form, and I am willing to participate in this study. I understand that my electronic confirmation (typed name, on-screen acknowledgment, consent version, and timestamp) constitutes my recorded informed consent.",
+  "choices": [
+    {
+      "id": "participation",
+      "required": true,
+      "label": "I agree to participate and allow the system to process the interaction text, events, labels, model data, questionnaire responses, and quality data required for the current study."
+    },
+    {
+      "id": "raw_audio",
+      "required": false,
+      "label": "I separately agree that the research team may store raw speech for acoustic and temporal analysis, annotation verification, and model analysis in this study. I understand that a voice may identify a person."
+    },
+    {
+      "id": "internal_reuse",
+      "required": false,
+      "label": "I separately agree that the research team may use de-identified data for subsequent non-commercial research within the scope of this ethics approval."
+    },
+    {
+      "id": "future_sharing",
+      "required": false,
+      "label": "I separately agree that de-identified data may be used in future related research that receives ethics approval. This is not permission to release raw speech publicly."
+    },
+    {
+      "id": "controlled_sharing",
+      "required": false,
+      "label": "I separately agree that vetted external researchers may access approved de-identified controlled data under a data-use agreement."
+    },
+    {
+      "id": "public_derived",
+      "required": false,
+      "label": "I separately agree to public release of de-identified derived data and interaction labels that exclude raw speech, verbatim transcripts, and full conversations."
+    },
+    {
+      "id": "public_audio",
+      "required": false,
+      "label": "I separately agree that processed speech clips may be released after another manual privacy review and ethics permission. The research team may still withhold them because of re-identification risk."
+    },
+    {
+      "id": "ai_training",
+      "required": false,
+      "label": "I separately agree that authorised data may be used to train or evaluate speech or artificial-intelligence models beyond the current study."
+    },
+    {
+      "id": "commercial_research",
+      "required": false,
+      "label": "I separately agree that authorised data may be used in research involving commercial organisations. Declining does not affect participation or base compensation in this study."
+    }
+  ]
+}

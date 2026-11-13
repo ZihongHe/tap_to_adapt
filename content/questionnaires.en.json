@@ -1,0 +1,225 @@
+{
+  "version": "questionnaires-2026-08-28-v13",
+  "scale": {
+    "min": 1,
+    "max": 7,
+    "min_label": "Strongly disagree",
+    "max_label": "Strongly agree"
+  },
+  "instruments": {
+    "baseline": {
+      "title": "Pre-study information and procedure check",
+      "instructions": "This information is used only to describe the sample and confirm that you understand the procedure. It will not reveal your experimental condition. Please answer truthfully.",
+      "items": [
+        {"id": "voice_technology_familiarity", "dimension": "technical_familiarity", "text": "I am familiar with voice assistants, voice input, or similar voice-interaction technologies."},
+        {"id": "privacy_concern", "dimension": "privacy_concern", "text": "I am usually concerned about privacy when using an online system that requires a microphone."},
+        {"id": "speech_agent_confidence", "dimension": "self_efficacy", "text": "I am confident that I can complete a browser-based voice task without a researcher continuously present."}
+      ],
+      "fields": [
+        {
+          "id": "age_range",
+          "type": "choice",
+          "required": true,
+          "text": "What is your age range?",
+          "reject_values": ["under_18"],
+          "options": [
+            {"value": "under_18", "label": "Under 18"},
+            {"value": "18_22", "label": "18–22"},
+            {"value": "23_27", "label": "23–27"},
+            {"value": "28_32", "label": "28–32"},
+            {"value": "33_37", "label": "33–37"},
+            {"value": "38_42", "label": "38–42"},
+            {"value": "43_47", "label": "43–47"},
+            {"value": "48_52", "label": "48–52"},
+            {"value": "53_57", "label": "53–57"},
+            {"value": "58_plus", "label": "58 or older"},
+            {"value": "prefer_not", "label": "Prefer not to say"}
+          ]
+        },
+        {
+          "id": "gender",
+          "type": "choice",
+          "required": true,
+          "text": "What is your gender?",
+          "options": [
+            {"value": "female", "label": "Woman"},
+            {"value": "male", "label": "Man"},
+            {"value": "nonbinary_or_other", "label": "Non-binary or another identity"},
+            {"value": "prefer_not", "label": "Prefer not to say"}
+          ]
+        },
+        {
+          "id": "identity",
+          "type": "choice",
+          "required": true,
+          "text": "What is your current role?",
+          "helper": "Used only to describe the sample. It will not reveal your experimental condition.",
+          "options": [
+            {"value": "student", "label": "Student"},
+            {"value": "university_staff", "label": "University staff"},
+            {"value": "public_service", "label": "Public-service employee"},
+            {"value": "tech_company", "label": "Technology-company employee"},
+            {"value": "other_employed", "label": "Other employed"},
+            {"value": "self_employed_or_unemployed", "label": "Self-employed or not currently employed"},
+            {"value": "other", "label": "Other"},
+            {"value": "prefer_not", "label": "Prefer not to say"}
+          ]
+        },
+        {
+          "id": "spoken_accent",
+          "type": "choice",
+          "required": true,
+          "text": "Which accent or dialect habit best describes your spoken Mandarin?",
+          "helper": "Choose the closest match to how you usually speak.",
+          "options": [
+            {"value": "near_standard_mandarin", "label": "Near-standard Mandarin with little dialect accent"},
+            {"value": "light_chaoshan_mandarin", "label": "Mandarin with a light Chaoshan dialect accent"},
+            {"value": "heavy_chaoshan_mandarin", "label": "Mandarin with a strong Chaoshan dialect accent"},
+            {"value": "light_cantonese_mandarin", "label": "Mandarin with a light Cantonese accent"},
+            {"value": "heavy_cantonese_mandarin", "label": "Mandarin with a strong Cantonese accent"},
+            {"value": "light_other_dialect_mandarin", "label": "Mandarin with a light accent from another dialect"},
+            {"value": "heavy_other_dialect_mandarin", "label": "Mandarin with a strong accent from another dialect"},
+            {"value": "primarily_dialect", "label": "I usually speak a dialect and switch to Mandarin for this study"},
+            {"value": "other", "label": "Other"},
+            {"value": "prefer_not", "label": "Prefer not to say"}
+          ]
+        },
+        {
+          "id": "primary_spoken_language",
+          "type": "choice",
+          "required": true,
+          "text": "Which language do you speak most often in daily life?",
+          "options": [
+            {"value": "mandarin", "label": "Mandarin Chinese"},
+            {"value": "cantonese", "label": "Cantonese"},
+            {"value": "english", "label": "English"},
+            {"value": "other_chinese", "label": "Another Chinese variety"},
+            {"value": "other", "label": "Another language"}
+          ]
+        },
+        {
+          "id": "voice_agent_frequency",
+          "type": "choice",
+          "required": true,
+          "text": "During the past three months, how often have you used a voice assistant or conversational voice product?",
+          "options": [
+            {"value": "never", "label": "Never"},
+            {"value": "monthly", "label": "Less than once per month"},
+            {"value": "few_monthly", "label": "1–3 times per month"},
+            {"value": "about_weekly", "label": "About once a week"},
+            {"value": "weekly", "label": "1–6 times per week"},
+            {"value": "daily", "label": "Almost every day"}
+          ]
+        },
+        {
+          "id": "hearing_or_speech_condition",
+          "type": "choice",
+          "required": true,
+          "text": "Do you have a hearing or speech condition that may affect this voice-interaction study?",
+          "options": [
+            {"value": "no", "label": "No"},
+            {"value": "yes", "label": "Yes"},
+            {"value": "prefer_not", "label": "Prefer not to say"}
+          ]
+        },
+        {
+          "id": "tap_rule_check",
+          "type": "choice",
+          "required": true,
+          "correct": "felt_need",
+          "text": "When should you tap the computer page during the study?",
+          "helper": "Judge by your real interaction intent; do not tap extra just to create more data.",
+          "options": [
+            {"value": "felt_need", "label": "Whenever I genuinely want the system to start answering or to stop its current answer"},
+            {"value": "fixed_rate", "label": "At a fixed interval"},
+            {"value": "increase_data", "label": "As often as possible to create more data"}
+          ]
+        },
+        {
+          "id": "failure_rule_check",
+          "type": "choice",
+          "required": true,
+          "correct": "pause_contact",
+          "text": "What should you do if the network, page, or phone behaves abnormally?",
+          "helper": "If something goes wrong, follow the on-page recovery steps first; do not try to make up data with extra taps.",
+          "options": [
+            {"value": "pause_contact", "label": "Pause and follow the recovery instructions; contact the research team if the problem continues"},
+            {"value": "repeat_taps", "label": "Tap repeatedly to replace lost data"},
+            {"value": "ignore", "label": "Ignore the problem and continue the timer"}
+          ]
+        },
+        {
+          "id": "device_rule_check",
+          "type": "choice",
+          "required": true,
+          "correct": "same_code_session",
+          "text": "How should the computer and phone enter the study?",
+          "helper": "The computer study page and phone companion page belong to the same session, so how you enter on both sides should match.",
+          "options": [
+            {"value": "same_code_session", "label": "Use the same participant code on the computer and companion phone"},
+            {"value": "different_codes", "label": "Use two different participant codes"},
+            {"value": "phone_optional", "label": "Open only the computer page"}
+          ]
+        }
+      ]
+    },
+    "daily": {
+      "title": "Experience in this study session",
+      "instructions": "Rate your actual experience in this session. 1 means strongly disagree and 7 means strongly agree.",
+      "items": [
+        {"id": "timing_today", "dimension": "response_accuracy", "text": "Overall, the system responded at the times I expected during this session."},
+        {"id": "effort_today", "dimension": "cognitive_demand", "reverse": true, "text": "I had to devote a great deal of attention to make the system respond at appropriate times."},
+        {"id": "annoyance_today", "dimension": "annoyance", "reverse": true, "text": "The system's response timing made me feel annoyed or interrupted."},
+        {"id": "predictable_today", "dimension": "habitability", "text": "I could generally predict when the system would start responding."},
+        {"id": "speed_today", "dimension": "speed", "text": "Interaction with the system was efficient."},
+        {"id": "like_today", "dimension": "likeability", "text": "Based on this experience, I would like to continue using the system."},
+        {"id": "fatigue_today", "dimension": "fatigue", "reverse": true, "text": "This session made me feel fatigued."},
+        {"id": "control_today", "dimension": "control", "text": "I felt able to control when the system started or stopped responding."}
+      ],
+      "open_items": [
+        {"id": "timing_example", "text": "Was there a response-timing moment in this session that stood out? Briefly describe what happened.", "required": false},
+        {"id": "technical_issue", "text": "Did you encounter any microphone, network, phone-playback, or page problems?", "required": false}
+      ]
+    },
+    "final": {
+      "title": "Overall evaluation of this study session",
+      "instructions": "Think about the complete session. 1 means strongly disagree and 7 means strongly agree. Each open-ended answer must contain at least 20 Chinese characters or at least 12 English words.",
+      "items": [
+        {"id": "trend_accuracy", "dimension": "response_accuracy", "text": "As the interaction progressed, the system's response timing increasingly matched my expectations."},
+        {"id": "trend_likeability", "dimension": "likeability", "text": "As the interaction progressed, I liked the system more and increasingly felt that it was worth continuing to use."},
+        {"id": "trend_demand", "dimension": "cognitive_demand", "text": "As the interaction progressed, I needed less attention and effort, and interaction became easier."},
+        {"id": "trend_annoyance", "dimension": "annoyance", "text": "As the interaction progressed, my frustration or discomfort with the system decreased."},
+        {"id": "trend_habitability", "dimension": "habitability", "text": "As the interaction progressed, I better understood how to speak to the system and could better predict its response timing."},
+        {"id": "trend_control", "dimension": "perceived_control", "text": "As the interaction progressed, I increasingly felt able to control when the system started or stopped responding."},
+        {"id": "trend_speed", "dimension": "speed", "text": "As the interaction progressed, interaction with the system became more efficient."},
+        {"id": "overall_accuracy", "dimension": "response_accuracy", "text": "Overall, the system's response timing matched my expectations."},
+        {"id": "overall_likeability", "dimension": "likeability", "text": "Overall, I liked the system and felt it was worth continuing to use."},
+        {"id": "overall_demand", "dimension": "cognitive_demand", "text": "Overall, the interaction required little attention and effort."},
+        {"id": "overall_annoyance", "dimension": "annoyance", "text": "Overall, interacting with the system rarely made me feel frustrated or uncomfortable."},
+        {"id": "overall_habitability", "dimension": "habitability", "text": "Overall, I knew how to speak to the system and could predict its response timing."},
+        {"id": "overall_speed", "dimension": "speed", "text": "Overall, interaction with the system was efficient."},
+        {"id": "response_predictability", "dimension": "predictability", "text": "After I finished an utterance, I could usually anticipate whether the system would start responding."},
+        {"id": "response_surprise", "dimension": "predictability", "reverse": true, "text": "The system often started responding when I did not expect it to respond."},
+        {"id": "response_consistency", "dimension": "predictability", "text": "In similar speaking and pausing situations, the system behaved consistently in whether it responded."},
+        {"id": "start_stop_control", "dimension": "perceived_control", "text": "I felt able to control when the system started or stopped responding."},
+        {"id": "correction_effectiveness", "dimension": "correctability", "text": "When I tapped Answer now or Stop answering, the system acted as I expected."},
+        {"id": "change_legibility", "dimension": "legibility", "text": "When the system's response behavior changed, those changes were understandable to me."},
+        {"id": "behavior_management_effort", "dimension": "behavioral_adaptation", "reverse": true, "text": "To manage whether the system responded, I had to deliberately change how I spoke, paused, or waited."}
+      ],
+      "open_items": [
+        {"id": "overall_impression", "text": "What is your main overall impression of the system?", "required": true},
+        {"id": "unexpected_response_incident", "text": "Recall the most surprising response or non-response. What happened, and what had you expected the system to do?", "required": true},
+        {"id": "correction_control_incident", "text": "Describe one specific time you tapped Answer now or Stop answering. Did the tap help you regain control of the interaction? Why or why not?", "required": true},
+        {"id": "best_change", "text": "What changed most noticeably in the system during this interaction, and were those changes understandable?", "required": false},
+        {"id": "user_adaptation", "text": "Did you change how you spoke, paused, or waited in order to adapt to the system? Please describe.", "required": true},
+        {"id": "companion_effect", "text": "Did the phone conversation partner or background sound affect how you interacted?", "required": false},
+        {"id": "improvement", "text": "If you continued using the system, what would you most like it to improve?", "required": false}
+      ],
+      "followups": [
+        {"when": {"item": "overall_accuracy", "lte": 3}, "id": "low_accuracy_why", "text": "Why did you give the response timing a relatively low score? Describe one specific situation."},
+        {"when": {"item": "overall_annoyance", "lte": 3}, "id": "annoyance_why", "text": "Which interactions were most likely to make you feel frustrated or uncomfortable?"},
+        {"when": {"item": "trend_accuracy", "gte": 6}, "id": "improvement_evidence", "text": "Why do you think the system clearly improved? Describe the specific evidence you used."}
+      ]
+    }
+  }
+}

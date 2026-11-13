@@ -1,0 +1,352 @@
+<!doctype html>
+<!-- Mobile companion document. The page separates connection checks, fixed device placement, and the hold-to-speak control used during companion phases. -->
+
+<html lang="zh-CN" data-app-ready="false">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="robots" content="noindex,nofollow">
+    <title>Tap-to-Adapt 手机伴随端</title>
+    <link rel="stylesheet" href="static/styles.css?v=20260826-stay-page-abc-v183">
+  </head>
+  <body>
+    <div id="companion-device-gate" class="device-role-gate" role="alert" aria-live="assertive">
+      <div class="device-role-gate-card">
+        <span class="device-role-gate-kicker">设备检查 / Device check</span>
+        <h1 id="companion-device-gate-title">正在检查陪伴系统设备</h1>
+        <p id="companion-device-gate-message">陪伴系统需要在手机上打开；微信内打开也可以，不必改用 Safari/Chrome。</p>
+        <p class="device-role-gate-english">Open the companion page on a smartphone. WeChat in-app browser is supported.</p>
+        <div class="device-role-gate-help">
+          请使用手机打开电脑端显示的专属陪伴链接（微信点开即可）。<br>
+          如需帮助，请联系微信 <strong>study-contact</strong>（微信名：Research team）。
+        </div>
+      </div>
+    </div>
+    <script>
+      // Fast path: hide the device gate on phones (including WeChat) before deferred scripts load.
+      (function earlyCompanionDeviceGate() {
+        try {
+          var ua = navigator.userAgent || "";
+          var hintsMobile = navigator.userAgentData && navigator.userAgentData.mobile === true;
+          var ipadDesktop = /Macintosh/i.test(ua) && navigator.maxTouchPoints > 1;
+          var pcWechat = /WindowsWechat|MacWechat/i.test(ua);
+          var wechatMobile = /MicroMessenger/i.test(ua) && !pcWechat && !ipadDesktop && !/iPad/i.test(ua);
+          var tablet = ipadDesktop || /iPad|Tablet|Kindle|Silk|PlayBook/i.test(ua)
+            || (/Android/i.test(ua) && !/Mobile/i.test(ua) && !/MicroMessenger/i.test(ua));
+          var phone = !tablet && (
+            hintsMobile
+            || wechatMobile
+            || /iPhone|iPod|Windows Phone|IEMobile|Opera Mini|Android.+Mobile|Mobile Safari/i.test(ua)
+          );
+          if (!phone) return;
+          var gate = document.getElementById("companion-device-gate");
+          if (gate) gate.classList.add("hidden");
+          document.documentElement.dataset.appReady = "phone-early";
+        } catch (err) {
+          // Fall through to companion.js classification.
+        }
+      })();
+    </script>
+    <div id="companion-browser-gate" class="device-role-gate hidden" role="alert" aria-live="assertive">
+      <div class="device-role-gate-card">
+        <span class="device-role-gate-kicker">浏览器检查 / Browser check</span>
+        <h1 id="companion-browser-gate-title">请改用 Safari 打开</h1>
+        <p id="companion-browser-gate-message">当前环境暂无法完成陪伴系统检测。</p>
+        <div id="companion-browser-gate-help" class="device-role-gate-help">
+          请用手机重新打开专属陪伴链接；微信内打开通常可用。若仍失败，可改用系统浏览器，或联系研究团队。
+        </div>
+      </div>
+    </div>
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">T</div>
+        <div>
+          <p class="brand-name">手机 · 陪伴伙伴</p>
+          <p class="brand-subtitle">与电脑实验系统是两个不同个体</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <span id="phone-code-badge" class="participant-code-badge hidden" title="当前实验编号" aria-live="polite"></span>
+        <button class="btn btn-quiet language-toggle" type="button" data-language-toggle>English</button>
+        <div class="header-status"><span id="phone-dot" class="status-dot"></span><span id="phone-header-status">未连接</span></div>
+        <button id="phone-logout-btn" class="btn btn-quiet logout-btn hidden" type="button">退出编号</button>
+      </div>
+    </header>
+    <div id="phone-pilot-banner" class="pilot-banner hidden">非正式数据模式</div>
+    <div id="phone-capacity-banner" class="capacity-banner hidden" role="alert" aria-live="assertive">
+      <strong id="phone-capacity-banner-title">当前同时使用人数较多</strong>
+      <p id="phone-capacity-banner-copy">为保证语音与网络稳定，请约 30 分钟后再来尝试。</p>
+    </div>
+
+    <main class="mobile-shell">
+      <section id="phone-login-view">
+        <div id="phone-login-environment-warning" class="companion-environment-warning hidden" role="alert" aria-live="assertive">
+          <strong>浏览器环境不符合要求</strong>
+          <p data-env-message></p>
+        </div>
+        <h1 class="view-title">连接到电脑实验</h1>
+        <p class="view-lead">使用电脑端显示的专属链接时，实验编号会自动带入；手动打开本页时也可以输入同一个编号。本次实验中，两端必须同时在线。</p>
+        <div class="study-quiet-notice" role="note">
+          <strong>实验开始前请确保绝对安静</strong>
+          <p>关闭电视、音乐、风扇直吹麦克风，避免他人说话或走动。设备检测与正式交互都需在安静室内进行；若环境噪声偏高，麦克风检测将无法通过。</p>
+        </div>
+        <div class="companion-background-notice" role="note">
+          <strong>实验会播放手机背景声</strong>
+          <p>正式交互开始后，手机会持续播放环境背景声（类似咖啡厅或街道环境音），并与对话伙伴语音混合播放。浏览器会以固定增益播放背景声；请将媒体音量设为约 50%，并按下方说明固定手机位置，实验全程勿移动。</p>
+        </div>
+        <div class="companion-phone-placement-guide" role="note">
+          <p class="companion-placement-title">手机摆放位置（不用量尺寸）</p>
+          <ul class="companion-placement-steps">
+            <li><strong>正前方：</strong>手机放在你正前方，屏幕朝向自己。</li>
+            <li><strong>合适高度：</strong>手机底部约在肚子到胸口之间，大约一臂伸直的距离即可。</li>
+            <li><strong>固定不动：</strong>用支架、书本或手机架固定，实验全程不要移动。</li>
+          </ul>
+        </div>
+        <form id="phone-login-form" class="panel" method="post" action="about:blank" onsubmit="return false;">
+          <div class="panel-body">
+            <div class="form-row">
+              <label for="phone-code">参与者编号</label>
+              <input id="phone-code" class="code-input" type="text" maxlength="32" placeholder="TTA-XXXX-XXXX" required autocomplete="off">
+              <span class="helper-text">上方仅为格式示例，请勿输入占位符或自行编写编号。</span>
+            </div>
+            <!-- type=button avoids WeChat native form navigation (reload → page top). -->
+            <button id="phone-login-submit" class="btn btn-primary" type="button" disabled>继续</button>
+            <p id="phone-login-error" class="error-text" role="alert"></p>
+          </div>
+        </form>
+        <script>
+          // Prefill as soon as the input exists (before deferred companion.js).
+          // Do NOT enable Continue here — enabling before the click handler is
+          // attached caused WeChat to treat the tap as a native form submit and
+          // reload the same page (scroll to top).
+          (function earlyCompanionCodeFill() {
+            try {
+              var form = document.getElementById("phone-login-form");
+              if (form) {
+                form.addEventListener("submit", function (event) {
+                  event.preventDefault();
+                  event.stopPropagation();
+                  return false;
+                });
+              }
+              var meta = document.querySelector('meta[name="tta-participant-code"]');
+              var code = ((meta && meta.getAttribute("content")) || "").trim();
+              if (!code) {
+                var params = new URLSearchParams(location.search || "");
+                code = (params.get("code") || params.get("participant_code") || "").trim();
+              }
+              if (!code) {
+                code = decodeURIComponent((location.hash || "").replace(/^#\/?/, "")).trim();
+              }
+              if (!code) {
+                var match = (location.pathname || "").match(/\/companion\/([^\/?#]+)/i);
+                if (match) code = decodeURIComponent(match[1] || "").trim();
+              }
+              if (!code) return;
+              code = String(code).toUpperCase();
+              var input = document.getElementById("phone-code");
+              if (!input) return;
+              input.value = code;
+              input.readOnly = true;
+              input.classList.add("code-input-autofilled");
+              var label = document.querySelector("label[for='phone-code']");
+              if (label) label.textContent = "参与者编号（已从链接填入）";
+              var helper = input.parentElement && input.parentElement.querySelector(".helper-text");
+              if (helper) helper.textContent = "编号已从专属陪伴链接自动填入，无需手动输入。";
+              var err = document.getElementById("phone-login-error");
+              if (err && !err.textContent) err.textContent = "正在准备连接…";
+              // Failsafe: never leave Continue permanently disabled if companion.js stalls.
+              setTimeout(function () {
+                if (document.documentElement.dataset.appReady) return;
+                var btn = document.getElementById("phone-login-submit");
+                if (btn) {
+                  btn.disabled = false;
+                  btn.removeAttribute("disabled");
+                }
+                var msg = document.getElementById("phone-login-error");
+                if (msg && /准备连接/.test(msg.textContent || "")) {
+                  msg.textContent = "若未自动进入，请点击继续";
+                }
+              }, 2500);
+            } catch (err) {
+              // companion.js will retry after load.
+            }
+          })();
+        </script>
+      </section>
+
+      <section id="phone-setup-view" class="hidden">
+        <div id="phone-setup-environment-warning" class="companion-environment-warning hidden" role="alert" aria-live="assertive">
+          <strong>浏览器环境不符合要求</strong>
+          <p data-env-message></p>
+        </div>
+        <h1 class="view-title">手机设备与环境检测</h1>
+        <p class="view-lead">坐在自然说话位置，让嘴与手机、电脑麦克风均保持 30–90 厘米；按下方说明将手机固定在正前方（肚子到胸口高度），保持充电和屏幕常亮。全部检测（含最低音量硬校准）通过后才能连接。</p>
+        <div class="study-quiet-notice" role="note">
+          <strong>实验开始前请确保绝对安静</strong>
+          <p>关闭电视、音乐、风扇直吹麦克风，避免他人说话或走动。设备检测与正式交互都需在安静室内进行；若环境噪声偏高，麦克风检测将无法通过。</p>
+        </div>
+        <div class="companion-background-notice" role="note">
+          <strong>请提前知晓：实验会播放背景声</strong>
+          <p>电脑端开始正式交互后，手机会自动播放连续环境背景声，并在你与手机对话伙伴交流时继续播放。请把系统媒体音量设为至少 50%（建议 50–70%）；稍后必须通过低增益听音校准，否则无法连接电脑或开始实验。</p>
+        </div>
+        <div class="companion-phone-placement-guide" role="note">
+          <p class="companion-placement-title">手机摆放位置（不用量尺寸）</p>
+          <ul class="companion-placement-steps">
+            <li><strong>正前方：</strong>手机放在你正前方，屏幕朝向自己。</li>
+            <li><strong>合适高度：</strong>手机底部约在肚子到胸口之间，大约一臂伸直的距离即可。</li>
+            <li><strong>固定不动：</strong>用支架、书本或手机架固定，实验全程不要移动。</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <div class="panel-body">
+            <div class="check-grid companion-check-grid">
+              <article id="phone-network-check" class="check-item">
+                <h2 class="check-title">网络稳定性</h2>
+                <p id="phone-network-value" class="check-value">等待检测</p>
+                <button id="phone-network-btn" class="btn btn-secondary" type="button">检测网络</button>
+              </article>
+              <article id="phone-mic-check" class="check-item">
+                <h2 class="check-title">正常说话音量与环境噪声</h2>
+                <p id="phone-mic-value" class="check-value">先保持安静，再按提示用正常音量说话</p>
+                <div class="volume-meter" role="meter" aria-label="手机麦克风音量" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                  <span id="phone-volume-bar"></span>
+                </div>
+                <button id="phone-mic-test" class="btn btn-secondary" type="button">测试正常说话音量</button>
+              </article>
+              <article id="phone-reaction-check" class="check-item">
+                <h2 class="check-title">触摸反应延迟</h2>
+                <p id="phone-reaction-value" class="check-value">看到红色圆形后立即轻触，共 6 次</p>
+                <button id="phone-reaction-btn" class="btn btn-secondary" type="button">开始反应检测</button>
+                <div id="phone-reaction-stage" class="reaction-stage hidden">
+                  <span id="phone-reaction-wait">请等待</span>
+                  <button id="phone-reaction-target" class="reaction-target hidden" type="button">轻触我（还差 6 次）</button>
+                </div>
+              </article>
+              <article id="phone-browser-check" class="check-item">
+                <h2 class="check-title">浏览器与最低音量硬校准</h2>
+                <p id="phone-browser-value" class="check-value">先把系统媒体音量调到 50% 以上，并勾选本卡内确认框</p>
+                <label id="volume-confirm-row" class="check-row phone-volume-confirm">
+                  <input id="volume-confirm" type="checkbox">
+                  <span>
+                    <strong>我已将系统媒体音量调到至少 50%</strong>
+                    <small>建议 50–70%，关闭静音模式和耳机连接，并按上方说明固定手机。手机网页无法直接读取侧边音量条，调好后请在这里确认。</small>
+                  </span>
+                </label>
+                <div class="playback-test-controls">
+                  <label for="phone-audio-language">
+                    <span>测试语音语言</span>
+                    <select id="phone-audio-language">
+                      <option value="zh-CN" selected>中文</option>
+                      <option value="en-US">英文</option>
+                    </select>
+                  </label>
+                  <button id="phone-browser-btn" class="btn btn-secondary" type="button" disabled>播放最低音量校准句</button>
+                  <label id="phone-answer-row" class="playback-answer-row hidden" for="phone-audio-answer">
+                    <span>请输入你听到的内容</span>
+                    <input id="phone-audio-answer" type="text" autocomplete="off" autocapitalize="sentences" spellcheck="false" placeholder="请输入听到的句子">
+                  </label>
+                  <button id="phone-audio-verify" class="btn btn-secondary hidden" type="button" disabled>核对听辨内容</button>
+                </div>
+              </article>
+            </div>
+            <div id="phone-gate-status" class="gate-status" role="status" aria-live="polite" aria-atomic="true" data-ready="false">
+              <strong id="phone-gate-summary">连接前还需完成以下条件：</strong>
+              <ul id="phone-gate-blockers" class="gate-blockers"></ul>
+            </div>
+            <button id="enable-phone-audio" class="phone-action" type="button" disabled>完成检测并连接电脑</button>
+            <p id="phone-setup-error" class="error-text" role="alert"></p>
+          </div>
+        </div>
+        <p id="license-note" class="license-note"></p>
+      </section>
+
+      <section id="phone-active-view" class="hidden">
+        <div id="phone-primary-overlay" class="phone-primary-overlay hidden" role="alert" aria-live="assertive">
+          <div class="phone-primary-overlay-card">
+            <h2 id="phone-primary-overlay-title">正在模拟环境声音，不要看我，专心和电脑互动</h2>
+            <p id="phone-primary-overlay-copy">请稍后再来和我互动</p>
+            <p class="stay-on-page-notice">请不要关闭手机陪伴链接，也不要离开本页。</p>
+            <div id="phone-primary-countdown" class="phone-primary-countdown">04:00</div>
+          </div>
+        </div>
+        <div id="phone-rest-overlay" class="rest-overlay phone-rest-overlay hidden" role="dialog" aria-modal="true" aria-live="polite">
+          <div class="overlay-dialog">
+            <p class="rest-kicker">本段数据采集与模型更新已停止</p>
+            <h2>请休息一分钟</h2>
+            <p>可以放松眼睛和声音，请不要继续对话或点击屏幕。背景声会暂停，倒计时结束后从原位置继续播放。</p>
+            <p class="stay-on-page-notice">请不要离开或关闭当前手机页面。</p>
+            <div id="phone-rest-countdown" class="timer">01:00</div>
+          </div>
+        </div>
+        <h1 id="phone-mode-title" class="view-title">等待电脑端开始</h1>
+        <p id="phone-mode-copy" class="view-lead">背景声将在电脑端开始实验后自动播放。</p>
+        <div id="phone-look-cue" class="phone-look-cue" aria-live="polite">
+          <span class="agent-identity-pill agent-identity-pill-companion">手机 · 陪伴伙伴</span>
+          <strong>现在请看着手机，与陪伴伙伴对话</strong>
+          <p>我是手机上的陪伴伙伴，不是电脑上的实验系统。请长按下方圆形按钮对我说话；松开后等待我回答。</p>
+          <div id="phone-invite-countdown" class="companion-invite-countdown hidden" data-state="idle" role="status" aria-live="polite">
+            <span id="phone-invite-label">若暂未开口，我将在 10 秒后主动打招呼</span>
+          </div>
+        </div>
+        <div id="phone-barge-banner" class="phone-barge-banner hidden" role="status" aria-live="assertive">
+          <strong id="phone-barge-title">电脑实验系统正在插话</strong>
+          <p id="phone-barge-copy">若接话不合时机，请到电脑点击「停止回答」打断。不要在手机上操作打断。</p>
+        </div>
+        <div id="phone-continuity-strip" class="phone-continuity-strip hidden" data-state="monitoring" role="status" aria-live="polite">
+          <strong id="phone-continuity-title">请保持连续语音对话</strong>
+          <span id="phone-continuity-copy">请留在当前位置，持续与当前智能体自然对话；倾听回答时无需说话。</span>
+          <strong id="phone-continuity-countdown" class="interaction-presence-countdown hidden" aria-hidden="true">30</strong>
+        </div>
+        <div class="mobile-status">
+          <div class="status-tile"><span>电脑连接</span><strong id="desktop-status">等待</strong></div>
+          <div class="status-tile"><span>背景声</span><strong id="background-status">待机</strong></div>
+          <div class="status-tile"><span>实验流程</span><strong id="phone-day-value">本次实验</strong></div>
+          <div class="status-tile"><span>播放进度</span><strong id="background-time">00:00</strong></div>
+        </div>
+        <div id="phone-chat-log" class="chat-log" aria-live="polite">
+          <p class="chat-line">电脑端开始实验后，请先专心与电脑端互动。</p>
+        </div>
+        <div class="phone-talk-dock" id="phone-talk-dock">
+          <p id="phone-asr-live" class="phone-asr-live helper-text hidden" aria-live="polite"></p>
+          <p id="phone-talk-hint" class="phone-talk-hint">长按说话（请保持原位，面向手机自然说；声音由电脑麦克风识别，无需转向电脑）</p>
+          <button
+            id="phone-talk-btn"
+            class="phone-talk-button"
+            type="button"
+            disabled
+            aria-label="长按说话"
+            aria-describedby="phone-talk-hint"
+          >
+            <span class="phone-talk-ring" aria-hidden="true"></span>
+            <span class="phone-talk-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M12 14a3 3 0 0 0 3-3V6a3 3 0 1 0-6 0v5a3 3 0 0 0 3 3Z" fill="currentColor"/>
+                <path d="M19 11a1 1 0 1 0-2 0 5 5 0 0 1-10 0 1 1 0 1 0-2 0 7 7 0 0 0 6 6.92V20H9a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2h-2v-2.08A7 7 0 0 0 19 11Z" fill="currentColor"/>
+              </svg>
+            </span>
+          </button>
+        </div>
+        <p id="phone-active-error" class="error-text" role="alert"></p>
+        <p class="license-note">请勿切换应用或锁屏。背景声在对话伙伴回答时也会继续播放；请保持手机位置不变，媒体音量保持 50%。</p>
+      </section>
+
+      <div id="phone-passive-exit-overlay" class="pause-overlay passive-exit-overlay hidden" role="alertdialog" aria-modal="true" aria-live="assertive" aria-labelledby="phone-passive-exit-title" aria-describedby="phone-passive-exit-reason">
+        <div class="overlay-dialog passive-exit-dialog">
+          <p class="passive-exit-kicker">本次实验未完成</p>
+          <h2 id="phone-passive-exit-title">本次实验已退出</h2>
+          <p class="passive-exit-label">退出原因</p>
+          <p id="phone-passive-exit-reason" class="passive-exit-reason">电脑端实验发生中断，需要从头重新开始。</p>
+          <p class="helper-text">请查看电脑端显示的原因，并在电脑端重新完成准备。</p>
+          <button id="phone-passive-exit-ok" class="btn btn-primary" type="button">我知道了，等待电脑重新开始</button>
+        </div>
+      </div>
+    </main>
+
+    <audio id="background-audio" preload="auto" playsinline></audio>
+    <script src="static/i18n.js?v=20260826-stay-page-abc-v183" defer></script>
+    <script src="static/quality-gate.js?v=20260822-volume-gate-message-v172" defer></script>
+    <script src="static/playback-test.js?v=20260804-playback-verify-ready-v26" defer></script>
+  <script src="static/companion.js?v=20260828-companion-http-ready-v198" defer></script>
+  </body>
+</html>

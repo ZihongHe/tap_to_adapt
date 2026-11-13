@@ -1,0 +1,73 @@
+<!doctype html>
+<!-- Transport-diagnostics document containing connection parameters, measurements, and troubleshooting controls. -->
+
+<html lang="zh-CN" data-app-ready="false">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex,nofollow">
+    <title>Tap-to-Adapt 传输链路探针</title>
+    <link rel="stylesheet" href="static/styles.css?v=20260719-transport-probe-v1">
+    <style>
+      .probe-shell { width: min(100% - 32px, 980px); margin: 32px auto; }
+      .probe-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+      .probe-metric { padding: 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+      .probe-metric span { display: block; color: var(--muted); font-size: 12px; }
+      .probe-metric strong { display: block; margin-top: 5px; font-size: 20px; }
+      .probe-controls { display: flex; align-items: end; flex-wrap: wrap; gap: 12px; }
+      .probe-controls label { display: grid; gap: 5px; color: var(--muted); font-size: 13px; }
+      .probe-controls input { width: 120px; padding: 9px; border: 1px solid var(--line); border-radius: 6px; }
+      .probe-status { margin: 0; font-weight: 700; }
+      .probe-status[data-state="completed"] { color: var(--teal); }
+      .probe-status[data-state="failed"] { color: var(--coral); }
+      .probe-json { max-height: 360px; overflow: auto; padding: 14px; border-radius: 8px; background: #17212b; color: #edf4f3; font-size: 12px; white-space: pre-wrap; word-break: break-word; }
+      @media (max-width: 700px) { .probe-grid { grid-template-columns: 1fr; } }
+    </style>
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">T</div>
+        <div>
+          <p class="brand-name">Tap-to-Adapt</p>
+          <p class="brand-subtitle">公开同源 WebSocket 传输链路探针</p>
+        </div>
+      </div>
+      <p id="probe-status" class="probe-status" data-state="idle" aria-live="polite">待运行</p>
+    </header>
+
+    <main class="probe-shell">
+      <section class="panel">
+        <div class="panel-body">
+          <h1 class="section-heading">工程预检（不登录、不创建实验 session）</h1>
+          <p class="section-copy">探针建立与正式流程同源的 6 条 WebSocket：2 个用户各含 timing、study_pair、companion_pair。仅 timing 以 10 Hz 发送 3200 字节 PCM，两条 pair 各以 1 Hz 发送心跳。</p>
+          <div class="probe-controls">
+            <label>持续时间（秒）
+              <input id="probe-duration" type="number" min="1" max="65" value="60">
+            </label>
+            <button id="probe-start" class="btn btn-primary" type="button">开始传输预检</button>
+            <button id="probe-stop" class="btn btn-secondary" type="button" disabled>停止</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="probe-grid" aria-label="探针摘要">
+        <div class="probe-metric"><span>Timing ACK</span><strong id="probe-ack-ratio">—</strong></div>
+        <div class="probe-metric"><span>RTT P95</span><strong id="probe-p95">—</strong></div>
+        <div class="probe-metric"><span>最大 ACK 间隔</span><strong id="probe-ack-gap">—</strong></div>
+        <div class="probe-metric"><span>相邻 RTT 变化 P95</span><strong id="probe-jitter">—</strong></div>
+        <div class="probe-metric"><span>调度延迟 P95</span><strong id="probe-scheduler">—</strong></div>
+        <div class="probe-metric"><span>最大 bufferedAmount</span><strong id="probe-buffered">—</strong></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-body">
+          <h2 class="section-heading">机器可读结果摘要</h2>
+          <pre id="probe-result" class="probe-json">{"done":false,"passed":null}</pre>
+        </div>
+      </section>
+    </main>
+
+    <script src="static/transport-probe.js?v=20260719-transport-probe-v1"></script>
+  </body>
+</html>

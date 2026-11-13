@@ -1,0 +1,101 @@
+{
+  "version": "factorized-eou-4plus2-simulation-2026-07-28-v6",
+  "initialization": {
+    "version": "factorized-eou-eight-profile-selection-lock-v6",
+    "temperature": 1.0,
+    "logit_bias": 0.0,
+    "activation_threshold": 0.94,
+    "decision_factorization": {
+      "minimum_end_of_turn_silence_ms": 400,
+      "explicit_turn_end_required": true,
+      "end_of_turn_definition": "ASR-final or simulator TTS-playback-complete AND at least 400 ms acoustic silence",
+      "context_required": true,
+      "reply_needed_threshold": 0.6079415352875194,
+      "reply_needed_model_version": "selection8-char-tfidf-logistic-v1",
+      "reply_needed_model_artifact_sha256": "af65ddc1c80c2e2410725743826b73d29df000c2ac364f1bb7be4521c7eec1c7",
+      "speaker_personalisation_scope": "frozen DistilHuBERT plus participant-specific replay head",
+      "addressee_scope": "protocol target gate",
+      "reply_needed_scope": "independent transcript context classifier",
+      "feedback_routing": "context errors never update the acoustic personalisation head"
+    },
+    "warmup_eligible_feedbacks": 0,
+    "warmup_update_scale": 1.0,
+    "network_update_schedule": [],
+    "network_update_control": "Only the participant-specific head may update; the shared head and frozen speech backbone remain immutable.",
+    "personal_calibration": {
+      "enabled": false,
+      "algorithm": "disabled-unless-selected-by-four-profile-development-comparison",
+      "initial_logit_bias": 0.0,
+      "learning_rate": 0.0,
+      "l2": 0.0,
+      "minimum_logit_bias": -0.01,
+      "maximum_logit_bias": 0.01,
+      "update_scope": "none",
+      "shared_prior_inclusion": false
+    },
+    "personal_head_optimizer": {
+      "candidate_id": "distil_replay_v1",
+      "learning_rate": 0.03,
+      "replay_per_class": 12,
+      "replay_batch_size": 24,
+      "proximal_to_shared": 0.01,
+      "max_gradient_norm": 2.0,
+      "require_both_replay_classes": false,
+      "single_class_update_scale": 1.0,
+      "shared_replay_seed_per_class": 0,
+      "selection_protocol": "eight disjoint simulated development profiles; 200 ms voiced frames followed by real 200 ms silence frames; independent end-of-turn, addressee and reply-needed gates; at most one correction direction per opportunity",
+      "human_effect_evidence": false
+    },
+    "engineering_calibration_evidence": {
+      "source_run": "intent-aware-eight-profile-development-comparison",
+      "source_origin": "simulation",
+      "formal_use": false
+    },
+    "formal_lock_rule": "Lock after the eight-profile engineering comparison and before the separate thirty-two-profile duration run."
+  },
+  "duration_simulation": {
+    "time_is_an_outcome": true,
+    "bin_minutes": 6,
+    "maximum_minutes": 60,
+    "minimum_confirmation_minutes": 18,
+    "practical_equivalence_margin_absolute_rate": 0.02,
+    "remaining_improvement_upper_ci_margin": 0.03,
+    "consecutive_stable_bins": 3,
+    "requires_no_later_equivalence_departure": true,
+    "absolute_tail_adequacy_gate": {
+      "window_bins": 3,
+      "manual_activate_rate_max": 0.1,
+      "manual_interrupt_rate_max": 0.05,
+      "total_correction_rate_max": 0.1,
+      "interpretation": "predeclared engineering adequacy target, not a universal HCI standard"
+    },
+    "primary_outcome": "eligible manual activate plus interrupt corrections divided by eligible opportunities",
+    "secondary_outcomes": [
+      "manual activate rate",
+      "manual interrupt rate",
+      "wake rate",
+      "shared versus personal probability",
+      "personal-head update count",
+      "cycle-level stimulus difficulty balance"
+    ],
+    "interaction_cycle": {
+      "primary_minutes": 4,
+      "companion_minutes": 2,
+      "manual_interrupt_rule": "Interrupt only if the experimental agent responds to a no-reply primary turn or during companion dialogue. Any response before participant TTS completion is an end-of-turn gate failure, not a learnable negative example.",
+      "manual_activate_rule": "After a reply-requesting primary turn, stream real zero-valued PCM in 200 ms frames for the frozen 1–3 second deadline; manually activate only if no valid response begins.",
+      "one_label_per_opportunity": "A single opportunity may produce at most one correction direction. Context-attributed errors are quarantined from the acoustic personalisation head.",
+      "difficulty_balance": "Every cycle has fixed intent, speaker-role, category and four low/four medium/four high lexical-length bands."
+    },
+    "voice_design": {
+      "provider": "local sherpa-onnx VITS AISHELL-3",
+      "participant_voices": 32,
+      "experimental_agent_voices": 1,
+      "companion_agent_voices": 1,
+      "mutual_exclusivity_required": true,
+      "selection_rule": "Exclude every selection8 and duration32 participant speaker, then select the two agent speakers by maximin robust-standardized acoustic distance using F0, spectral centroid, rolloff, zero-crossing rate, RMS and eight spectral bands.",
+      "silent_synthesis": true,
+      "audio_output_device": false
+    },
+    "scope": "engineering simulation only; profiles, voices, utterances and tap events are not human participants"
+  }
+}

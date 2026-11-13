@@ -1,0 +1,225 @@
+{
+  "version": "questionnaires-2026-08-28-v13",
+  "scale": {
+    "min": 1,
+    "max": 7,
+    "min_label": "非常不同意",
+    "max_label": "非常同意"
+  },
+  "instruments": {
+    "baseline": {
+      "title": "开始前信息与操作确认",
+      "instructions": "以下信息仅用于描述样本与核验操作要求，不会显示你的实验条件。请按真实情况选择。",
+      "items": [
+        {"id": "voice_technology_familiarity", "dimension": "technical_familiarity", "text": "我熟悉语音助手、语音输入或类似语音交互技术。"},
+        {"id": "privacy_concern", "dimension": "privacy_concern", "text": "使用需要麦克风的在线系统时，我通常会担心隐私。"},
+        {"id": "speech_agent_confidence", "dimension": "self_efficacy", "text": "我有信心在没有研究者实时陪同的情况下完成网页语音任务。"}
+      ],
+      "fields": [
+        {
+          "id": "age_range",
+          "type": "choice",
+          "required": true,
+          "text": "你的年龄范围是？",
+          "reject_values": ["under_18"],
+          "options": [
+            {"value": "under_18", "label": "18 岁以下"},
+            {"value": "18_22", "label": "18–22 岁"},
+            {"value": "23_27", "label": "23–27 岁"},
+            {"value": "28_32", "label": "28–32 岁"},
+            {"value": "33_37", "label": "33–37 岁"},
+            {"value": "38_42", "label": "38–42 岁"},
+            {"value": "43_47", "label": "43–47 岁"},
+            {"value": "48_52", "label": "48–52 岁"},
+            {"value": "53_57", "label": "53–57 岁"},
+            {"value": "58_plus", "label": "58 岁及以上"},
+            {"value": "prefer_not", "label": "不愿透露"}
+          ]
+        },
+        {
+          "id": "gender",
+          "type": "choice",
+          "required": true,
+          "text": "你的性别是？",
+          "options": [
+            {"value": "female", "label": "女性"},
+            {"value": "male", "label": "男性"},
+            {"value": "nonbinary_or_other", "label": "非二元或其他"},
+            {"value": "prefer_not", "label": "不愿透露"}
+          ]
+        },
+        {
+          "id": "identity",
+          "type": "choice",
+          "required": true,
+          "text": "你目前的身份是？",
+          "helper": "用于描述样本构成，不会显示你的实验条件。",
+          "options": [
+            {"value": "student", "label": "在读学生"},
+            {"value": "university_staff", "label": "高校教职工"},
+            {"value": "public_service", "label": "公共部门从业者"},
+            {"value": "tech_company", "label": "科技公司员工"},
+            {"value": "other_employed", "label": "其他在职"},
+            {"value": "self_employed_or_unemployed", "label": "自由职业或待业"},
+            {"value": "other", "label": "其他"},
+            {"value": "prefer_not", "label": "不愿透露"}
+          ]
+        },
+        {
+          "id": "spoken_accent",
+          "type": "choice",
+          "required": true,
+          "text": "你说普通话时的口音或方言习惯是？",
+          "helper": "请按日常说话习惯选择最接近的一项。",
+          "options": [
+            {"value": "near_standard_mandarin", "label": "普通话接近标准，没有明显方言口音"},
+            {"value": "light_chaoshan_mandarin", "label": "带有轻微潮汕方言口音的普通话"},
+            {"value": "heavy_chaoshan_mandarin", "label": "带有较重潮汕方言口音的普通话"},
+            {"value": "light_cantonese_mandarin", "label": "带有轻微粤语口音的普通话"},
+            {"value": "heavy_cantonese_mandarin", "label": "带有较重粤语口音的普通话"},
+            {"value": "light_other_dialect_mandarin", "label": "带有轻微其他方言口音的普通话"},
+            {"value": "heavy_other_dialect_mandarin", "label": "带有较重其他方言口音的普通话"},
+            {"value": "primarily_dialect", "label": "日常主要说方言，实验中改说普通话"},
+            {"value": "other", "label": "其他"},
+            {"value": "prefer_not", "label": "不愿透露"}
+          ]
+        },
+        {
+          "id": "primary_spoken_language",
+          "type": "choice",
+          "required": true,
+          "text": "你日常最常使用的口语是？",
+          "options": [
+            {"value": "mandarin", "label": "普通话"},
+            {"value": "cantonese", "label": "粤语"},
+            {"value": "english", "label": "英语"},
+            {"value": "other_chinese", "label": "其他汉语方言"},
+            {"value": "other", "label": "其他语言"}
+          ]
+        },
+        {
+          "id": "voice_agent_frequency",
+          "type": "choice",
+          "required": true,
+          "text": "过去 3 个月，你使用语音助手或语音对话产品的频率是？",
+          "options": [
+            {"value": "never", "label": "从未使用"},
+            {"value": "monthly", "label": "每月少于 1 次"},
+            {"value": "few_monthly", "label": "每月 1–3 次"},
+            {"value": "about_weekly", "label": "大约每周 1 次"},
+            {"value": "weekly", "label": "每周 1–6 次"},
+            {"value": "daily", "label": "几乎每天"}
+          ]
+        },
+        {
+          "id": "hearing_or_speech_condition",
+          "type": "choice",
+          "required": true,
+          "text": "是否存在可能影响本次语音交互的听力或言语情况？",
+          "options": [
+            {"value": "no", "label": "没有"},
+            {"value": "yes", "label": "有"},
+            {"value": "prefer_not", "label": "不愿透露"}
+          ]
+        },
+        {
+          "id": "tap_rule_check",
+          "type": "choice",
+          "required": true,
+          "correct": "felt_need",
+          "text": "实验中应当在什么时候点击电脑页面？",
+          "helper": "按你当时真实的交互意图判断即可，不必为了凑次数而多点。",
+          "options": [
+            {"value": "felt_need", "label": "按当时真实感受，希望系统开始回答或停止当前回答时"},
+            {"value": "fixed_rate", "label": "每隔固定时间点击一次"},
+            {"value": "increase_data", "label": "为了增加数据而尽量多点击"}
+          ]
+        },
+        {
+          "id": "failure_rule_check",
+          "type": "choice",
+          "required": true,
+          "correct": "pause_contact",
+          "text": "如果网络、页面或手机端异常，应该怎么做？",
+          "helper": "出现异常时，优先按页面提示处理；不要试图用额外点击去补数据。",
+          "options": [
+            {"value": "pause_contact", "label": "暂停并按页面提示恢复；持续失败时联系研究团队"},
+            {"value": "repeat_taps", "label": "连续点击来补回丢失的数据"},
+            {"value": "ignore", "label": "忽略异常并继续计时"}
+          ]
+        },
+        {
+          "id": "device_rule_check",
+          "type": "choice",
+          "required": true,
+          "correct": "same_code_session",
+          "text": "电脑端和手机端应如何进入实验？",
+          "helper": "电脑实验页与手机陪伴页属于同一次实验，两端进入方式需保持对应。",
+          "options": [
+            {"value": "same_code_session", "label": "电脑端和手机伴随端使用同一个参与者编号"},
+            {"value": "different_codes", "label": "分别使用两个参与者编号"},
+            {"value": "phone_optional", "label": "只打开电脑端即可"}
+          ]
+        }
+      ]
+    },
+    "daily": {
+      "title": "本次实验使用感受",
+      "instructions": "请按本次实验的实际体验评分。1 表示非常不同意，7 表示非常同意。",
+      "items": [
+        {"id": "timing_today", "dimension": "response_accuracy", "text": "本次实验中，系统的响应时机总体符合我的预期。"},
+        {"id": "effort_today", "dimension": "cognitive_demand", "reverse": true, "text": "本次实验中，为了让系统在合适的时机响应，我需要投入很多注意力。"},
+        {"id": "annoyance_today", "dimension": "annoyance", "reverse": true, "text": "本次实验中，系统的响应时机让我感到烦躁或受打扰。"},
+        {"id": "predictable_today", "dimension": "habitability", "text": "本次实验中，我能够大致预测系统何时会开始响应。"},
+        {"id": "speed_today", "dimension": "speed", "text": "本次实验中，与系统的交互是高效的。"},
+        {"id": "like_today", "dimension": "likeability", "text": "基于本次体验，我愿意继续使用这个系统。"},
+        {"id": "fatigue_today", "dimension": "fatigue", "reverse": true, "text": "本次实验让我感到疲劳。"},
+        {"id": "control_today", "dimension": "control", "text": "本次实验中，我觉得自己能够控制系统何时开始或停止响应。"}
+      ],
+      "open_items": [
+        {"id": "timing_example", "text": "本次实验中有没有一次响应时机让你印象很深？请简要描述当时发生了什么。", "required": false},
+        {"id": "technical_issue", "text": "本次实验是否遇到麦克风、网络、手机播放或页面异常？", "required": false}
+      ]
+    },
+    "final": {
+      "title": "本次实验总体评价",
+      "instructions": "请回顾本次完整实验。1 表示非常不同意，7 表示非常同意。填空题每个空至少填写 20 个汉字，或至少 12 个英文单词。",
+      "items": [
+        {"id": "trend_accuracy", "dimension": "response_accuracy", "text": "随着互动轮次增加，系统的响应时机越来越符合我的预期。"},
+        {"id": "trend_likeability", "dimension": "likeability", "text": "随着互动轮次增加，我对系统的好感度逐渐提高，并越来越认为它值得继续使用。"},
+        {"id": "trend_demand", "dimension": "cognitive_demand", "text": "随着互动轮次增加，我需要投入的注意力和精力逐渐减少，互动变得更轻松。"},
+        {"id": "trend_annoyance", "dimension": "annoyance", "text": "随着互动轮次增加，我对系统感到的沮丧或不适逐渐减少。"},
+        {"id": "trend_habitability", "dimension": "habitability", "text": "随着互动轮次增加，我更了解该如何与系统说话，也更能预测它的响应时机。"},
+        {"id": "trend_control", "dimension": "perceived_control", "text": "随着互动轮次增加，我越来越能掌控系统何时开始或停止响应。"},
+        {"id": "trend_speed", "dimension": "speed", "text": "随着互动轮次增加，我认为与系统的互动越来越高效。"},
+        {"id": "overall_accuracy", "dimension": "response_accuracy", "text": "总体而言，系统的响应时机符合我的预期。"},
+        {"id": "overall_likeability", "dimension": "likeability", "text": "总体而言，我喜欢这个系统，并认为它值得继续使用。"},
+        {"id": "overall_demand", "dimension": "cognitive_demand", "text": "总体而言，互动需要的注意力和精力较少。"},
+        {"id": "overall_annoyance", "dimension": "annoyance", "text": "总体而言，与系统互动很少让我感到沮丧或不适。"},
+        {"id": "overall_habitability", "dimension": "habitability", "text": "总体而言，我知道该如何与系统说话，也能预测它的响应时机。"},
+        {"id": "overall_speed", "dimension": "speed", "text": "总体而言，与系统的互动是高效的。"},
+        {"id": "response_predictability", "dimension": "predictability", "text": "当我说完一句话后，我通常能够预期系统是否会开始响应。"},
+        {"id": "response_surprise", "dimension": "predictability", "reverse": true, "text": "系统经常在我没有预期它响应的时候开始响应。"},
+        {"id": "response_consistency", "dimension": "predictability", "text": "在相似的说话和停顿情况下，系统是否响应的表现是一致的。"},
+        {"id": "start_stop_control", "dimension": "perceived_control", "text": "我觉得自己能够掌控系统何时开始或停止响应。"},
+        {"id": "correction_effectiveness", "dimension": "correctability", "text": "当我点击“现在回答”或“停止回答”时，系统会按照我的预期采取行动。"},
+        {"id": "change_legibility", "dimension": "legibility", "text": "当系统的响应行为发生变化时，这些变化对我是可以理解的。"},
+        {"id": "behavior_management_effort", "dimension": "behavioral_adaptation", "reverse": true, "text": "为了管理系统是否响应，我不得不刻意改变自己的说话、停顿或等待方式。"}
+      ],
+      "open_items": [
+        {"id": "overall_impression", "text": "你对系统最主要的总体印象是什么？", "required": true},
+        {"id": "unexpected_response_incident", "text": "请回忆一次最出乎你意料的响应或未响应：当时发生了什么，你原本预期系统怎么做？", "required": true},
+        {"id": "correction_control_incident", "text": "请描述一次你点击“现在回答”或“停止回答”的具体情况。点击后你是否感觉重新掌控了交互？为什么？", "required": true},
+        {"id": "best_change", "text": "本次互动过程中，系统在哪些方面发生了最明显的变化？这些变化是否容易理解？", "required": false},
+        {"id": "user_adaptation", "text": "你是否改变了自己的说话、停顿或等待方式来适应系统？请描述。", "required": true},
+        {"id": "companion_effect", "text": "手机对话助手或环境声是否影响了你的交互方式？", "required": false},
+        {"id": "improvement", "text": "如果继续使用，你最希望系统改进什么？", "required": false}
+      ],
+      "followups": [
+        {"when": {"item": "overall_accuracy", "lte": 3}, "id": "low_accuracy_why", "text": "你给响应时机较低评分的主要原因是什么？请描述一次具体情况。"},
+        {"when": {"item": "overall_annoyance", "lte": 3}, "id": "annoyance_why", "text": "哪些交互最容易让你感到沮丧或不适？"},
+        {"when": {"item": "trend_accuracy", "gte": 6}, "id": "improvement_evidence", "text": "你为何认为系统明显改善了？请描述你用来判断的具体表现。"}
+      ]
+    }
+  }
+}

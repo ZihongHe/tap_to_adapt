@@ -1,0 +1,54 @@
+{
+  "version": "duration-simulation-distilhubert-replay-2026-07-23-v1",
+  "initialization": {
+    "version": "distilhubert-replay-heldout-tts-threshold-v1",
+    "temperature": 1.0,
+    "logit_bias": 0.0,
+    "activation_threshold": 0.94,
+    "warmup_eligible_feedbacks": 0,
+    "warmup_update_scale": 1.0,
+    "network_update_schedule": [],
+    "network_update_control": "Every eligible correction updates only the participant's cloned linear head using locked class-balanced replay; the frozen DistilHuBERT backbone and shared head never change.",
+    "personal_calibration": {
+      "enabled": false,
+      "algorithm": "disabled-to-isolate-the-replay-logistic-head",
+      "initial_logit_bias": 0.0,
+      "learning_rate": 0.0,
+      "l2": 0.0,
+      "minimum_logit_bias": -0.01,
+      "maximum_logit_bias": 0.01,
+      "update_scope": "none",
+      "shared_prior_inclusion": false
+    },
+    "engineering_calibration_evidence": {
+      "source_run": "llm-tts-participant-disjoint-development-fixture-20260723",
+      "source_origin": "simulation",
+      "held_out_participants": 6,
+      "held_out_events": 150,
+      "selected_threshold": 0.94,
+      "held_out_wake_rate": 0.47333333333333333,
+      "held_out_balanced_accuracy": 0.9010043041606887,
+      "selection_rule": "maximize held-out balanced accuracy subject to pooled wake rate in [0.20, 0.75] and each held-out synthetic participant in [0.05, 0.95]",
+      "formal_use": false
+    },
+    "formal_lock_rule": "simulation-only; replace with participant-disjoint human donor release before confirmatory study"
+  },
+  "duration_simulation": {
+    "time_is_an_outcome": true,
+    "bin_minutes": 5,
+    "maximum_minutes": 90,
+    "minimum_confirmation_minutes": 15,
+    "practical_equivalence_margin_absolute_rate": 0.02,
+    "remaining_improvement_upper_ci_margin": 0.03,
+    "consecutive_stable_bins": 2,
+    "primary_outcome": "eligible manual activate plus interrupt corrections divided by eligible opportunities",
+    "secondary_outcomes": [
+      "manual activate rate",
+      "manual interrupt rate",
+      "wake rate",
+      "shared versus personal probability",
+      "personal-head update count"
+    ],
+    "scope": "engineering simulation only; no TTS voice or opportunity is an independent human participant"
+  }
+}

@@ -1,0 +1,829 @@
+<!doctype html>
+<!-- Desktop study document. Stable element identifiers connect accessible controls to the participant controller and bilingual rendering layer. -->
+
+<html lang="zh-CN" data-app-ready="false">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex,nofollow">
+    <title>Tap-to-Adapt 在线研究</title>
+    <link rel="stylesheet" href="static/styles.css?v=20260904-enrollment-closed-v216">
+  </head>
+  <body>
+    <div id="study-device-gate" class="device-role-gate" role="alert" aria-live="assertive">
+      <div class="device-role-gate-card">
+        <span class="device-role-gate-kicker">设备检查 / Device check</span>
+        <h1 id="study-device-gate-title">正在检查主实验设备</h1>
+        <p id="study-device-gate-message">实验系统必须在笔记本或台式电脑浏览器中打开。</p>
+        <p class="device-role-gate-english">The study system must be opened in a desktop or laptop browser.</p>
+        <div class="device-role-gate-help">
+          请在电脑上重新打开 <strong>127.0.0.1:8765</strong> 或 <strong>127.0.0.1:8765</strong>。<br>
+          如需帮助，请联系微信 <strong>study-contact</strong>（微信名：Research team）。
+        </div>
+      </div>
+    </div>
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">T</div>
+        <div>
+          <p class="brand-name">Tap-to-Adapt</p>
+          <p class="brand-subtitle">在线语音交互研究</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-quiet language-toggle" type="button" data-language-toggle>English</button>
+        <div class="header-status" aria-live="polite">
+          <span id="connection-dot" class="status-dot"></span>
+          <button id="connection-label" class="connection-label-button" type="button">尚未连接</button>
+        </div>
+        <button id="logout-btn" class="btn btn-quiet logout-btn hidden" type="button">退出编号</button>
+      </div>
+    </header>
+
+    <div id="pilot-banner" class="pilot-banner hidden">非正式数据模式：当前数据不能并入正式 Study A 或 Study B</div>
+    <div id="capacity-banner" class="capacity-banner hidden" role="alert" aria-live="assertive">
+      <strong id="capacity-banner-title">当前同时使用人数较多</strong>
+      <p id="capacity-banner-copy">为保证语音与网络稳定，请约 30 分钟后再来尝试。</p>
+    </div>
+    <div id="page-visibility-notice" class="page-visibility-notice hidden" role="status" aria-live="polite">
+      全程保持电脑实验系统全屏；退出全屏或离开页面共用 30 秒离开时限
+    </div>
+    <div class="participant-help-banner">遇到任何问题，请随时联系微信 <strong>study-contact</strong>（微信名：Research team），我们会及时帮你解答。</div>
+    <div id="setup-deadline-banner" class="setup-deadline-banner hidden" role="timer" aria-live="polite" aria-atomic="true">
+      <div>
+        <strong>请在 30 分钟内完成准备并连接手机</strong>
+        <p>倒计时从电脑实验会话创建时开始；完成设备检测、手机连接并启动正式实验后自动停止。</p>
+        <span id="setup-deadline-start">开始时间：—</span>
+      </div>
+      <div class="setup-deadline-clock">
+        <span>准备时间剩余</span>
+        <strong id="setup-deadline-countdown">30:00</strong>
+      </div>
+    </div>
+
+    <main>
+      <section id="login-view" class="page-shell">
+        <div class="narrow">
+          <h1 class="view-title">开始 Tap-to-Adapt 实验</h1>
+          <p class="view-lead">报名时请留下邮箱、电话或微信中的至少一项。系统随后会生成匿名内部编号，并依次引导你完成知情同意、调查问卷和报销信息选择。</p>
+          <div class="panel">
+            <div class="panel-body public-enrollment-intro">
+              <div class="enrollment-fact-grid">
+                <div><strong>实验报酬</strong><span>完成实验和最终问卷后领取 40 元</span></div>
+                <div><strong>领取方式</strong><span>添加微信 study-contact（微信名：Research team），并发送完成页显示的编号尾号</span></div>
+                <div><strong>遇到问题</strong><span>随时联系微信 study-contact（微信名：Research team），我们会及时帮你解答</span></div>
+              </div>
+              <p id="instance-notice" class="helper-text"></p>
+              <div id="public-enroll-closed" class="enrollment-closed-notice hidden" role="status">
+                <p>实验暂时结束不接收新的受试者，如果您有兴趣请联系study-contact</p>
+              </div>
+              <div id="public-enroll-open">
+              <fieldset class="compensation-contact-card enrollment-contact-card">
+                <legend>报名联系方式（至少填写一项）</legend>
+                <p class="helper-text">请填写邮箱、电话号码或微信号中的至少一项，用于实验联系与发放报酬。联系方式会单独加密保存，不进入研究分析、模型训练或发布数据集。</p>
+                <div class="compensation-contact-grid">
+                  <div class="form-row">
+                    <label for="enrollment-contact-email">邮箱</label>
+                    <input id="enrollment-contact-email" type="email" maxlength="254" autocomplete="email">
+                  </div>
+                  <div class="form-row">
+                    <label for="enrollment-contact-phone">电话号码</label>
+                    <input id="enrollment-contact-phone" type="tel" maxlength="40" autocomplete="tel">
+                  </div>
+                  <div class="form-row">
+                    <label for="enrollment-contact-wechat">微信号</label>
+                    <input id="enrollment-contact-wechat" type="text" maxlength="100" autocomplete="off" spellcheck="false">
+                  </div>
+                </div>
+              </fieldset>
+              <div class="button-row">
+                <button id="enroll-submit" class="btn btn-primary" type="button" disabled>加密保存联系方式并开始填写</button>
+                <button id="enroll-future-appointment" class="btn btn-secondary" type="button" disabled>预约未来时间</button>
+              </div>
+              <p class="helper-text">现在有空位时可直接开始；也可以先预约未来 12 小时内的时间，到点后再用四位凭证进入。</p>
+              </div>
+              <p id="login-error" class="error-text" role="alert"></p>
+              <div class="appointment-resume-login">
+                <h2>已预约受试者入口</h2>
+                <p class="helper-text">若你已经预约实验，请输入四位预约凭证进入。忘记凭证时，填写上方已登记的联系方式或下方姓名，对上后无需凭证也可以继续实验。</p>
+                <div class="form-row">
+                  <label for="appointment-resume-name">姓名（忘记凭证时填写）</label>
+                  <input id="appointment-resume-name" type="text" maxlength="100" autocomplete="name" spellcheck="false">
+                </div>
+                <div class="appointment-resume-login-row">
+                  <input id="appointment-resume-voucher" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="4" pattern="\d{4}" placeholder="四位预约凭证" aria-label="四位预约凭证">
+                  <button id="appointment-resume-submit" class="btn btn-secondary" type="button">进入已预约实验</button>
+                </div>
+                <p id="appointment-resume-error" class="error-text" role="alert"></p>
+              </div>
+              <div class="final-recovery-login">
+                <h2>继续填写最终问卷</h2>
+                <p class="helper-text">如果你已完成计时互动但尚未提交最终问卷，请输入服务器发放的 8 位受试者凭据。</p>
+                <div class="final-recovery-login-row">
+                  <input id="final-recovery-entry" type="text" maxlength="9" autocomplete="one-time-code" spellcheck="false" placeholder="例如 ABCD-2X7K" aria-label="最终问卷受试者凭据">
+                  <button id="final-recovery-submit" class="btn btn-secondary" type="button">继续最终问卷</button>
+                </div>
+                <p id="final-recovery-error" class="error-text" role="alert"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="appointment-view" class="page-shell hidden">
+        <div class="narrow">
+          <h1 class="view-title">智能体互动用户实验预约</h1>
+          <p class="view-lead">为保证实验过程顺利进行，同一预约时段仅安排一位参与者。</p>
+          <div class="panel appointment-wait-card">
+            <div class="panel-body">
+              <span class="appointment-kicker">已锁定实验位置</span>
+              <h2 id="appointment-wait-time">—</h2>
+              <p id="appointment-wait-copy">请在预约时间回到本页面。预约时间到达后 10 分钟内输入凭证进入；若上一位尚未结束，请等到其最长时限后再输入。空闲后超过 15 分钟未进入，凭证失效。</p>
+              <div id="appointment-countdown" class="appointment-countdown" aria-live="polite">—</div>
+              <div class="appointment-voucher-card">
+                <span>预约凭证</span>
+                <strong id="appointment-voucher-display">——</strong>
+                <p>请妥善保存四位凭证。到达预约时间后输入凭证进入；如凭证遗失，可返回首页用联系方式或姓名进入，也可联系微信 study-contact。</p>
+              </div>
+              <div id="appointment-arrival-gate" class="appointment-arrival-gate hidden">
+                <label for="appointment-voucher-entry">请输入四位预约凭证</label>
+                <div class="appointment-voucher-entry-row">
+                  <input id="appointment-voucher-entry" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="4" pattern="\d{4}" placeholder="四位数字">
+                  <button id="appointment-voucher-submit" class="btn btn-primary" type="button">验证凭证并进入</button>
+                </div>
+              </div>
+              <p id="appointment-delay-message" class="appointment-delay-message hidden" role="status"></p>
+              <p class="appointment-lock-copy">预约等待期间请保持本页打开。需要离开可点右上角「退出编号」。系统每 15 秒自动检查一次；上一位结束后请在 15 分钟内输入凭证进入。</p>
+              <p id="appointment-wait-error" class="error-text" role="alert"></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="consent-view" class="page-shell hidden">
+        <div class="narrow">
+          <h1 id="consent-title" class="view-title">知情同意</h1>
+          <p class="view-lead">请完整阅读本研究知情同意书后勾选同意并打字输入姓名。可选数据授权不会影响是否能够参加研究；手写签名与身份证号仍仅在后续报销页按信任程度自愿提供。</p>
+          <div class="panel">
+            <div class="panel-body">
+              <div id="consent-document" class="consent-document" tabindex="0"></div>
+              <form id="consent-form">
+                <div id="consent-choices" class="check-stack"></div>
+                <label class="consent-typed-name-field" for="consent-typed-name">
+                  <span id="consent-typed-name-label">参与者姓名（打字输入）</span>
+                  <input id="consent-typed-name" name="typed_name" type="text" minlength="2" maxlength="100" autocomplete="name" required>
+                </label>
+                <p id="consent-typed-name-help" class="helper-text">请输入您的真实姓名。打字姓名与屏幕勾选确认共同构成电子知情同意记录。</p>
+                <p id="consent-scroll-hint" class="helper-text">请先阅读到文件末尾，再进行电子签署。</p>
+                <p class="helper-text">电子同意书一式两份：研究团队归档副本写入独立的不可修改同意库；参与者留存副本会在签署后自动下载。两份对应同一记录 ID、文件版本、哈希、签署时间、打字姓名和授权选择。</p>
+                <div class="button-row end">
+                  <button id="consent-submit" class="btn btn-primary" type="submit" disabled>确认并电子签署</button>
+                </div>
+                <p id="consent-error" class="error-text" role="alert"></p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="compensation-view" class="page-shell hidden">
+        <div class="narrow">
+          <h1 id="compensation-title" class="view-title">请您提供您的信息，方便我们记录</h1>
+          <p id="compensation-lead" class="view-lead">身份证号与手写签名仅用于学校统一财务报销；不填写不影响继续实验。请至少留下邮箱、电话号码或微信号中的一项，方便我们联系与发放报酬。</p>
+          <div class="panel">
+            <div class="panel-body">
+              <div id="compensation-draft-notice" class="draft-notice"></div>
+              <div id="compensation-debug-notice" class="debug-identity-notice hidden">
+                <strong>个人调试数据保持隔离</strong>
+                <p id="compensation-debug-copy"></p>
+              </div>
+              <section class="compensation-notice" aria-labelledby="compensation-notice-heading">
+                <h2 id="compensation-notice-heading">为什么需要这些信息</h2>
+                <p id="compensation-purpose"></p>
+                <ul id="compensation-protections"></ul>
+              </section>
+              <div id="compensation-contact-saved" class="contact-saved-notice hidden" role="status">联系方式已在报名时单独加密保存，无需重复填写。</div>
+              <fieldset id="compensation-contact-card" class="compensation-contact-card">
+                <legend>联系方式（至少填写一项）</legend>
+                <p id="compensation-contact-help" class="helper-text">请至少留下邮箱、电话号码或微信号中的一项，用于联系、发放实验报酬和处理报销；不会用于研究分析、模型训练或数据集发布。</p>
+                <div class="compensation-contact-grid">
+                  <div class="form-row">
+                    <label for="compensation-contact-email">邮箱</label>
+                    <input id="compensation-contact-email" name="contact_email" type="email" maxlength="254" autocomplete="email">
+                  </div>
+                  <div class="form-row">
+                    <label for="compensation-contact-phone">电话号码</label>
+                    <input id="compensation-contact-phone" name="contact_phone" type="tel" maxlength="40" autocomplete="tel">
+                  </div>
+                  <div class="form-row">
+                    <label for="compensation-contact-wechat">微信号</label>
+                    <input id="compensation-contact-wechat" name="contact_wechat" type="text" maxlength="100" autocomplete="off" spellcheck="false">
+                  </div>
+                </div>
+              </fieldset>
+              <div id="compensation-contact-only-panel" class="contact-only-panel hidden">
+                <p>您此前已完成报销身份资料选择；现在只需补充至少一种联系方式。</p>
+                <button id="compensation-contact-submit" class="btn btn-primary" type="button">加密保存联系方式并继续</button>
+              </div>
+              <fieldset id="compensation-route-choice" class="compensation-route-choice">
+                <legend id="compensation-choice-prompt">请选择是否提供学校报销身份资料</legend>
+                <label class="choice-card">
+                  <input name="compensation_route" type="radio" value="provide">
+                  <span id="compensation-provide-choice">我愿意提供统一报销所需信息。</span>
+                </label>
+                <label class="choice-card">
+                  <input name="compensation_route" type="radio" value="decline">
+                  <span id="compensation-decline-choice">我暂不信任或不愿提供，但仍愿意继续实验。</span>
+                </label>
+              </fieldset>
+              <div id="compensation-decline-panel" class="decline-panel hidden">
+                <p id="compensation-decline-explanation"></p>
+                <button id="compensation-decline-submit" class="btn btn-primary" type="button">不提供身份信息，继续实验</button>
+              </div>
+              <form id="compensation-form" class="hidden" autocomplete="off">
+                <h2 class="compensation-identity-heading">仅在您选择提供并信任后填写</h2>
+                <p class="helper-text">证件号码和手写签名为可选报销身份资料；姓名沿用知情同意页已填写内容，无需重复填写。不提供也可以继续实验。</p>
+                <input id="compensation-full-name" name="full_name" type="hidden" value="">
+                <p id="compensation-name-reuse" class="helper-text">姓名将使用知情同意页已填写的姓名。</p>
+                <div class="form-row">
+                  <label for="compensation-document-type">证件类型</label>
+                  <select id="compensation-document-type" name="document_type" required>
+                    <option value="resident_identity_card">居民身份证</option>
+                    <option value="passport_or_other">护照或其他获准证件</option>
+                  </select>
+                </div>
+                <div class="form-row">
+                  <label for="compensation-document-number">身份证号／证件号</label>
+                  <input id="compensation-document-number" name="document_number" type="text" minlength="5" maxlength="40" inputmode="text" autocomplete="off" spellcheck="false" required>
+                  <span class="helper-text">系统仅保存加密密文；页面不会在提交后重新显示证件号。</span>
+                </div>
+                <div class="form-row">
+                  <div class="signature-label-row">
+                    <label for="compensation-signature">手写电子签名</label>
+                    <button id="clear-compensation-signature" class="btn btn-quiet" type="button">清除重写</button>
+                  </div>
+                  <canvas id="compensation-signature" class="signature-pad" width="720" height="220" tabindex="0" aria-label="请用鼠标、触控板或触摸屏在此手写签名"></canvas>
+                  <span class="helper-text">请用鼠标、触控板或触摸屏书写。这里保存的是手写确认图样，不宣称构成受信任服务提供者签发的合格电子签名。</span>
+                </div>
+                <label class="check-row sensitive-consent-row">
+                  <input id="compensation-separate-consent" name="separate_consent" type="checkbox" required>
+                  <span id="compensation-affirmation"></span>
+                </label>
+                <button id="compensation-submit" class="btn btn-primary" type="submit">加密保存并继续</button>
+              </form>
+              <p id="compensation-error" class="error-text" role="alert"></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="setup-view" class="page-shell hidden">
+        <div class="workspace">
+          <nav class="step-nav" aria-label="实验进度">
+            <div class="step-item active" data-step="overview"><span class="step-number">1</span><span>熟悉流程</span></div>
+            <div class="step-item" data-step="network"><span class="step-number">2</span><span>设备检测</span></div>
+            <div class="step-item" data-step="phone"><span class="step-number">3</span><span>连接手机</span></div>
+            <div class="step-item" data-step="training"><span class="step-number">4</span><span>点击练习</span></div>
+            <div class="step-item" data-step="ready"><span class="step-number">5</span><span>开始实验</span></div>
+          </nav>
+
+          <div>
+            <div class="consent-copy-strip" role="status" aria-label="电子同意书副本状态">
+              <div class="consent-copy-summary">
+                  <span class="consent-copy-kicker">电子同意书 · 一式两份</span>
+                  <strong>研究团队归档副本已保存</strong>
+                  <p>研究服务器已保存本次每一项“同意/未同意”选择、文件版本、哈希和签署时间；参与者副本可随时重新下载并打印。</p>
+              </div>
+              <div class="consent-copy-actions">
+                <button id="download-consent-copy" class="btn btn-secondary" type="button">下载参与者留存副本</button>
+                <button id="download-consent-evidence" class="btn btn-secondary" type="button">下载可验证证据包</button>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panel-body">
+                <h1 class="section-heading">先熟悉本次完整实验</h1>
+                <p class="section-copy">本次正式交互采用固定的六分钟统计周期，有效交互 30 分钟（5 个活跃块），页面计时流程约 34 分钟且不超过 60 分钟。页面会自动切换对象并提示休息；设备检测和结束问卷不计入正式交互计时。</p>
+                <div class="setup-summary">
+                  <div class="summary-cell"><strong>每周期前 4 分钟</strong><span>和电脑上的实验系统自然对话；说完后等待 1～3 秒，若仍未开始且希望它回答，点击“现在回答”。若已超过约 5 秒仍未自动回答，请重新说一遍，不要再为上一句话点击。</span></div>
+                  <div class="summary-cell"><strong>随后 2 分钟</strong><span>页面提示后改与手机陪伴智能体对话；实验系统若不合适地介入，点击电脑界面中的“停止回答”。</span></div>
+                  <div class="summary-cell"><strong>周期后休息 1 分钟</strong><span>停止对话和点击；休息段不采集音频、不更新模型，也不进入主要统计。</span></div>
+                </div>
+                <div class="flow-note">
+                  <strong>话题本会一直可用</strong>
+                  <p>进入正式交互后，页面会显示话题本。它只用于避免冷场，不是准入条件，也不要求按顺序完成；你可以沿着一个话题连续多轮交流，也可以随时自然换题。</p>
+                </div>
+                <div class="study-quiet-notice" role="note">
+                  <strong>实验开始前请确保绝对安静</strong>
+                  <p>关闭电视、音乐、风扇直吹麦克风，避免他人说话或走动。设备检测与正式交互都需在安静室内进行；若环境噪声偏高，麦克风检测将无法通过。</p>
+                </div>
+                <p id="session-error" class="error-text" role="alert"></p>
+              </div>
+            </div>
+
+            <div id="quality-panel" class="panel hidden">
+              <div class="panel-body">
+                <h2 class="section-heading">设备与环境检测</h2>
+                <p class="section-copy">关闭会议软件，连接电源，保持电脑麦克风位置固定。检测时手机背景声应尚未开始。</p>
+                <div class="study-quiet-notice" role="note">
+                  <strong>检测前请确保绝对安静</strong>
+                  <p>关闭电视、音乐、风扇直吹麦克风，避免他人说话或走动。安静段与说话段都会计入麦克风检测。</p>
+                </div>
+                <div class="check-grid">
+                  <article id="network-check" class="check-item">
+                    <h3 class="check-title">网络稳定性</h3>
+                    <p id="network-value" class="check-value">等待检测</p>
+                    <button id="network-btn" class="btn btn-secondary" type="button">检测网络</button>
+                  </article>
+                  <article id="mic-check" class="check-item">
+                    <h3 class="check-title">正常说话音量、环境噪声与语音识别</h3>
+                    <p id="mic-value" class="check-value">嘴与电脑保持 30–90 厘米；先安静，再按提示自然说一句完整的话。</p>
+                    <div class="mic-device-controls">
+                      <label for="mic-device-select">
+                        <span>电脑麦克风</span>
+                        <select id="mic-device-select">
+                          <option value="">Windows / Edge 默认输入设备</option>
+                        </select>
+                      </label>
+                      <button id="refresh-mic-devices" class="btn btn-quiet" type="button">刷新麦克风列表</button>
+                    </div>
+                    <button id="mic-btn" class="btn btn-secondary" type="button">测试说话音量与识别效果</button>
+                    <div id="mic-asr-verification" class="mic-asr-verification hidden" role="group" aria-labelledby="mic-asr-title">
+                      <strong id="mic-asr-title">请核对识别结果</strong>
+                      <blockquote id="mic-asr-transcript"></blockquote>
+                      <p>只要主要意思大致正确即可；少量漏字、近义表达，以及简体与繁体差异都不影响通过。</p>
+                      <div class="mic-asr-actions">
+                        <button id="mic-asr-accept" class="btn btn-primary" type="button">大致正确，可以继续</button>
+                        <button id="mic-asr-reject" class="btn btn-secondary" type="button">明显不对，重新测试</button>
+                      </div>
+                    </div>
+                    <div id="mic-troubleshooting" class="mic-troubleshooting hidden" role="alert">
+                      <strong id="mic-troubleshooting-title">没有收到有效的麦克风声音</strong>
+                      <p id="mic-troubleshooting-detail">请确认 Windows 和 Edge 选择的是同一个真实麦克风，而不是立体声混音、显示器或虚拟输入设备。</p>
+                      <ol>
+                        <li>打开“Windows 设置 → 系统 → 声音 → 输入”，选择真实麦克风并确认输入音量条会随说话跳动。</li>
+                        <li>在 Edge 地址栏输入 <code>edge://settings/content/microphone</code>，选择同一个麦克风。</li>
+                        <li>回到本页点击“刷新麦克风列表”，选择该设备后重新检测。</li>
+                      </ol>
+                      <a class="btn btn-secondary" href="ms-settings:sound">打开 Windows 声音设置</a>
+                    </div>
+                  </article>
+                  <article id="reaction-check" class="check-item">
+                    <h3 class="check-title">点击反应延迟</h3>
+                    <p id="reaction-value" class="check-value">看到红色圆形后立即点击，共 6 次</p>
+                    <button id="reaction-btn" class="btn btn-secondary" type="button">开始反应检测</button>
+                  </article>
+                  <article id="browser-check" class="check-item">
+                    <h3 class="check-title">浏览器与声音播放</h3>
+                    <p id="browser-value" class="check-value">请选择语言并播放测试句</p>
+                    <div class="playback-test-controls">
+                      <label for="browser-audio-language">
+                        <span>测试语音语言</span>
+                        <select id="browser-audio-language">
+                          <option value="zh-CN" selected>中文</option>
+                          <option value="en-US">英文</option>
+                        </select>
+                      </label>
+                      <button id="browser-btn" class="btn btn-secondary" type="button">播放测试句</button>
+                      <label id="browser-answer-row" class="playback-answer-row hidden" for="browser-audio-answer">
+                        <span>请输入你听到的内容</span>
+                        <input id="browser-audio-answer" type="text" autocomplete="off" autocapitalize="sentences" spellcheck="false" placeholder="请输入听到的句子">
+                      </label>
+                      <button id="browser-audio-verify" class="btn btn-secondary hidden" type="button" disabled>核对听辨内容</button>
+                    </div>
+                  </article>
+                </div>
+                <div id="reaction-stage" class="reaction-stage hidden">
+                  <span id="reaction-wait">请等待</span>
+                  <button id="reaction-target" class="reaction-target hidden" type="button">点我（还差 6 次）</button>
+                </div>
+              </div>
+            </div>
+
+            <div id="phone-panel" class="panel hidden">
+              <div class="panel-body">
+                <h2 class="section-heading">连接手机伴随端</h2>
+                <div id="companion-link-instruction" class="companion-link-instruction" tabindex="-1">
+                  <strong>请现在用手机打开此专属链接</strong>
+                  <div class="companion-link-row">
+                    <a id="companion-url" class="companion-link" href="#" target="_blank" rel="noreferrer"></a>
+                    <button id="companion-url-copy" class="btn btn-secondary companion-link-copy" type="button">复制链接</button>
+                    <p class="companion-link-transfer-tip" role="note">
+                      <strong>小提示</strong>
+                      <span>推荐在电脑上登录微信等聊天软件，将复制的链接发送到手机后直接打开；请勿逐字手动输入，以免输错。</span>
+                    </p>
+                  </div>
+                  <p id="companion-url-copy-status" class="helper-text companion-link-copy-status hidden" role="status" aria-live="polite"></p>
+                  <span>页面会自动带入当前实验编号，无需再次输入。</span>
+                </div>
+                <p class="section-copy">只有两端同时在线且手机端网络、麦克风、点击反应、浏览器与声音播放检测全部通过，本次实验才会启动。请坐在自然说话位置，让嘴与电脑麦克风、手机均保持 30–90 厘米，并固定设备位置。</p>
+                <p><span id="pair-dot" class="status-dot"></span> <strong id="pair-label">等待手机连接</strong></p>
+                <div id="start-gate-status" class="gate-status" role="status" aria-live="polite" aria-atomic="true" data-ready="false" data-blockers="session_missing,quality_network_pending,quality_microphone_pending,quality_reaction_latency_pending,quality_browser_pending,pair_not_connected">
+                  <strong id="start-gate-summary">开始前还需完成以下条件：</strong>
+                  <ul id="start-gate-blockers" class="gate-blockers">
+                    <li data-blocker-code="session_missing">本次实验尚未创建</li>
+                  </ul>
+                </div>
+                <div class="study-data-collection-option" role="group" aria-labelledby="study-data-collection-label">
+                  <label class="check-row study-data-collection-row" for="study-data-collection-opt-in">
+                    <input id="study-data-collection-opt-in" name="study_data_collection_opt_in" type="checkbox">
+                    <span id="study-data-collection-label">
+                      <strong>可选：同意脱敏数据记录与学术发布</strong>
+                      <button id="study-data-collection-info" class="text-link-button" type="button">了解详情</button>
+                    </span>
+                  </label>
+                  <p id="study-data-collection-thanks" class="study-data-collection-thanks hidden" role="status" aria-live="polite">感谢你愿意为研究贡献去标识化数据。</p>
+                  <p class="helper-text">此为可选项；不勾选也不影响继续实验。</p>
+                </div>
+                <div class="study-no-pause-notice" role="note">
+                  <strong>请注意：电脑实验系统必须全程全屏，且实验不支持暂停</strong>
+                  <p>点击开始后，系统会要求进入全屏。退出全屏、切换页面或窗口不可见都会计入同一个 30 秒离开时限；未在时限内恢复全屏并回到本页，本次实验无效，需从头重新开始。</p>
+                </div>
+                <button id="start-study-btn" class="btn btn-primary blocked-action" type="button" aria-describedby="start-gate-status" aria-disabled="true" data-blockers="session_missing">开始完整实验</button>
+                <div id="interrupt-choice-panel" class="interrupt-choice-panel hidden">
+                  <p class="helper-text">请先完成上方检测与手机连接。通过后再选择下一步。</p>
+                  <button id="interrupt-restart-btn" class="btn btn-primary" type="button">重新开始实验（推荐）</button>
+                  <button id="interrupt-continue-btn" class="btn btn-secondary" type="button">从上次中断处继续（会被记录，不推荐）</button>
+                </div>
+                <p id="start-error" class="error-text" role="alert"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div id="tap-training-overlay" class="tap-training-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="training-title">
+        <div class="tap-training-dialog">
+          <button id="training-close-btn" class="training-close" type="button" aria-label="关闭点击练习">×</button>
+          <p class="training-kicker">约 2 分钟 · 不进入正式计时与模型学习</p>
+          <h2 id="training-title">先练习什么时候点击</h2>
+
+          <div id="training-intro">
+            <p>界面中的“现在回答 / 停止回答”按钮用于纠正响应时机，不是用来推进页面，也不需要每轮点击。请根据当下真实意图判断：</p>
+            <div class="training-rules">
+              <article>
+                <strong>刚说完：先等待 1～3 秒</strong>
+                <span>说完后先等待 1～3 秒，让电脑实验智能体有机会自行回答；如果等待后仍未开始且你希望它现在回答，再点击“现在回答”。</span>
+              </article>
+              <article>
+                <strong>等待 1～3 秒后仍未回答：现在回答</strong>
+                <span>你已说完并希望得到回答；等待 1～3 秒仍未开始时，点击一次“现在回答”。</span>
+              </article>
+              <article>
+                <strong>超过约 5 秒仍未回答：重新说一遍</strong>
+                <span>请重新说一遍，不要再为上一句话点击“现在回答”。</span>
+              </article>
+              <article>
+                <strong>它不应开始或继续回答：停止回答</strong>
+                <span>你还没开口、还没说完、正在和手机陪伴智能体对话，或不希望这次回答继续时，点击一次“停止回答”。</span>
+              </article>
+              <article>
+                <strong>其他情况：不点击</strong>
+                <span>电脑实验智能体正在合适地回答、你不期待回答、或页面正在休息时，都不点击。</span>
+              </article>
+            </div>
+            <p class="helper-text">练习共 7 题。答错后会解释原因，并锁定 5 秒供你阅读，再在同一题重新选择；通过后才可开始正式实验。</p>
+            <button id="training-begin-btn" class="btn btn-primary" type="button">开始 7 题练习</button>
+          </div>
+
+          <div id="training-trial" class="hidden">
+            <div class="training-progress">
+              <strong id="training-progress-label">练习 1/7</strong>
+              <span>每道新题及每次错答后均需阅读 5 秒</span>
+            </div>
+            <article id="training-scenario" class="training-scenario" data-state="waiting">
+              <div class="training-agent-display">
+                <span class="emotion-frame training-emotion-frame" aria-hidden="true">
+                  <img id="training-agent-emotion" class="agent-emotion" src="static/emotions/wait.png" alt="">
+                </span>
+                <div>
+                  <span id="training-agent-state" class="training-agent-state" data-state="waiting">等待</span>
+                  <h3 id="training-scenario-title"></h3>
+                  <p id="training-scenario-copy"></p>
+                </div>
+              </div>
+            </article>
+            <div class="training-actions">
+              <button id="training-tap-btn" class="training-tap-button" type="button">A. 点击“现在回答”按钮</button>
+              <button id="training-wait-btn" class="btn btn-secondary" type="button">B. 这时不点击</button>
+              <button id="training-retry-btn" class="btn btn-secondary training-retry-button hidden" type="button">C. 这时不点击，然后我再重新说一遍</button>
+            </div>
+            <p id="training-feedback" class="training-feedback" role="status" aria-live="assertive"></p>
+          </div>
+
+          <div id="training-complete" class="training-complete hidden">
+            <div class="training-pass-mark" aria-hidden="true">✓</div>
+            <h3>点击练习已通过</h3>
+            <p>正式实验中继续按刚才的规则判断。练习行为不会训练模型，也不会进入正式统计。</p>
+            <button id="training-finish-btn" class="btn btn-primary" type="button">返回并开始完整实验</button>
+          </div>
+        </div>
+      </div>
+
+      <section id="study-view" class="hidden">
+        <div class="study-shell">
+          <div class="study-toolbar">
+            <div>
+              <div id="phase-label" class="phase-label">准备开始</div>
+              <div id="phase-detail" class="phase-detail">准备进入第 1 个六分钟统计周期</div>
+            </div>
+            <div id="phase-timer" class="timer">00:00</div>
+            <div class="toolbar-actions">
+              <button id="topics-toggle" class="btn btn-secondary" type="button">话题本</button>
+              <button id="end-early-btn" class="btn btn-danger" type="button">提前结束实验</button>
+            </div>
+          </div>
+          <div id="primary-attention-banner" class="primary-attention-banner hidden" role="status" aria-live="polite">
+            <div class="primary-attention-banner-inner">
+              <span class="agent-identity-pill agent-identity-pill-study">电脑 · 实验系统</span>
+              <strong>与实验系统对话 · 本轮 4 分钟</strong>
+              <p>请对着电脑与「实验系统」说话（不是手机上的陪伴伙伴）。说完后等待 1～3 秒；若仍未自动回答且你希望它回答，请点「现在回答」。若已超过约 5 秒仍未回答，请重新说一遍，不要再为上一句话点击。若接话时机不合适，请点「停止回答」。</p>
+              <div id="primary-countdown" class="primary-attention-countdown">04:00</div>
+            </div>
+          </div>
+          <div id="companion-attention-banner" class="companion-attention-banner hidden" role="status" aria-live="polite">
+            <div class="companion-attention-banner-inner">
+              <img
+                class="companion-attention-art"
+                data-static-src="static/guides/look-at-phone.svg"
+                width="420"
+                height="280"
+                alt="请拿起手机并看着屏幕，与手机陪伴伙伴对话"
+              >
+              <div class="companion-attention-copy">
+                <span class="agent-identity-pill agent-identity-pill-companion">手机 · 陪伴伙伴</span>
+                <strong>请看手机，与陪伴伙伴对话 · 本轮 2 分钟</strong>
+                <p>请转向手机，长按圆形按钮与「手机陪伴伙伴」交流（与电脑实验系统是两个不同个体）。电脑端仍在监听：若实验系统不合适地介入，请点击下方「停止回答」。</p>
+                <p class="stay-on-page-notice">请不要关闭电脑实验页，也不要离开本页。</p>
+                <div id="companion-countdown" class="companion-attention-countdown">02:00</div>
+                <div id="companion-invite-countdown" class="companion-invite-countdown hidden" data-state="idle" role="status" aria-live="polite">
+                  <span id="companion-invite-label">若暂未开口，手机陪伴伙伴将在 10 秒后主动打招呼</span>
+                  <span class="companion-invite-seconds-wrap hidden" aria-hidden="true"><strong id="companion-invite-seconds">10</strong></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="interaction-presence-strip" class="interaction-presence-strip hidden" data-state="monitoring" role="status" aria-live="polite">
+            <span class="interaction-presence-marker" aria-hidden="true"></span>
+            <strong id="interaction-presence-title">请保持连续语音对话</strong>
+            <span id="interaction-presence-copy">请留在当前位置，持续与当前智能体自然对话；倾听它回答时无需说话。</span>
+            <strong id="interaction-presence-countdown" class="interaction-presence-countdown hidden" aria-hidden="true">30</strong>
+          </div>
+          <div class="study-body">
+            <div class="tap-zone-wrap">
+              <section id="tap-zone" class="tap-zone" data-state="waiting" aria-live="polite" aria-atomic="false">
+                <div class="agent-identity-row">
+                  <span class="agent-identity-pill agent-identity-pill-study">电脑 · 实验系统</span>
+                  <span class="agent-identity-note">与手机陪伴伙伴不是同一个</span>
+                </div>
+                <div class="tap-main">
+                  <span class="emotion-frame" aria-hidden="true">
+                    <img id="agent-emotion" class="agent-emotion" src="static/emotions/wait.png" alt="">
+                  </span>
+                  <span id="agent-state" class="agent-state">等待</span>
+                  <span id="agent-state-description" class="agent-state-description">实验系统尚未开始回答</span>
+                </div>
+                <p id="tap-neutral-guidance" class="tap-neutral-guidance" role="note"><strong>无需每轮点击，请按等待时长判断：</strong>说完后等待 1～3 秒；若仍未自动回答且你希望它回答，请点“现在回答”。如果已经超过约 5 秒仍未回答，请重新说一遍，不要再为上一句话点击。</p>
+                <button id="tap-action-btn" class="tap-action-button" type="button" data-action="manual_activate">
+                  <span class="tap-action-affordance" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                      <path d="M5 3.5v14l3.6-3.6 2.8 5.6 2.1-1.1-2.7-5.3h5.7L5 3.5Z"></path>
+                    </svg>
+                    <span>可点击操作</span>
+                  </span>
+                  <strong id="tap-action-label">现在回答</strong>
+                  <span id="tap-instruction" class="tap-instruction">说完后等待 1～3 秒；仍未回答时点击（超过约 5 秒请重新说一遍）</span>
+                </button>
+                <p id="tap-action-feedback" class="tap-action-feedback hidden" role="status" aria-live="polite"></p>
+                <div id="agent-subtitle" class="agent-subtitle hidden" aria-live="polite"></div>
+                <span id="live-transcript" class="live-transcript">可以从右侧任选一个话题开始说</span>
+              </section>
+            </div>
+            <aside id="topic-drawer" class="topic-drawer">
+              <h2>对话话题本</h2>
+              <p class="helper-text">仅用于避免冷场；可连续多轮交流，也可随时自然换题。</p>
+              <div id="topic-list"></div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <div id="data-collection-overlay" class="start-confirm-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="data-collection-title">
+        <div class="overlay-dialog start-confirm-dialog">
+          <h2 id="data-collection-title">脱敏数据记录与学术发布</h2>
+          <p>若你勾选此项，研究团队可在去标识化处理后，将你的交互数据用于学术分析与公开发布。</p>
+          <p>发布内容不包含可直接识别个人身份的原始语音、逐字转写或完整对话原文；仍会先经过脱敏与审核流程。</p>
+          <p>你可以随时不勾选；不勾选不会影响参加实验、完成实验或领取补偿。</p>
+          <div class="start-confirm-actions">
+            <button id="data-collection-close" class="btn btn-primary" type="button">我知道了</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="share-appointment-overlay" class="start-confirm-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="share-appointment-title">
+        <div class="overlay-dialog appointment-dialog">
+          <span class="appointment-kicker">智能体互动用户实验 · 预约</span>
+          <h2 id="share-appointment-title">请选择未来 12 小时内的实验时间</h2>
+          <p id="share-appointment-copy">当前已有参与者取得实验位置。每个已预约开始时间的前后 1 小时内均不可再预约；请在预约时间到达后 10 分钟内回到本页，否则该预约自动作废。</p>
+          <div class="appointment-time-field">
+            <span>请选择实验开始时间块（北京时间）</span>
+            <div id="share-appointment-slots" class="appointment-slot-grid" role="radiogroup" aria-label="可预约时间块"></div>
+            <input id="share-appointment-time" type="hidden">
+          </div>
+          <p id="share-appointment-window" class="helper-text"></p>
+          <div class="appointment-slot-legend" aria-label="时间块图例">
+            <span><i class="slot-legend-available"></i>可选择</span>
+            <span><i class="slot-legend-blocked"></i>已预约或缓冲时间</span>
+          </div>
+          <div id="share-appointment-blocked" class="appointment-blocked-times"></div>
+          <p id="share-appointment-error" class="error-text" role="alert"></p>
+          <div class="start-confirm-actions">
+            <button id="share-appointment-cancel" class="btn btn-secondary hidden" type="button">取消，改为现在开始</button>
+            <button id="share-appointment-submit" class="btn btn-primary" type="button">确认预约</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="appointment-success-overlay" class="start-confirm-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="appointment-success-title">
+        <div class="overlay-dialog appointment-dialog appointment-success-dialog">
+          <span class="appointment-kicker">智能体互动用户实验 · 预约成功</span>
+          <h2 id="appointment-success-title">预约成功</h2>
+          <p id="appointment-success-time">—</p>
+          <div class="appointment-success-voucher">
+            <span>四位预约凭证</span>
+            <strong id="appointment-success-voucher">——</strong>
+          </div>
+          <p>请截图或记下凭证。到达预约时间后输入凭证进入；如凭证遗失，请联系微信 study-contact 获取。</p>
+          <div class="start-confirm-actions">
+            <button id="appointment-success-copy" class="btn btn-secondary" type="button">复制凭证</button>
+            <button id="appointment-success-confirm" class="btn btn-primary" type="button">我已保存，进入等待页</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="start-confirm-overlay" class="start-confirm-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="start-confirm-title" data-countdown-state="waiting">
+        <div class="overlay-dialog start-confirm-dialog">
+          <h2 id="start-confirm-title">确认开始实验</h2>
+          <p>实验开始后不支持暂停。</p>
+          <p>电脑实验系统必须全程全屏。退出全屏、切换页面或窗口不可见都会计入同一个 30 秒离开时限；必须在倒计时结束前恢复全屏并回到本页。</p>
+          <p class="start-confirm-question">确定现在开始吗？</p>
+          <div id="start-confirm-countdown" class="start-confirm-countdown" aria-live="polite" aria-atomic="true">5</div>
+          <p id="start-confirm-hint" class="start-confirm-hint">请阅读上方说明，倒计时结束后方可开始</p>
+          <div class="start-confirm-actions">
+            <button id="start-confirm-cancel" class="btn btn-secondary" type="button">取消</button>
+            <button id="start-confirm-ok" class="btn btn-primary" type="button" disabled aria-disabled="true">进入全屏并开始实验（5）</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="start-failure-overlay" class="start-confirm-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="start-failure-title">
+        <div class="overlay-dialog start-confirm-dialog start-failure-dialog">
+          <h2 id="start-failure-title">无法启动实验</h2>
+          <p id="start-failure-message" class="start-failure-message"></p>
+          <ul id="start-failure-blockers" class="start-failure-blockers"></ul>
+          <p id="start-failure-hint" class="helper-text"></p>
+          <div class="start-confirm-actions">
+            <button id="start-failure-ok" class="btn btn-primary" type="button">我知道了</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="setup-expired-overlay" class="start-confirm-overlay hidden" role="alertdialog" aria-modal="true" aria-live="assertive" aria-labelledby="setup-expired-title">
+        <div class="overlay-dialog setup-expired-dialog">
+          <p class="setup-expired-kicker">准备时限已结束</p>
+          <h2 id="setup-expired-title">30 分钟准备时间已到</h2>
+          <p>此前的电脑实验会话尚未完成准备并启动正式实验，系统已结束该会话并释放实验位置。</p>
+          <p>你已返回倒计时开始前的报名界面。已提交的记录会保留，不会被删除；如需继续参与，请重新报名并生成新编号。</p>
+          <div class="start-confirm-actions">
+            <button id="setup-expired-restart" class="btn btn-primary" type="button">返回报名并重新开始</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="study-loading-overlay" class="study-loading-overlay hidden" role="dialog" aria-modal="true" aria-live="polite" aria-labelledby="study-loading-title">
+        <div class="overlay-dialog study-loading-dialog">
+          <div class="study-loading-spinner" aria-hidden="true"></div>
+          <h2 id="study-loading-title">正在加载中…</h2>
+          <p id="study-loading-detail">正在连接实验系统</p>
+        </div>
+      </div>
+
+      <div id="visibility-grace-overlay" class="pause-overlay hidden" role="dialog" aria-modal="true" aria-live="assertive">
+        <div class="overlay-dialog">
+          <h2 id="visibility-grace-title">实验全屏或页面状态异常</h2>
+          <p id="visibility-grace-copy"><span id="visibility-grace-prefix">请在</span> <strong id="visibility-grace-seconds">30</strong> <span id="visibility-grace-suffix">秒内恢复全屏并返回本页，即可继续当前进度。</span></p>
+          <p class="helper-text">超过时限后需要从头重新开始。</p>
+          <button id="restore-fullscreen-btn" class="btn btn-primary hidden" type="button">重新进入全屏</button>
+        </div>
+      </div>
+
+      <div id="pause-overlay" class="pause-overlay passive-exit-overlay hidden" role="alertdialog" aria-modal="true" aria-live="assertive" aria-labelledby="passive-exit-title" aria-describedby="pause-reason">
+        <div class="overlay-dialog passive-exit-dialog">
+          <p class="passive-exit-kicker">本次实验未完成</p>
+          <h2 id="passive-exit-title">本次实验已退出</h2>
+          <p class="passive-exit-label">退出原因</p>
+          <p id="pause-reason" class="passive-exit-reason">本次实验发生中断，需要从头重新开始。</p>
+          <p class="helper-text">已完成的过程记录会保留，但不会作为端到端完成数据进入用户实验汇总。</p>
+          <button id="resume-btn" class="btn btn-primary" type="button">我知道了，重新准备</button>
+        </div>
+      </div>
+
+      <div id="rest-overlay" class="rest-overlay hidden" role="dialog" aria-modal="true" aria-live="polite">
+        <div class="overlay-dialog">
+          <p class="rest-kicker">本段数据采集与模型更新已停止</p>
+          <h2>请休息一分钟</h2>
+          <p>可以放松眼睛和声音，请不要继续对话或点击屏幕。手机背景声会暂停，倒计时结束后从原位置继续播放。</p>
+          <p class="stay-on-page-notice">请不要离开或关闭当前电脑页面。</p>
+          <div id="rest-countdown" class="timer">01:00</div>
+        </div>
+      </div>
+
+      <section id="questionnaire-view" class="page-shell hidden">
+        <div class="narrow">
+          <h1 id="questionnaire-title" class="view-title">本次实验总体评价</h1>
+          <p id="questionnaire-instructions" class="view-lead"></p>
+          <div id="final-questionnaire-credential-card" class="panel final-questionnaire-credential-card hidden" role="status">
+            <div class="panel-body">
+              <span class="claim-kicker">最终问卷受试者凭据</span>
+              <strong id="final-questionnaire-credential">——</strong>
+              <p>计时互动和模型提交已完成，实验位已释放。最终问卷仍须单独提交；计时完成与问卷提交在后台分开记录。请保存此凭据；若现在离开或曾看到完成页，可之后在首页用凭据继续填写。</p>
+              <button id="copy-final-questionnaire-credential" class="btn btn-secondary" type="button">复制凭据</button>
+              <p id="copy-final-questionnaire-credential-status" class="helper-text" role="status"></p>
+            </div>
+          </div>
+          <form id="questionnaire-form" class="panel">
+            <div id="questionnaire-items" class="panel-body"></div>
+            <div class="panel-body">
+              <button id="questionnaire-submit" class="btn btn-primary" type="submit">提交</button>
+              <p id="questionnaire-error" class="error-text" role="alert"></p>
+              <div id="closeout-status" class="closeout-status hidden" role="alert" aria-live="assertive" data-state="" data-error-code="" data-http-status="">
+                <strong>问卷及已提交的互动数据已经保存，但本次实验完成确认失败。</strong>
+                <p>请保持本页面打开并重试。若持续失败，请联系研究团队并提供错误码 <code id="closeout-error-code"></code>。</p>
+                <p id="closeout-error-detail" class="helper-text"></p>
+                <button id="retry-closeout-btn" class="btn btn-secondary" type="button">重试完成确认</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section id="complete-view" class="page-shell hidden">
+        <div class="narrow">
+          <h1 id="complete-title" class="view-title">本次实验已完成</h1>
+          <p id="complete-copy" class="view-lead">数据已提交。现在可以关闭电脑和手机页面。</p>
+          <div id="compensation-claim" class="compensation-claim panel">
+            <div class="panel-body">
+              <span class="claim-kicker">40元实验报酬</span>
+              <h2>请联系微信 <code id="compensation-wechat">study-contact</code>（微信名：Research team）领取</h2>
+              <p id="compensation-claim-detail">请发送你的参与者编号尾号 <strong id="compensation-code-hint"></strong>。不要通过微信发送身份证照片。</p>
+              <button id="copy-wechat-btn" class="btn btn-secondary" type="button">复制微信号 study-contact</button>
+              <p id="copy-wechat-status" class="helper-text" role="status"></p>
+              <div class="portable-bundle-card">
+                <h3>在你自己的电脑上继续使用</h3>
+                <p>下载本次实验形成的个人响应时机模型、对话历史和长期记忆。数据包只包含当前编号本次实验的数据。</p>
+                <button id="download-portable-bundle-btn" class="btn btn-secondary" type="button">下载我的个人模型与记忆数据包</button>
+                <p id="portable-bundle-status" class="helper-text" role="status"></p>
+                <p class="helper-text">下载后可在 <a href="/#local-source" target="_blank" rel="noopener noreferrer">Tap-to-Adapt 本地项目</a> 中导入，以便在本地继续长期使用。</p>
+              </div>
+            </div>
+          </div>
+          <div class="panel"><div class="panel-body"><p id="completion-code"></p></div></div>
+        </div>
+      </section>
+    </main>
+
+    <footer id="group-session-lock-bar" class="group-session-lock-bar hidden" hidden>
+      <div class="group-session-lock-inner">
+        <div>
+          <p class="group-session-lock-kicker">集体实验锁定</p>
+          <p id="group-session-lock-copy">该时段已锁定，外部不能直接开始实验。持召集密码可在此开启。</p>
+        </div>
+        <div class="group-session-lock-row">
+          <label class="visually-hidden" for="group-session-password">召集密码</label>
+          <input id="group-session-password" type="text" maxlength="12" autocomplete="one-time-code" spellcheck="false" placeholder="召集密码">
+          <button id="group-session-unlock" class="btn btn-primary" type="button">用密码开启实验</button>
+        </div>
+        <p id="group-session-lock-error" class="error-text" role="alert"></p>
+      </div>
+    </footer>
+
+    <div id="code-hint-entry-overlay" class="pause-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="code-hint-entry-title">
+      <div class="pause-card appointment-dialog">
+        <p class="appointment-kicker">编号核验</p>
+        <h2 id="code-hint-entry-title">请输入四位登录码尾号</h2>
+        <p class="helper-text">用于核验当前浏览器上的实验编号。</p>
+        <label for="code-hint-entry-input">登录码尾号</label>
+        <input id="code-hint-entry-input" type="text" maxlength="4" autocomplete="one-time-code" spellcheck="false" placeholder="四位尾号">
+        <div class="interrupt-choice-actions">
+          <button id="code-hint-entry-submit" class="btn btn-primary" type="button">确认</button>
+          <button id="code-hint-entry-cancel" class="btn btn-quiet" type="button">取消</button>
+        </div>
+        <p id="code-hint-entry-error" class="error-text" role="alert"></p>
+      </div>
+    </div>
+
+    <script src="static/i18n.js?v=20260904-enrollment-closed-v216" defer></script>
+    <script src="static/quality-gate.js?v=20260822-server-asr-v168" defer></script>
+    <script src="static/playback-test.js?v=20260805-study-server-tts-v49" defer></script>
+    <script src="static/app.js?v=20260904-enrollment-closed-v216" defer></script>
+  </body>
+</html>

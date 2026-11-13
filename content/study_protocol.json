@@ -1,0 +1,290 @@
+{
+  "version": "single-session-six-minute-blocks-2026-08-09-v29",
+  "timezone": "Asia/Shanghai",
+  "session_design": {
+    "total_sessions": 1,
+    "participant_facing_day_selector": false,
+    "maximum_timed_flow_seconds": 3600,
+    "current_timed_flow_seconds": 2040,
+    "setup_and_questionnaires_outside_timed_flow": true,
+    "require_final_questionnaire": true
+  },
+  "pipeline": {
+    "version": "two-factor-shared-prior-pipeline-v10.3",
+    "study_a_wave_sizes": [12, 8, 8, 8],
+    "study_a_wave_roles": ["seed_donor", "evaluator_donor", "evaluator_donor", "holdout_evaluator"],
+    "study_a_donor_checkpoints": [12, 20, 28],
+    "budget_kind": "eligible_feedback",
+    "budget_semantics": "per_donor_cap",
+    "require_max_q_attainment": false,
+    "q_feedback_levels": [2, 4, 8],
+    "q_opportunity_levels": [2, 4, 8],
+    "snapshot_every_feedback_up_to": 8,
+    "candidate_probe_plans": {
+      "2": {
+        "cells": [[0, 0], [12, 2], [12, 4], [12, 8]],
+        "default_cell": [12, 4]
+      },
+      "3": {
+        "cells": [[0, 0], [12, 4], [20, 4], [20, 8]],
+        "default_cell": [20, 4]
+      },
+      "4": {
+        "cells": [[20, 4], [20, 8], [28, 4], [28, 8]],
+        "default_cell": [28, 4]
+      }
+    },
+    "study_b_selectable_cells": [[12, 2], [12, 4], [12, 8], [20, 4], [20, 8], [28, 4], [28, 8]],
+    "saturation_decision": {
+      "primary_metric": "correction_burden_per_minute",
+      "paired_n_contrast": [20, 28],
+      "required_q_levels": [4, 8],
+      "equivalence_margin_per_minute": 0.1,
+      "bootstrap_replicates": 2000,
+      "require_holdout_completion": true
+    },
+    "shared_prior_algorithm": "class-balanced-equal-donor-capped-applied-feedback-fedavg-from-locked-m0-v6-personal-intercept-excluded",
+    "study_b_initial_per_group": 16,
+    "study_b_reserve_per_group": 2,
+    "matched_other_budget_by_day": {
+      "1": 8
+    },
+    "matched_other_algorithm": "shared-prior-plus-capped-donor-shadow-delta-v3",
+    "formal_fallback_allowed": false,
+    "study_b_selection_requires_blinded_decision_record": true
+  },
+  "initialization": {
+    "version": "guarded-factorized-cold-start-v10-acoustic-timing-authority",
+    "temperature": 4.0,
+    "logit_bias": 0.80,
+    "activation_threshold": 0.70,
+    "decision_factorization": {
+      "minimum_end_of_turn_silence_ms": 0,
+      "explicit_turn_end_required": false,
+      "end_of_turn_definition": "disabled: continuous DistilHuBERT/TapHistory streaming decisions decide response timing without silence or ASR-final turn-end gates",
+      "acoustic_vad": {
+        "adaptive_threshold_enabled": true,
+        "minimum_rms_threshold": 0.020,
+        "noise_multiplier": 1.5,
+        "noise_percentile": 20.0,
+        "window_frames": 50,
+        "calibration_frames": 5,
+        "rms_ema_alpha": 0.35,
+        "voice_confirm_frames": 2,
+        "selection_rule": "voice activity is telemetry/feature context only; it does not gate automatic activation. Response timing is decided by the streaming acoustic model against the effective threshold"
+      },
+      "context_required": false,
+      "reply_needed_threshold": 0.45,
+      "reply_needed_model_version": "selection8-char-tfidf-logistic-v1",
+      "reply_needed_rule": "disabled as an activation gate (v27): automatic activation is decided solely by the streaming acoustic timing model; ASR text is consumed only after activation for LLM chat inference",
+      "conversation_target_rule": "conversation_target is telemetry only; automatic activation remains eligible during companion windows so the experimental agent may barge in",
+      "context_lifecycle": "decision_context no longer gates activation; ASR transcript buffer is used at activation time for chat content"
+    },
+    "warmup_eligible_feedbacks": 0,
+    "warmup_update_scale": 1.0,
+    "network_update_schedule": [
+      {
+        "eligible_feedbacks_lt": 2,
+        "scale": 0.0
+      },
+      {
+        "eligible_feedbacks_lt": 4,
+        "scale": 0.05
+      },
+      {
+        "eligible_feedbacks_lt": 6,
+        "scale": 0.2
+      },
+      {
+        "eligible_feedbacks_lt": 8,
+        "scale": 0.5
+      }
+    ],
+    "network_update_control": "scale multiplies the class-weighted loss, optimizer learning rate (Adam), configured optimizer-step count, and the resulting floating parameter and buffer delta; non-floating buffers are restored and the original learning rate is restored after each feedback",
+    "personal_calibration": {
+      "enabled": true,
+      "algorithm": "class-weighted-online-logistic-intercept",
+      "initial_logit_bias": 0.0,
+      "learning_rate": 0.25,
+      "l2": 0.05,
+      "minimum_logit_bias": -1.25,
+      "maximum_logit_bias": 1.25,
+      "update_scope": "eligible_learning_current_feedback_after_the_protocol_required_personal_or_network_adaptation_step",
+      "shared_prior_inclusion": false
+    },
+    "tap_timing_history": {
+      "enabled": true,
+      "variant_id": "A10_lr_high_0.05",
+      "horizon_s": 60.0,
+      "feature_mode": "full",
+      "fusion_mode": "threshold_and_early",
+      "state_lr": 0.05,
+      "k_interrupt0": 0.08,
+      "k_activate0": 0.04,
+      "early_fusion_delta": 0.5,
+      "logit_clip_delta": 0.75,
+      "selection_evidence": "cold-start feature/backbone sweep vs no-history B; A10 lowest interrupt among first-tier correction rate 0.0781",
+      "coadaptation": "same eligible acoustic taps update replay-v1 personal head and this online threshold/early-fusion controller"
+    },
+    "engineering_calibration_evidence": {
+      "source_run": "simulation-human-v9-20260718-02",
+      "source_origin": "simulation",
+      "cold_start_learning_raw_logit_median": -3.947958469390869,
+      "frozen_raw_logit_reference": 1.5385783910751343,
+      "selection_rule": "v22 adds a soft rest-end chime, a persistent desktop do-not-switch-page notice during timed primary/companion/rest phases, and long-press wording on the companion phone UI",
+      "runtime_label_quota": false,
+      "formal_use": false
+    },
+    "formal_lock_rule": "freeze_after_independent_pilot_before_formal_release"
+  },
+  "feedback": {
+    "version": "observable-activation-interrupt-v3-state-transition-guard",
+    "state_transition_tap_guard_ms": 500,
+    "state_transition_tap_rule": "activation or interruption taps received within 500 ms after an agent-state transition are treated as accidental touches; they do not execute an action, create a label, or update the model",
+    "positive_rule": "manual_activation_while_waiting_in_learning",
+    "negative_rule": "first_valid_user_interrupt_of_the_same_observable_model_activation_born_in_learning_current_regardless_of_thinking_or_speaking_phase_latency_or_pre_tap_speech",
+    "negative_training_window": "audio_window_ending_at_the_original_model_activation_decision",
+    "confidence_rule": "frontend_visibility_activation_binding_and_speech_overlap_are_recorded_for_stratified_analysis_but_do_not_gate_the_negative_label",
+    "other_taps": "execute_action_but_quarantine_only_when_activation_source_or_learning_policy_or_training_integrity_is_ineligible",
+    "latency_clock": "server_monotonic_activation_commit_v2",
+    "eligible_feedback_application": {
+      "minimum_audio_seconds": 0.5,
+      "minimum_audio_samples_at_16000_hz": 8000,
+      "requires_training_audio_compatible": true,
+      "requires_optimizer_step": "when_network_update_scale_is_positive",
+      "requires_persisted_personal_calibration_step": "when_network_update_scale_is_zero",
+      "requires_training_applied": true,
+      "counter_update": "after_current_network_or_persisted_personal_adaptation_step"
+    },
+    "class_balance": {
+      "algorithm": "sqrt_inverse_observed_class_frequency",
+      "minimum_weight": 0.35,
+      "maximum_weight": 3.0
+    }
+  },
+  "quality_gate": {
+    "max_attempts_per_kind_per_day": 2,
+    "network": {
+      "minimum_samples": 10,
+      "maximum_failures": 1,
+      "median_ms_max": 200,
+      "p95_ms_max": 500,
+      "jitter_ms_max": 150,
+      "hard_p95_ms_max": 1000
+    },
+    "microphone": {
+      "snr_db_min": 10,
+      "quiet_rms_p90_max": 0.09,
+      "speech_rms_p90_min": 0.008,
+      "clipping_ratio_max": 0.01,
+      "require_asr_probe": true
+    },
+    "phone_microphone": {
+      "snr_db_min": 6,
+      "quiet_rms_p90_max": 0.09,
+      "speech_rms_p90_min": 0.0035,
+      "clipping_ratio_max": 0.01,
+      "require_asr_probe": false
+    },
+    "reaction_latency": {
+      "minimum_samples": 6,
+      "median_ms_min": 100,
+      "median_ms_max": 900
+    }
+  },
+  "topic_gate": {
+    "required_before_first_phase": true,
+    "minimum_primary_chat_turns_per_day": 1,
+    "allow_free_topic": true,
+    "allow_explicit_changes": true
+  },
+  "tts_gate": {
+    "server_only": false,
+    "provider": "sherpa_onnx_vits_aishell3",
+    "provider_version": "sherpa-onnx-1.13.2",
+    "voice": "participant-stable counterbalanced pair",
+    "voice_pair": {
+      "A": "aishell3-sid25",
+      "B": "aishell3-sid92",
+      "assignment": "participant-stable Bernoulli(0.5) role swap; study and companion roles always use different voices"
+    },
+    "format": "mp3",
+    "sample_rate_hz": 16000,
+    "speed": 1.0,
+    "minimum_server_generations_per_day": 1,
+    "browser_fallback_allowed": true,
+    "recovery_policy": "server TTS (8s timeout) -> browser speechSynthesis -> text dwell then waiting; never stall the study on TTS failure"
+  },
+  "timing_perturbation": {
+    "enabled": false,
+    "requires_independent_pilot_lock": true,
+    "candidate_rate_range": [0.05, 0.08],
+    "candidate_offsets_ms": [-500, -250, 0, 250, 500],
+    "status": "disabled_until_pilot_locks_rate_offsets_and_safety_gate"
+  },
+  "required_quality_checks": [
+    "network",
+    "microphone",
+    "reaction_latency",
+    "browser"
+  ],
+  "modes": {
+    "strict": {
+      "require_later_local_date": false,
+      "min_day_gap_seconds": 0,
+      "min_session_seconds": 2040,
+      "min_pair_overlap_seconds": 2040,
+      "min_phase_server_ratio": 0.9,
+      "min_phase_reported_ratio": 0.98,
+      "min_model_predictions": 10,
+      "block_schedule": {
+        "enabled": true,
+        "active_blocks": 5,
+        "primary_seconds": 240,
+        "companion_seconds": 120,
+        "rest_seconds": 60,
+        "rest_after_final_block": false,
+        "analysis_unit_seconds": 360,
+        "rest_analysis_eligible": false,
+        "protocol_note": "Engineering-locked single-session schedule: five 6-minute active blocks (30 min effective interaction) plus four 1-minute inter-block rests, for 34 minutes of timed flow. The final block ends without a redundant post-study rest."
+      },
+      "frozen": {
+        "min_seconds": 300,
+        "max_seconds": 420,
+        "target_opportunities": 12
+      },
+      "learning_seconds": [480, 480, 480, 60],
+      "companion_seconds": [120, 120, 120],
+      "micro_probe_seconds": [180, 180, 180],
+      "candidate_probe_seconds": 90
+    },
+    "compressed": {
+      "require_later_local_date": false,
+      "min_day_gap_seconds": 0,
+      "min_session_seconds": 0,
+      "min_pair_overlap_seconds": 0,
+      "min_phase_server_ratio": 0,
+      "min_phase_reported_ratio": 0,
+      "min_model_predictions": 0,
+      "block_schedule": {
+        "enabled": false,
+        "active_blocks": 0,
+        "primary_seconds": 0,
+        "companion_seconds": 0,
+        "rest_seconds": 0,
+        "rest_after_final_block": false,
+        "analysis_unit_seconds": 0,
+        "rest_analysis_eligible": false
+      },
+      "frozen": {
+        "min_seconds": 0,
+        "max_seconds": 0,
+        "target_opportunities": 0
+      },
+      "learning_seconds": [0, 0, 0, 0],
+      "companion_seconds": [0, 0, 0],
+      "micro_probe_seconds": [0, 0, 0],
+      "candidate_probe_seconds": 0
+    }
+  }
+}

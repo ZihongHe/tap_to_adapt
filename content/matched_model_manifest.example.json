@@ -1,0 +1,40 @@
+{
+  "version": "preregistered-matched-other-v1",
+  "approved": false,
+  "assignment_rule": "Replace with the preregistered matching and tie-breaking rule.",
+  "matching_variables": [
+    "shared_prior_id",
+    "day",
+    "baseline_activation_rate"
+  ],
+  "random_seed": 20260713,
+  "frozen_at_ms": 0,
+  "assignments": {
+    "TARGET_PARTICIPANT_UUID": {
+      "1": {
+        "donor_participant_id": "OTHER_PARTICIPANT_UUID",
+        "matching_strata": {"shared_prior_id": "prior-example", "day": 1},
+        "encoder_checkpoint": "/absolute/path/to/donor/day1_encoder.pth",
+        "encoder_sha256": "REPLACE_WITH_SHA256",
+        "main_checkpoint": "/absolute/path/to/donor/day1_main_model.pth",
+        "main_sha256": "REPLACE_WITH_SHA256"
+      },
+      "2": {
+        "donor_participant_id": "OTHER_PARTICIPANT_UUID",
+        "matching_strata": {"shared_prior_id": "prior-example", "day": 2},
+        "encoder_checkpoint": "/absolute/path/to/donor/day2_encoder.pth",
+        "encoder_sha256": "REPLACE_WITH_SHA256",
+        "main_checkpoint": "/absolute/path/to/donor/day2_main_model.pth",
+        "main_sha256": "REPLACE_WITH_SHA256"
+      },
+      "3": {
+        "donor_participant_id": "OTHER_PARTICIPANT_UUID",
+        "matching_strata": {"shared_prior_id": "prior-example", "day": 3},
+        "encoder_checkpoint": "/absolute/path/to/donor/day3_encoder.pth",
+        "encoder_sha256": "REPLACE_WITH_SHA256",
+        "main_checkpoint": "/absolute/path/to/donor/day3_main_model.pth",
+        "main_sha256": "REPLACE_WITH_SHA256"
+      }
+    }
+  }
+}

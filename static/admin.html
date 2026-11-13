@@ -1,0 +1,512 @@
+<!doctype html>
+<!-- Authenticated operator-dashboard document containing study monitoring tables and explicit administrative controls. -->
+
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex,nofollow">
+    <title>Tap-to-Adapt 数据管理</title>
+    <link rel="stylesheet" href="static/styles.css?v=20260829-admin-q-facet-v206">
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">T</div>
+        <div>
+          <p class="brand-name">实验数据管理</p>
+          <p class="brand-subtitle">受试者记录与数据集管理</p>
+        </div>
+      </div>
+      <div class="header-status">
+        <span id="admin-dot" class="status-dot"></span>
+        <span id="admin-status">未认证</span>
+      </div>
+    </header>
+
+    <main class="page-shell">
+      <section id="admin-login" class="narrow">
+        <h1 class="view-title">管理员认证</h1>
+        <p class="view-lead">令牌只保存在当前浏览器标签页，不会写入本地存储。</p>
+        <form id="admin-login-form" class="panel">
+          <div class="panel-body">
+            <div class="form-row">
+              <label for="admin-token">管理员令牌</label>
+              <input id="admin-token" type="password" autocomplete="current-password" required>
+            </div>
+            <button class="btn btn-primary" type="submit">进入管理页</button>
+            <p id="admin-login-error" class="error-text" role="alert"></p>
+          </div>
+        </form>
+      </section>
+
+      <section id="admin-console" class="hidden">
+        <div class="admin-toolbar">
+          <div>
+            <h1 class="view-title">实验概览</h1>
+            <p class="view-lead compact">管理员令牌下显示受试者姓名与联系方式，并按五个计时窗口列出点击 / 打断次数。论文核心表仍按实验臂聚合，不含身份明文。</p>
+          </div>
+          <div class="button-row">
+            <button id="refresh-admin" class="btn btn-secondary" type="button">刷新</button>
+            <button id="export-data" class="btn btn-secondary" type="button">下载用户实验数据包</button>
+          </div>
+        </div>
+
+        <div class="admin-viewbar" role="navigation" aria-label="管理页数据视图">
+          <div class="admin-view-tabs" role="tablist">
+            <button id="show-core-view" class="admin-view-tab active" type="button" role="tab" aria-selected="true">
+              用户试验核心
+            </button>
+            <button id="show-other-view" class="admin-view-tab" type="button" role="tab" aria-selected="false">
+              其他
+            </button>
+          </div>
+          <div class="form-row admin-filter admin-global-filter">
+            <label for="run-filter">数据范围</label>
+            <select id="run-filter"><option value="">全部 Run</option></select>
+          </div>
+        </div>
+
+        <section id="admin-core-view">
+          <div class="panel admin-core-panel admin-live-board">
+            <div class="panel-body">
+              <div class="admin-section-heading">
+                <div>
+                  <p class="admin-kicker">LIVE SUBJECTS</p>
+                  <h2 class="section-heading">正在试验中的受试者</h2>
+                </div>
+                <div class="button-row">
+                  <span id="live-subjects-count" class="admin-method-chip">只读 · —</span>
+                  <button id="refresh-live-subjects" class="btn btn-secondary" type="button">刷新看板</button>
+                </div>
+              </div>
+              <p class="section-copy">只显示已经到场、正在准备或已正式计时的受试者，不含未到场预约。正式开始时间以电脑端计时启动为准。此看板只读取状态，不会改写受试者数据、模型或全局编排。</p>
+              <p id="live-subjects-updated" class="section-copy compact"></p>
+              <div id="live-subjects-table" class="admin-table-wrap"></div>
+            </div>
+          </div>
+
+          <div class="panel admin-core-panel">
+            <div class="panel-body">
+              <div class="admin-section-heading">
+                <div>
+                  <p class="admin-kicker">SHARE FIT 逐人变化趋势</p>
+                  <h2 class="section-heading">share fit组逐人变化趋势看板</h2>
+                </div>
+                <div class="button-row">
+                  <span id="share-fit-trend-count" class="admin-method-chip">只读 · —</span>
+                  <button id="refresh-share-fit-trend" class="btn btn-secondary" type="button">刷新看板</button>
+                </div>
+              </div>
+              <p class="section-copy">只读分析：按模型链顺序看每位 donor 的五块 taps/min 与块内 q（合格纠错 / 机会），IQR 1.5 剔除离群后再算 Spearman 趋势、双侧 p 与是否显著。问卷 11 维已反向计分，越高越好。拟合点预估使用最新开场 q 三人中位闸门，不改写受试者、模型或编排状态。</p>
+              <p id="share-fit-trend-updated" class="section-copy compact"></p>
+              <div id="share-fit-block-trend-table" class="admin-table-wrap"></div>
+              <div id="share-fit-questionnaire-trend-table" class="admin-table-wrap"></div>
+              <div id="share-fit-donor-trend-table" class="admin-table-wrap"></div>
+            </div>
+          </div>
+
+          <div class="admin-core-hero">
+            <div>
+              <p class="admin-kicker">CHI USER STUDY CORE</p>
+              <h2>论文核心数据，一屏读取</h2>
+              <p id="core-scope" class="section-copy"></p>
+            </div>
+            <div id="core-instance-badge" class="admin-instance-badge">—</div>
+          </div>
+
+          <div id="core-primary-cards" class="admin-metric-grid core-grid" aria-live="polite">
+            <div class="admin-metric core-emphasis"><span>参与者均值纠错率</span><strong id="core-participant-rate">—</strong></div>
+            <div class="admin-metric"><span>Eligible opportunities</span><strong id="core-opportunities">—</strong></div>
+            <div class="admin-metric"><span>Eligible corrections</span><strong id="core-corrections">—</strong></div>
+            <div class="admin-metric"><span>Activate / Interrupt</span><strong id="core-tap-split">—</strong></div>
+            <div class="admin-metric"><span>完成 / 本实例账号</span><strong id="core-completed">—</strong></div>
+            <div class="admin-metric"><span>5 blocks / 结束问卷</span><strong id="core-completeness">—</strong></div>
+          </div>
+
+          <div class="panel admin-core-panel">
+            <div class="panel-body">
+              <div class="admin-section-heading">
+                <div>
+                  <p class="admin-kicker">SAMPLE & PRIMARY OUTCOME</p>
+                  <h2 class="section-heading">样本进度与主要结局</h2>
+                </div>
+                <span class="admin-method-chip">统计单位：参与者</span>
+              </div>
+              <p class="section-copy">主要结局只纳入端到端完成实验的参与者；休息、误触和不满足 eligible 条件的 tap 不进入分子或分母。</p>
+              <div id="core-arm-table" class="admin-table-wrap"></div>
+            </div>
+          </div>
+
+          <div class="panel admin-core-panel">
+            <div class="panel-body">
+              <div class="admin-section-heading">
+                <div>
+                  <p class="admin-kicker">SUBJECT × WINDOW</p>
+                  <h2 class="section-heading">每位受试者的五窗口点击 / 打断</h2>
+                </div>
+              </div>
+              <p class="section-copy">每个窗口显示「点击 / 打断」。点击是电脑端主动接话，打断是停止当前回答。未进入该窗口的格子为 0。身份与口音来自开始前问卷；尚未填写的显示为 —。</p>
+              <div id="core-subject-window-table" class="admin-table-wrap"></div>
+            </div>
+          </div>
+
+          <div class="panel admin-core-panel">
+            <div class="panel-body">
+              <div class="admin-section-heading">
+                <div>
+                  <p class="admin-kicker">CONDITION × BLOCK</p>
+                  <h2 class="section-heading">五个六分钟块的组间趋势</h2>
+                </div>
+              </div>
+              <p class="section-copy">用于 H3/H4 的 condition × block 检查；每格显示参与者均值纠错率、机会数、自动响应暴露量与误触。</p>
+              <div id="core-block-table" class="admin-table-wrap"></div>
+            </div>
+          </div>
+
+          <div class="panel admin-core-panel">
+            <div class="panel-body">
+              <div class="admin-section-heading">
+                <div>
+                  <p class="admin-kicker">RQ4 FINAL QUESTIONNAIRE</p>
+                  <h2 class="section-heading">可预测性、掌控感与可纠错性</h2>
+                </div>
+              </div>
+              <p class="section-copy">1–7 分；反向题已反向计分，越高表示体验越好。向好性与整体性分开展示，不把同一构念的两类题合成一个均值。不展示开放题原文。</p>
+              <h3 class="section-heading">问卷 · 向好性</h3>
+              <div id="core-questionnaire-trend-table" class="admin-table-wrap"></div>
+              <h3 class="section-heading">问卷 · 整体性</h3>
+              <div id="core-questionnaire-overall-table" class="admin-table-wrap"></div>
+              <h3 class="section-heading">问卷 · 构念题</h3>
+              <div id="core-questionnaire-construct-table" class="admin-table-wrap"></div>
+            </div>
+          </div>
+
+          <div class="panel admin-core-panel">
+            <div class="panel-body">
+              <div class="admin-section-heading">
+                <div>
+                  <p class="admin-kicker">THREE-ARM DIFFERENCE</p>
+                  <h2 class="section-heading">三臂 × 五块与问卷维度差异</h2>
+                </div>
+              </div>
+              <p class="section-copy">只读计算：仅纳入端到端完成的 ①冷启动在线学 / ②Share 启动在线学 / ③Share 启动冻结。五块拆成上下两张表：上表是各窗口参与者平均纠错率，下表是各窗口人均激活 / 打断次数（行为纠错与实际 tap）。行为纠错包含「本可训练、但冻结臂按设计不更新」的 tap，避免 ③ 被训练口径整列打成 0。问卷拆成向好性 / 整体性 / 构念题三表，不把 trend 与 overall 合成同一维度；1–7 分（反向题已反向），不是百分比。总检验 Kruskal-Wallis，成对 Mann-Whitney + Holm。n 不足时显示「n不足」。不改写任何原始数据、状态或模型。* p&lt;0.05，** p&lt;0.01，*** p&lt;0.001，ns 不显著。</p>
+              <h3 class="section-heading">五个六分钟块 · 平均纠错率</h3>
+              <div id="three-arm-block-diff-table" class="admin-table-wrap"></div>
+              <h3 class="section-heading">五个六分钟块 · 平均激活 / 打断次数</h3>
+              <div id="three-arm-block-count-table" class="admin-table-wrap"></div>
+              <h3 class="section-heading">问卷 · 向好性</h3>
+              <div id="three-arm-questionnaire-trend-table" class="admin-table-wrap"></div>
+              <h3 class="section-heading">问卷 · 整体性</h3>
+              <div id="three-arm-questionnaire-overall-table" class="admin-table-wrap"></div>
+              <h3 class="section-heading">问卷 · 构念题</h3>
+              <div id="three-arm-questionnaire-construct-table" class="admin-table-wrap"></div>
+            </div>
+          </div>
+
+          <div class="panel admin-core-panel">
+            <div class="panel-body">
+              <div class="admin-section-heading">
+                <div>
+                  <p class="admin-kicker">FINAL QUESTIONNAIRE RECOVERY</p>
+                  <h2 class="section-heading">最终问卷凭据与提交状态</h2>
+                </div>
+              </div>
+              <p class="section-copy">计时互动结束并安全提交模型后发放凭据。端到端完成只表示计时互动已完成，不要求最终问卷；「最终问卷已提交」才表示问卷答案已写入。凭据可在端到端完成后继续补填未提交的问卷。上方用户实验汇总按端到端（计时）纳入。</p>
+              <div id="core-final-recovery-table" class="admin-table-wrap"></div>
+              <h3 class="section-heading">中断后继续 / 重开记录</h3>
+              <p class="section-copy">只读事件汇总：记录「从中断处继续」与「重新开始」的次数和时间戳，不改写原始实验数据。</p>
+              <div id="interrupt-continue-table" class="admin-table-wrap"></div>
+            </div>
+          </div>
+
+        <div class="panel">
+          <div class="panel-body">
+            <div class="admin-section-heading">
+              <div>
+                <p class="admin-kicker">公开报名编排</p>
+                <h2 class="section-heading">自动进行</h2>
+              </div>
+            </div>
+            <p class="section-copy">
+              当前正式实例已从三臂退回 Share 拟合，从链尖 M(16) 继续累计。
+              自动锁定：改善界 0.2 个百分点、取最低开场平台起点、再确认一个不重叠三人窗；回弹需连续两窗且发生在最低点后再一个三人窗之后；确认帽 22 人。
+              锁定拟合权重后才会进入 ①冷启动在线学 → ②share 启动在线学 → ③share 启动冻结（每组端到端完成上限 32）。
+              停止后新受试者暂时无法报名；任意状态下均可查看与导出数据。受试者原始会话与事件不被此页改写。
+            </p>
+            <div id="orchestration-summary" class="admin-metric-grid compact" aria-live="polite">
+              <div class="admin-metric"><span>自动进行</span><strong id="orch-auto">—</strong></div>
+              <div class="admin-metric"><span>报名状态</span><strong id="orch-status">—</strong></div>
+              <div class="admin-metric"><span>当前阶段</span><strong id="orch-phase">—</strong></div>
+              <div class="admin-metric"><span>当前拟合点</span><strong id="orch-fit-point">—</strong></div>
+              <div class="admin-metric"><span>Share 模型链 / 端到端 / 50上限</span><strong id="orch-share">—</strong></div>
+              <div class="admin-metric"><span>模型就绪待链提交</span><strong id="orch-chain-pending">—</strong></div>
+              <div class="admin-metric"><span>已验证模型最终化</span><strong id="orch-model-finalized">—</strong></div>
+              <div class="admin-metric"><span>① 冷启动学（完成/上限）</span><strong id="orch-arm1">—</strong></div>
+              <div class="admin-metric"><span>② share+学（完成/上限）</span><strong id="orch-arm2">—</strong></div>
+              <div class="admin-metric"><span>③ share+冻（完成/上限）</span><strong id="orch-arm3">—</strong></div>
+              <div class="admin-metric"><span>下一臂</span><strong id="orch-next">—</strong></div>
+              <div class="admin-metric">
+                <span>拟合点预计还需</span>
+                <strong id="orch-fit-remaining">—</strong>
+                <em id="orch-fit-confidence" class="orch-fit-confidence">自信 —</em>
+              </div>
+            </div>
+            <p id="orch-fit-remaining-copy" class="helper-text" role="status"></p>
+            <div id="orch-fit-remaining-history" class="admin-table-wrap"></div>
+            <div class="button-row">
+              <label class="check-row" for="orch-auto-toggle">
+                <input id="orch-auto-toggle" type="checkbox" checked>
+                <span>自动进行（默认开启）</span>
+              </label>
+            </div>
+            <div class="button-row">
+              <button id="orch-pause" class="btn btn-secondary" type="button">停止报名</button>
+              <button id="orch-resume" class="btn btn-secondary" type="button">继续报名</button>
+              <button id="orch-refresh-share" class="btn btn-secondary" type="button">刷新 share 拟合</button>
+              <button id="orch-lock-share" class="btn btn-primary" type="button">确认拟合并进入对比</button>
+              <button id="orch-early-stop" class="btn btn-danger" type="button">提前结束实验</button>
+              <button id="orch-download-curve" class="btn btn-secondary" type="button" disabled>
+                下载 Share 拟合曲线（含开场 q）
+              </button>
+              <button id="orch-download-weights" class="btn btn-secondary" type="button" disabled>
+                下载最新 Share 拟合权重（只读备份）
+              </button>
+            </div>
+            <p id="orchestration-error" class="error-text" role="alert"></p>
+            <p class="helper-text">
+              「下载最新 Share 拟合权重」只读取已落盘的 prior 并传给浏览器，不改写、不移动服务器上的模型或编排状态。
+            </p>
+            <p id="orchestration-meta" class="helper-text" role="status"></p>
+            <h3 class="section-subheading">集体实验锁定</h3>
+            <p class="helper-text">
+              锁定后：该时段内外部不能开始实验；预约格灰掉；已在进行中的受试者不受影响。
+              系统会生成一段召集密码，可在本机研究入口与隔离测试入口页底开启实验，便于用固定设备召集一批人。
+              本操作只写独立的锁定文件，不改 share 拟合、模型和当前持有者。
+            </p>
+            <div class="form-row session-lock-time-row">
+              <label for="session-lock-start">开始（北京时间）</label>
+              <input id="session-lock-start" type="datetime-local">
+              <label for="session-lock-end">结束（北京时间）</label>
+              <input id="session-lock-end" type="datetime-local">
+            </div>
+            <div class="button-row">
+              <button id="session-lock-save" class="btn btn-primary" type="button">锁定并生成密码</button>
+              <button id="session-lock-clear" class="btn btn-secondary" type="button">解除锁定</button>
+              <button id="session-lock-copy" class="btn btn-secondary" type="button" disabled>复制密码</button>
+            </div>
+            <p id="session-lock-status" class="helper-text" role="status">当前未锁定。</p>
+            <p id="session-lock-password" class="session-lock-password hidden" hidden></p>
+            <p id="session-lock-error" class="error-text" role="alert"></p>
+            <h3 class="section-subheading">不可预约时间段</h3>
+            <p class="helper-text">
+              按北京时间选择某一天的半小时块。保存后仅阻止本实例后续新预约；已有预约、进行中的实验、模型和全局互斥都不会被改写。
+            </p>
+            <div class="form-row">
+              <label for="orch-block-date">日期（北京时间）</label>
+              <input id="orch-block-date" type="date">
+            </div>
+            <div id="orch-block-slot-grid" class="orch-block-slot-grid"></div>
+            <div class="button-row">
+              <button id="orch-block-select-day" class="btn btn-secondary" type="button">当天全选</button>
+              <button id="orch-block-clear-day" class="btn btn-secondary" type="button">当天清空勾选</button>
+              <button id="orch-block-save" class="btn btn-primary" type="button">保存当天不可预约时段</button>
+            </div>
+            <h3 class="section-subheading">预约记录与四位凭证</h3>
+            <div id="orch-appointment-table" class="admin-table-wrap"></div>
+            <canvas id="orch-curve-canvas" class="hidden" width="960" height="540" aria-hidden="true"></canvas>
+          </div>
+        </div>
+
+        </section>
+
+        <section id="admin-other-view" class="hidden">
+        <div id="summary-cards" class="admin-metric-grid" aria-live="polite">
+          <div class="admin-metric"><span>实验 Run</span><strong id="metric-runs">—</strong></div>
+          <div class="admin-metric"><span>参与者账号</span><strong id="metric-participants">—</strong></div>
+          <div class="admin-metric"><span>会话</span><strong id="metric-sessions">—</strong></div>
+          <div class="admin-metric"><span>事件</span><strong id="metric-events">—</strong></div>
+          <div class="admin-metric"><span>音频文件</span><strong id="metric-audio">—</strong></div>
+          <div class="admin-metric"><span>数据集发布</span><strong id="metric-releases">—</strong></div>
+        </div>
+
+        <div class="panel hidden" aria-hidden="true">
+          <div class="panel-body">
+            <div class="admin-section-heading">
+              <div>
+                <p class="admin-kicker">第一步</p>
+                <h2 class="section-heading">初始化实验阶段账号</h2>
+              </div>
+            </div>
+            <p class="section-copy">选择阶段后，系统自动锁定 cohort、数据来源和协议模式。所有真人实验默认记录研究必需数据；原始语音及后续共享范围由参与者的分层同意决定。登录码只显示一次。</p>
+            <form id="stage-accounts-form">
+              <div class="check-grid">
+                <div class="form-row">
+                  <label for="stage-template">实验阶段</label>
+                  <select id="stage-template" required></select>
+                </div>
+                <div class="form-row">
+                  <label for="stage-count">指派人数</label>
+                  <input id="stage-count" type="text" inputmode="numeric" required>
+                </div>
+                <div class="form-row">
+                  <label for="stage-run-slug">Run 标识（可选）</label>
+                  <input id="stage-run-slug" type="text" placeholder="留空则自动生成">
+                </div>
+                <div class="form-row">
+                  <label for="stage-label">批次备注（可选）</label>
+                  <input id="stage-label" type="text" placeholder="例如：操作员走查第 1 批">
+                </div>
+              </div>
+              <label class="check-row admin-pre-experiment-check" for="stage-personal-debug">
+                <input id="stage-personal-debug" type="checkbox">
+                <span>
+                  <strong>仅用于个人调试</strong><br>
+                  以所选实验类型创建 1 个操作员自测账号；数据、音频和 personal head 使用独立调试目录，不影响本实例的常规实验数据与模型。
+                </span>
+              </label>
+              <div id="stage-description" class="admin-stage-note"></div>
+              <div class="button-row">
+                <button id="create-stage-accounts" class="btn btn-primary" type="submit">生成账号与 ID</button>
+              </div>
+              <p id="stage-error" class="error-text" role="alert"></p>
+            </form>
+
+            <div id="created-accounts" class="hidden admin-result">
+              <div class="admin-result-head">
+                <div>
+                  <strong>账号已生成</strong>
+                  <p id="created-accounts-meta" class="helper-text"></p>
+                </div>
+                <div class="button-row">
+                  <button id="copy-accounts" class="btn btn-secondary" type="button">复制 TSV</button>
+                  <button id="download-accounts" class="btn btn-secondary" type="button">下载 CSV</button>
+                </div>
+              </div>
+              <p class="draft-notice">请现在保存登录码；系统只保存散列，刷新后无法恢复完整登录码。</p>
+              <div id="created-accounts-table" class="admin-table-wrap"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-body">
+            <div class="admin-section-heading">
+              <div>
+                <p class="admin-kicker">第二步</p>
+                <h2 class="section-heading">查看记录和文件位置</h2>
+              </div>
+            </div>
+
+            <h3 class="admin-subheading">存储路径</h3>
+            <p class="section-copy">路径来自当前服务器配置。数据集发布需使用下方导出脚本执行同意范围和去标识检查。</p>
+            <div id="paths-table" class="admin-table-wrap"></div>
+
+            <h3 class="admin-subheading">Run 汇总</h3>
+            <div id="runs-table" class="admin-table-wrap"></div>
+
+            <h3 class="admin-subheading">账号初始化批次</h3>
+            <p id="archive-status" class="helper-text" role="status"></p>
+            <div id="batches-table" class="admin-table-wrap"></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-body">
+            <h2 class="section-heading">参与者实验记录</h2>
+            <p class="section-copy">名单直接显示姓名、联系方式、身份、口音和只读实验状态（实验中 / 已完成 / 中途退出等）。点击“查看”读取该参与者的五窗口点击 / 打断、会话、质量检查、用户发言、智能体回答和问卷原文。</p>
+            <div id="participants-table" class="admin-table-wrap"></div>
+            <div id="participant-detail" class="hidden admin-detail" aria-live="polite">
+              <div class="admin-detail-head">
+                <div>
+                  <p class="admin-kicker">参与者记录</p>
+                  <h3 id="participant-detail-title" class="admin-subheading"></h3>
+                </div>
+                <div class="button-row">
+                  <button id="download-research-consent-copy" class="btn btn-secondary hidden" type="button">下载研究方归档副本</button>
+                  <button id="download-research-consent-evidence" class="btn btn-secondary hidden" type="button">下载可验证证据包</button>
+                  <button id="close-participant-detail" class="btn btn-quiet" type="button">关闭</button>
+                </div>
+              </div>
+              <div id="participant-detail-summary" class="admin-metric-grid compact"></div>
+              <h4>五个窗口的点击 / 打断</h4>
+              <div id="participant-window-taps-table" class="admin-table-wrap"></div>
+              <h4>事件类型</h4>
+              <div id="participant-events-table" class="admin-table-wrap"></div>
+              <h4>会话</h4>
+              <div id="participant-sessions-table" class="admin-table-wrap"></div>
+              <h4>用户与智能体对话原文</h4>
+              <p class="section-copy">每行对应一次实际发送给智能体的用户发言及其回答；“电脑实验系统”和“手机陪伴系统”分别标记。</p>
+              <div id="participant-conversation-table" class="admin-table-wrap"></div>
+              <h4>最近含文本事件原文</h4>
+              <div id="participant-text-events-table" class="admin-table-wrap"></div>
+              <h4>问卷选择记录</h4>
+              <p class="section-copy">显示受试者实际看到的题目文字与所选选项内容；内部稳定编码同时保留用于统计。</p>
+              <div id="participant-responses-table" class="admin-table-wrap"></div>
+              <h4>问卷开放题原文</h4>
+              <div id="participant-open-responses-table" class="admin-table-wrap"></div>
+              <h4>音频文件</h4>
+              <div id="participant-audio-table" class="admin-table-wrap"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-body">
+            <h2 class="section-heading">数据资产</h2>
+            <div class="admin-asset-grid">
+              <div>
+                <h3 class="admin-subheading">最近 200 条事件的类型分布</h3>
+                <div id="event-types-table" class="admin-table-wrap"></div>
+              </div>
+              <div>
+                <h3 class="admin-subheading">数据集发布</h3>
+                <div id="dataset-releases-table" class="admin-table-wrap"></div>
+              </div>
+            </div>
+            <details class="admin-details">
+              <summary>查看音频和模型文件路径</summary>
+              <h3 class="admin-subheading">最近音频文件</h3>
+              <div id="audio-assets-table" class="admin-table-wrap"></div>
+              <h3 class="admin-subheading">模型文件</h3>
+              <div id="model-assets-table" class="admin-table-wrap"></div>
+            </details>
+          </div>
+        </div>
+
+        <details class="panel admin-details hidden" aria-hidden="true">
+          <summary>正式实验门禁与 A→B 高级操作</summary>
+          <div class="panel-body">
+            <h2 class="section-heading">正式实验门禁</h2>
+            <p id="readiness-summary" class="section-copy"></p>
+            <div id="readiness-table" class="admin-table-wrap"></div>
+
+            <h2 class="section-heading admin-spaced-heading">A→B 正式流水线</h2>
+            <p class="section-copy">正式 Study A/B 账号不由上方快捷表单创建。释放前服务端会检查完整会话、机会预算、模型快照、prior 哈希和 matched assignment。</p>
+            <div class="check-grid">
+              <div class="form-row"><label for="pipeline-run">Formal run</label><input id="pipeline-run" type="text" placeholder="例如 chi-formal-20260715"></div>
+              <div class="form-row"><label for="pipeline-wave">Study A wave</label><select id="pipeline-wave"><option value="1">Wave 1 (12)</option><option value="2">Wave 2 (8)</option><option value="3">Wave 3 (8)</option><option value="4">Wave 4 (8)</option></select></div>
+              <div class="form-row"><label for="selected-n">锁定 donor n</label><select id="selected-n"><option value="12">12</option><option value="20">20</option><option value="28" selected>28</option></select></div>
+              <div class="form-row"><label for="selected-q">锁定反馈上限 q</label><select id="selected-q"><option value="2">2</option><option value="4" selected>4</option><option value="8">8</option></select></div>
+              <div class="form-row"><label for="decision-record">盲态饱和/精度决策记录</label><input id="decision-record" type="text" placeholder="填写预注册判据的判定与分析记录位置"></div>
+              <div class="form-row"><label for="reserve-reason">Reserve 释放原因</label><input id="reserve-reason" type="text" placeholder="记录实际 attrition 原因"></div>
+            </div>
+            <div class="button-row">
+              <button id="pipeline-status-btn" class="btn btn-secondary" type="button">读取状态</button>
+              <button id="pipeline-analysis-btn" class="btn btn-secondary" type="button">J(n,q) / Study B 分析</button>
+              <button id="release-wave-btn" class="btn btn-secondary" type="button">释放所选 Wave</button>
+              <button id="prepare-study-b-btn" class="btn btn-primary" type="button">冻结并准备 Study B</button>
+              <button id="release-reserve-btn" class="btn btn-danger" type="button">释放 Reserve</button>
+            </div>
+            <p id="pipeline-error" class="error-text" role="alert"></p>
+            <p id="pipeline-meta" class="section-copy"></p>
+            <div id="pipeline-table" class="admin-table-wrap"></div>
+            <pre id="pipeline-analysis" class="admin-analysis"></pre>
+          </div>
+        </details>
+        </section>
+      </section>
+    </main>
+    <script src="static/admin.js?v=20260829-admin-q-facet-v206" defer></script>
+  </body>
+</html>
