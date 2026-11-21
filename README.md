@@ -1,6 +1,6 @@
 # Tap-to-Adapt
 
-Tap-to-Adapt learns when to initiate a speech response from corrective taps during interaction. Manual activation supplies a positive timing label; manual interruption supplies a negative label for the response's initiation. A frozen DistilHuBERT encoder, an individual decision head, class-balanced proximal experience replay (CBPER), and Recent Tap-History Adaptation (RTHA) implement the timing path. ASR, conversational generation, and speech synthesis provide response content.
+Tap-to-Adapt learns when to initiate a speech response from corrective taps during interaction. Manual activation supplies a positive timing label; manual interruption supplies a negative label for the response's initiation. Its response-timing model, BPRHT (Balanced Proximal Replay for History-conditioned Timing), combines multi-window representations from frozen DistilHuBERT, a user-specific logistic regression head, class-balanced replay with proximal regularization, and recent correction history with acoustic memory. ASR, conversational generation, and speech synthesis provide response content.
 
 This repository contains the study implementation: a desktop client, a mobile push-to-talk companion, and a FastAPI server. English and Simplified Chinese interfaces are included. The [preprint](https://arxiv.org/abs/2603.14449) describes the research; consult its version history for the corresponding manuscript.
 
@@ -9,7 +9,7 @@ This repository contains the study implementation: a desktop client, a mobile pu
 | Path | Contents |
 | --- | --- |
 | `app/distilhubert_online.py` | Frozen encoder, individual heads, replay, proximal regularization, and checkpoint validation |
-| `app/tap_history.py` | RTHA feedback features and timing modulation |
+| `app/tap_history.py` | Recent correction-history features and probability/threshold adjustments |
 | `app/main.py` | HTTP/WebSocket endpoints and interaction orchestration |
 | `app/` | Enrollment, consent, storage, analysis, speech, and scheduling services |
 | `static/` | Desktop, companion, and operator interfaces |

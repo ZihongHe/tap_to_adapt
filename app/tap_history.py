@@ -1,4 +1,4 @@
-"""Recent Tap-History Adaptation (RTHA) for response initiation timing.
+"""Recent correction-history features and timing adjustments for BPRHT.
 
 The deployed configuration uses accepted taps from the 60 seconds preceding
 each decision.
