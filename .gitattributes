@@ -1,0 +1,4 @@
+* text=auto eol=lf
+data/pilot_1000/audio/*.wav binary
+data/pilot_1000/features/*.npz binary
+data/pilot_1000/labels.csv -text

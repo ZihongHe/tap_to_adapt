@@ -1,0 +1,85 @@
+{
+  "backbone": "distilhubert",
+  "n_samples": 1000,
+  "feature_dim": 10752,
+  "clip_seconds": 15.0,
+  "model_id": "ntu-spml/distilhubert",
+  "commit_hash": "fa87d96265d6b7af66e112faff6ff44df419cec9",
+  "model_type": "hubert",
+  "hidden_size": 768,
+  "num_hidden_layers": 2,
+  "parameter_count": 23491968,
+  "schema": "tap-to-adapt-authorized-pilot/v1",
+  "audio_files": 1000,
+  "positive_labels": 253,
+  "negative_labels": 747,
+  "collection": "Human-recorded scripted speech interactions with scenario-intention labels.",
+  "annotation_review": "No independent annotation review.",
+  "license": "CC-BY-NC-4.0",
+  "audio_bytes": 480044000,
+  "labels_sha256": "74f714e41c0a49395865c90cd2285ffb7a12122105efd9dc4b57f202bc9e01aa",
+  "cached_inference_precision": "CUDA float16 mixed precision; temporal pooling in float32",
+  "distribution": "Public distribution authorized by the data owner.",
+  "feature_parts": [
+    {
+      "path": "features/acoustic_0001_0100.npz",
+      "first_event_index": 1,
+      "last_event_index": 100,
+      "sha256": "29b773f813a303d3f238453fbbaa509b96573409f2a12eb2be2dbc229d8ba05e"
+    },
+    {
+      "path": "features/acoustic_0101_0200.npz",
+      "first_event_index": 101,
+      "last_event_index": 200,
+      "sha256": "3ae56769d1de890cfeeab6a54ff8a18c53932db028ce2192e10556e94529bbb0"
+    },
+    {
+      "path": "features/acoustic_0201_0300.npz",
+      "first_event_index": 201,
+      "last_event_index": 300,
+      "sha256": "921cec9afa888143aa7549508c72b88799fe5b75a1d923d056760358dc044052"
+    },
+    {
+      "path": "features/acoustic_0301_0400.npz",
+      "first_event_index": 301,
+      "last_event_index": 400,
+      "sha256": "df537078ab0d638feb0d9f402d0a6a34c0588a0b06016515c9023f1221079d26"
+    },
+    {
+      "path": "features/acoustic_0401_0500.npz",
+      "first_event_index": 401,
+      "last_event_index": 500,
+      "sha256": "5990edf758baa11037c3c43c3412ceabbf472a739927ab3e5e362c9684a50cb8"
+    },
+    {
+      "path": "features/acoustic_0501_0600.npz",
+      "first_event_index": 501,
+      "last_event_index": 600,
+      "sha256": "9bd8fb5973f95fd3112ef3f83e7d0d0d1be45064a23187f937daef2fefb296ca"
+    },
+    {
+      "path": "features/acoustic_0601_0700.npz",
+      "first_event_index": 601,
+      "last_event_index": 700,
+      "sha256": "cc58e8a700c325c44a445c5e9e0bb7e594bac2b5e26f62b355d762064721d4f1"
+    },
+    {
+      "path": "features/acoustic_0701_0800.npz",
+      "first_event_index": 701,
+      "last_event_index": 800,
+      "sha256": "18265de9ead32a96b4a1f00f19b7fba0a83d3a2cd55245a24f3a7382ab03912a"
+    },
+    {
+      "path": "features/acoustic_0801_0900.npz",
+      "first_event_index": 801,
+      "last_event_index": 900,
+      "sha256": "b77c0f877688c8e3e86cfe94fc0668c06e77b03831054dde031c5f573af87365"
+    },
+    {
+      "path": "features/acoustic_0901_1000.npz",
+      "first_event_index": 901,
+      "last_event_index": 1000,
+      "sha256": "a4ed6aeba32a674cf131f28295dcaec5b0bd4904377515ecd02117f448754887"
+    }
+  ]
+}
