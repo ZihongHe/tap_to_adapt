@@ -1,6 +1,6 @@
 # Tap-to-Adapt
 
-Response initiation models and a corpus of 1,000 human-recorded speech clips.
+Response initiation timing models for speech agents and a corpus of 1,000 human-recorded speech clips.
 BPRHT (Balanced Proximal Replay for History-conditioned Timing) combines frozen
 DistilHuBERT representations, individual logistic decision heads, balanced
 proximal replay, and recent correction history.
